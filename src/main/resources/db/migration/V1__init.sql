@@ -15,10 +15,10 @@ create table `players` (
 );
 
 create table `highscores` (
-  `Id` int not null AUTO_INCREMENT unique,
-  `Playerid` int not null,
+  `PlayerId` int not null,
   `highscore` int not null,
-  primary key(Id)
+  primary key(PlayerId),
+  foreign key(PlayerId) references players(Id)
 );
 
 create table `gametype` (
