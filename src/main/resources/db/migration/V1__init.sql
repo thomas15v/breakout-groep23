@@ -29,7 +29,7 @@ create table `gametype` (
   `LengtePallet` int not null,
   `Levens` int not null,
   `ScoreMultiplier` int not null,
-  `AantalRijen` int not null
+  `AantalRijen` int not null,
   primary key (Id)
 );
 
