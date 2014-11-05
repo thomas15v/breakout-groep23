@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -32,6 +33,7 @@ public class BreakOutFrame extends JFrame implements Observer {
                     game.setGameState(GameState.closed);
                 }
             });
+            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             pack();
             game.run();
         }catch (Exception e){
