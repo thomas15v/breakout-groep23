@@ -1,8 +1,8 @@
 package edu.howest.breakout.game;
 
 import edu.howest.breakout.game.entity.Entity;
-import edu.howest.breakout.game.entity.EntityBall;
-import edu.howest.breakout.game.entity.EntityBlock;
+import edu.howest.breakout.game.info.GameProperties;
+import edu.howest.breakout.game.info.GameState;
 
 import java.awt.*;
 import java.util.ArrayList;

@@ -2,8 +2,8 @@ package edu.howest.breakout;
 
 import edu.howest.breakout.client.GameGrid;
 import edu.howest.breakout.game.Game;
-import edu.howest.breakout.game.GameProperties;
-import edu.howest.breakout.game.GameState;
+import edu.howest.breakout.game.info.GameProperties;
+import edu.howest.breakout.game.info.GameState;
 import edu.howest.breakout.game.LocalGame;
 
 import javax.swing.*;

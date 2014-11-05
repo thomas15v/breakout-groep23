@@ -1,4 +1,4 @@
-package edu.howest.breakout.game;
+package edu.howest.breakout.game.info;
 
 /**
  * Created by thomas on 05/11/2014.
