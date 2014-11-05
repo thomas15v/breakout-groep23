@@ -4,7 +4,9 @@ import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.info.GameProperties;
 import edu.howest.breakout.game.info.GameState;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -12,7 +14,7 @@ import java.util.Observable;
 /***
  * Future class in case we would implement multiplayer
  */
-public abstract class Game extends Observable implements Runnable {
+public abstract class Game extends Observable {
     protected GameProperties gameProperties;
     protected List<Entity> entities;
     protected GameState gameState;
@@ -38,5 +40,9 @@ public abstract class Game extends Observable implements Runnable {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+        notifyObservers();
     }
+
+    public abstract void run();
+
 }

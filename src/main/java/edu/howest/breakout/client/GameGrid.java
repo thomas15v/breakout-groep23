@@ -51,9 +51,9 @@ public class GameGrid extends JPanel implements Observer, Runnable  {
 
     @Override
     protected void paintComponent(Graphics g) {
-        fpsCalculator.tick();
         super.paintComponent(g);
         Graphics2D graphics2D = (Graphics2D) g;
+        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         paintDebug(graphics2D);
         for (Render e : renders)
             e.render(graphics2D);
@@ -64,8 +64,9 @@ public class GameGrid extends JPanel implements Observer, Runnable  {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update (Observable o, Object arg) {
         repaint();
+        fpsCalculator.tick();
     }
 
     @Override

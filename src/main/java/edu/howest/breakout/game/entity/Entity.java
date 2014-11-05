@@ -16,6 +16,8 @@ public abstract class Entity {
     private int sizex;
     private int sizey;
     private Color color;
+    private double vX;
+    private double vY;
 
     protected Entity(int x, int y){
         this.x = x;
@@ -31,6 +33,8 @@ public abstract class Entity {
 
     protected void setSpeed(int speed) {
         this.speed = speed;
+        this.vX = speed * Math.sin(Math.toRadians(angle)) * 0.5;
+        this.vY = speed * Math.cos(Math.toRadians(angle)) * 0.5;
     }
 
     public double getX() {
@@ -55,6 +59,7 @@ public abstract class Entity {
 
     protected void setAngle(int angle) {
         this.angle = angle;
+        setSpeed(speed);
     }
 
     public int getRotation() {
@@ -77,11 +82,11 @@ public abstract class Entity {
     }
 
     protected double getXdir(){
-        return speed * Math.sin(Math.toRadians(angle));
+        return vX;
     }
 
     protected double getYdir(){
-        return speed * Math.cos(Math.toRadians(angle));
+        return vY;
     }
 
     public int getSizex() {

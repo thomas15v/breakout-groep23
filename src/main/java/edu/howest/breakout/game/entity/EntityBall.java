@@ -21,9 +21,15 @@ public class EntityBall extends Entity {
         if(getY()<=0 || getY()>game.getDimension().getHeight()-(3*getSizey())){
             setAngle(180-getAngle());
         }
-        //System.out.println(game.getDimension().getWidth());
+        for (Entity e : game.getEntities()){
+            if (!e.equals(this) && e instanceof EntityBlock){
+
+            }
+        }
         setX(getX() + getXdir());
         setY(getY() + getYdir());
     }
+
+
 
 }
