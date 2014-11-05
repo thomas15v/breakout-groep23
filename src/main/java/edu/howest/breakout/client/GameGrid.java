@@ -1,10 +1,12 @@
 package edu.howest.breakout.client;
 
+import edu.howest.breakout.client.Render.RenderBlock;
 import edu.howest.breakout.game.Game;
 import edu.howest.breakout.client.Render.Render;
 import edu.howest.breakout.client.Render.RenderBall;
 import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.entity.EntityBall;
+import edu.howest.breakout.game.entity.EntityBlock;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +32,7 @@ public class GameGrid extends JPanel implements Observer {
 
     private void registerRenders(){
         registerRender(EntityBall.class, RenderBall.class);
+        registerRender(EntityBlock.class, RenderBlock.class);
     }
 
     public void addEntity(Entity entity) throws Exception {

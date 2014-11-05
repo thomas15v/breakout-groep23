@@ -2,6 +2,8 @@ package edu.howest.breakout.game.entity;
 
 import edu.howest.breakout.game.Game;
 
+import java.awt.*;
+
 /**
  * Created by thomas on 04/11/2014.
  */
@@ -19,6 +21,7 @@ public class EntityBall extends Entity {
         setY(getY() + getYdir());
         setSizex(20);
         setSizey(20);
+        setColor(Color.RED);
     }
 
 }

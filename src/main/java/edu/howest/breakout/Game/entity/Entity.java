@@ -15,6 +15,7 @@ public abstract class Entity {
     private int rotation;
     private int sizex;
     private int sizey;
+    private Color color;
 
     protected Entity(int x, int y){
         this.x = x;
@@ -97,5 +98,13 @@ public abstract class Entity {
 
     public void setSizey(int sizey) {
         this.sizey = sizey;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }
