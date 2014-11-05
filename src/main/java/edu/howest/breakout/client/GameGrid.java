@@ -7,19 +7,20 @@ import edu.howest.breakout.client.Render.RenderBall;
 import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.entity.EntityBall;
 import edu.howest.breakout.game.entity.EntityBlock;
+import edu.howest.breakout.game.info.GameState;
 
 import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.List;
 
-public class GameGrid extends JPanel implements Observer {
+public class GameGrid extends JPanel implements Observer, Runnable  {
 
     private List<Render> renders = new ArrayList<Render>();
     private Map<Class<? extends Entity>, Class<? extends Render>> renderclasses = new HashMap<Class<? extends Entity>, Class<? extends Render>>();
     private Game game;
+    private FpsCalculator fpsCalculator = new FpsCalculator();
 
     public GameGrid(Game game) throws Exception {
         this.game = game;
@@ -50,14 +51,33 @@ public class GameGrid extends JPanel implements Observer {
 
     @Override
     protected void paintComponent(Graphics g) {
+        fpsCalculator.tick();
         super.paintComponent(g);
         Graphics2D graphics2D = (Graphics2D) g;
+        paintDebug(graphics2D);
         for (Render e : renders)
             e.render(graphics2D);
+    }
+
+    private void paintDebug(Graphics2D g){
+        g.drawString("fps: " + fpsCalculator.getFps(), 0,10);
     }
 
     @Override
     public void update(Observable o, Object arg) {
         repaint();
+    }
+
+    @Override
+    public void run() {
+        while (game.getGameState() == GameState.Running)
+        {
+            repaint();
+            try {
+                Thread.sleep(25);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

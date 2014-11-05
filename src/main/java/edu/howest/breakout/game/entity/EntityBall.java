@@ -10,8 +10,7 @@ public class EntityBall extends Entity {
         setColor(Color.RED);
         setSizex(20);
         setSizey(20);
-        //setAngle(45);
-        //setSpeed(10);
+        setSpeed(10);
     }
 
     @Override

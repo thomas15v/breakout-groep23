@@ -24,7 +24,7 @@ public class LocalGame extends Game {
         while (gameState == GameState.Running) {
             try {
                 tick();
-                Thread.sleep(50);
+                Thread.sleep(0);
             } catch (Exception e) {
                 e.printStackTrace();
                 gameState = GameState.Errored;
