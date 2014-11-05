@@ -34,6 +34,8 @@ public class GameGrid extends JPanel implements Observer {
 
     public void addEntity(Entity entity) throws Exception {
         System.out.println("added entity: " + entity.getClass().getName() );
+        if (!renderclasses.containsKey(entity.getClass()))
+            throw new ClassNotFoundException("We didn't found a renderclass for " + entity.getClass().getName() + ". I gues you forgot registering it!");
         Constructor c = renderclasses.get(entity.getClass()).getConstructor(Entity.class);
         c.setAccessible(true);
         renders.add((Render) c.newInstance(entity));
