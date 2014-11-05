@@ -13,11 +13,13 @@ public abstract class Entity {
     private double y;
     private int angle;
     private int rotation;
+    private int sizex;
+    private int sizey;
 
     protected Entity(int x, int y){
         this.x = x;
         this.y = y;
-        this.angle = 20;
+        this.angle = 80;
         this.speed = 2;
         this.rotation = 0;
     }
@@ -79,5 +81,21 @@ public abstract class Entity {
 
     protected double getYdir(){
         return speed * Math.cos(Math.toRadians(angle));
+    }
+
+    public int getSizex() {
+        return sizex;
+    }
+
+    public int getSizey() {
+        return sizey;
+    }
+
+    public void setSizex(int sizex) {
+        this.sizex = sizex;
+    }
+
+    public void setSizey(int sizey) {
+        this.sizey = sizey;
     }
 }

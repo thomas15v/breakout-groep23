@@ -17,6 +17,8 @@ public class EntityBall extends Entity {
         double breete = game.getDimension().getWidth();
         setX(getX() + getXdir());
         setY(getY() + getYdir());
+        setSizex(20);
+        setSizey(20);
     }
 
 }

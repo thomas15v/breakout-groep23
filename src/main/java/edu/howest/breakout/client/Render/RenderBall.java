@@ -13,7 +13,8 @@ public class RenderBall extends Render {
 
     @Override
     public void render(Graphics2D g) {
-        g.setColor(Color.BLACK);
-        g.fill(new Ellipse2D.Double(getEntity().getX(), getEntity().getY(), 20,20));
+        g.setColor(Color.red);
+        Entity e = getEntity();
+        g.fill(new Ellipse2D.Double(e.getX(), e.getY(),e.getSizex(),e.getSizey()));
     }
 }

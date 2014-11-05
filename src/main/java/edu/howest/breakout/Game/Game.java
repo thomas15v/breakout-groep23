@@ -2,6 +2,7 @@ package edu.howest.breakout.game;
 
 import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.entity.EntityBall;
+import edu.howest.breakout.game.entity.EntityBlock;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,26 +15,29 @@ import java.util.Observable;
 public abstract class Game extends Observable implements Runnable {
     private GameProperties gameProperties;
     private List<Entity> entities;
-    private boolean running;
+    private GameState gameState;
     private Dimension dimension = new Dimension(500,500);
 
     public Game(GameProperties properties){
         this.entities = new ArrayList<Entity>();
         this.gameProperties = properties;
-        running = true;
         entities.add(new EntityBall(10,10));
+        entities.add(new EntityBlock(10,10, Color.black, 20,20));
+        gameState = GameState.Running;
     }
 
     @Override
     public void run() {
-        while (running) {
-            tick();
+        while (gameState == GameState.Running) {
             try {
+                tick();
                 Thread.sleep(50);
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                gameState = GameState.Errored;
             }
         }
+        notifyObservers();
     }
 
     public void tick(){
@@ -43,19 +47,19 @@ public abstract class Game extends Observable implements Runnable {
         notifyObservers();
     }
 
-    public boolean isRunning() {
-        return running;
-    }
-
-    public void setRunning(boolean running) {
-        this.running = running;
-    }
-
     public List<Entity> getEntities() {
         return entities;
     }
 
     public Dimension getDimension() {
         return dimension;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 }
