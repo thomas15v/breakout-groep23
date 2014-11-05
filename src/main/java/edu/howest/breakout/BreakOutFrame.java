@@ -20,7 +20,7 @@ public class BreakOutFrame extends JFrame implements Observer {
 
     public BreakOutFrame(){
         try {
-            setPreferredSize(new Dimension(700, 700));
+            setPreferredSize(new Dimension(500,500));
             setVisible(true);
             this.game = new LocalGame(GameProperties.BASIC_PROPERTIES);
             this.gameGrid = new GameGrid(game);

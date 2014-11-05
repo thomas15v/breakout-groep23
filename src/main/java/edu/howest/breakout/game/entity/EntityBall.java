@@ -4,24 +4,27 @@ import edu.howest.breakout.game.Game;
 
 import java.awt.*;
 
-/**
- * Created by thomas on 04/11/2014.
- */
 public class EntityBall extends Entity {
-    
     public EntityBall(int x, int y) {
         super(x, y);
+        setColor(Color.RED);
+        setSizex(20);
+        setSizey(20);
+        //setAngle(45);
+        //setSpeed(10);
     }
 
     @Override
     public void tick(Game game) {
-        double hoogte = game.getDimension().getHeight();
-        double breete = game.getDimension().getWidth();
+        if(getX()<=0 || getX()>game.getDimension().getWidth()-(2*getSizex())){
+            setAngle(getAngle()*-1);
+        }
+        if(getY()<=0 || getY()>game.getDimension().getHeight()-(3*getSizey())){
+            setAngle(180-getAngle());
+        }
+        //System.out.println(game.getDimension().getWidth());
         setX(getX() + getXdir());
         setY(getY() + getYdir());
-        setSizex(20);
-        setSizey(20);
-        setColor(Color.RED);
     }
 
 }
