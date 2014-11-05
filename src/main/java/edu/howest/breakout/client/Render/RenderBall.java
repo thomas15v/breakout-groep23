@@ -15,6 +15,7 @@ public class RenderBall extends Render {
     public void render(Graphics2D g) {
         Entity e = getEntity();
         g.setColor(e.getColor());
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.fill(new Ellipse2D.Double(e.getX(), e.getY(),e.getSizex(),e.getSizey()));
     }
 }
