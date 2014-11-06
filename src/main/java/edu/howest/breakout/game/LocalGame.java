@@ -1,5 +1,6 @@
 package edu.howest.breakout.game;
 
+import edu.howest.breakout.client.FpsCalculator;
 import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.entity.EntityBall;
 import edu.howest.breakout.game.entity.EntityBlock;
@@ -14,23 +15,24 @@ import java.awt.event.ActionListener;
 /**
  * Created by thomas on 04/11/2014.
  */
-public class LocalGame extends Game  implements ActionListener {
+public class LocalGame extends Game implements Runnable {
 
     private long clock = 100/6;
     private Timer timer;
+    FpsCalculator fpsCalculator = new FpsCalculator();
 
     public LocalGame(GameProperties properties) {
         super(properties);
-        entities.add(new EntityBall(10,10));
+        for (int i = 0; i < 3000; i++)
+            entities.add(new EntityBall(10,10));
         entities.add(new EntityBlock(10,10, Color.black, 20,20));
     }
 
-    @Deprecated
-    public void run1() {
+    public void run() {
         while (gameState == GameState.Running) {
             try {
                 tick();
-                Thread.sleep(clock);
+                Thread.sleep(fpsCalculator.getDelay());
             } catch (Exception e) {
                 e.printStackTrace();
                 gameState = GameState.Errored;
@@ -42,13 +44,15 @@ public class LocalGame extends Game  implements ActionListener {
         for (Entity e : entities)
             e.tick(this);
         setChanged();
+        fpsCalculator.tick();
         notifyObservers();
     }
 
-    @Override
+    @Deprecated
     public void actionPerformed(ActionEvent e) {
         try {
             tick();
+            timer.setDelay(fpsCalculator.getDelay());
         }catch (Exception err){
             err.printStackTrace();
             this.setGameState(GameState.Errored);
@@ -57,14 +61,15 @@ public class LocalGame extends Game  implements ActionListener {
 
     @Override
     public void setGameState(GameState gameState) {
-        if (gameState != GameState.Running)
-            timer.stop();
+        if (gameState != GameState.Running) {
+            System.out.println("Game Thread stopped!");
+        }
         super.setGameState(gameState);
+
     }
 
-    public void run(){
-        int clock = 95/6;
-        timer = new Timer(0, this);
-        timer.start();
+    @Override
+    public FpsCalculator getFpsCalculator() {
+        return fpsCalculator;
     }
 }

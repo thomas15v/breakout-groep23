@@ -1,5 +1,6 @@
 package edu.howest.breakout.game;
 
+import edu.howest.breakout.client.FpsCalculator;
 import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.info.GameProperties;
 import edu.howest.breakout.game.info.GameState;
@@ -42,6 +43,8 @@ public abstract class Game extends Observable {
         this.gameState = gameState;
         notifyObservers();
     }
+
+    public abstract FpsCalculator getFpsCalculator();
 
     public abstract void run();
 

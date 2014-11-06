@@ -20,7 +20,6 @@ public class GameGrid extends JPanel implements Observer, Runnable  {
     private List<Render> renders = new ArrayList<Render>();
     private Map<Class<? extends Entity>, Class<? extends Render>> renderclasses = new HashMap<Class<? extends Entity>, Class<? extends Render>>();
     private Game game;
-    private FpsCalculator fpsCalculator = new FpsCalculator();
 
     public GameGrid(Game game) throws Exception {
         this.game = game;
@@ -60,13 +59,13 @@ public class GameGrid extends JPanel implements Observer, Runnable  {
     }
 
     private void paintDebug(Graphics2D g){
-        g.drawString("fps: " + fpsCalculator.getFps(), 0,10);
+        g.drawString("fps: " + game.getFpsCalculator().getFps(), 0,10);
+        g.drawString("tickduration: " + game.getFpsCalculator().getDelay(), 0,20);
     }
 
     @Override
     public void update (Observable o, Object arg) {
         repaint();
-        fpsCalculator.tick();
     }
 
     @Override

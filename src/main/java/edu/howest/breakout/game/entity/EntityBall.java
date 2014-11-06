@@ -3,6 +3,7 @@ package edu.howest.breakout.game.entity;
 import edu.howest.breakout.game.Game;
 
 import java.awt.*;
+import java.util.Random;
 
 public class EntityBall extends Entity {
     public EntityBall(int x, int y) {
@@ -10,7 +11,8 @@ public class EntityBall extends Entity {
         setColor(Color.RED);
         setSizex(20);
         setSizey(20);
-        setSpeed(10);
+        setSpeed(50);
+        setAngle(new Random().nextInt());
     }
 
     @Override

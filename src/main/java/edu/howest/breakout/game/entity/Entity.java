@@ -22,9 +22,7 @@ public abstract class Entity {
     protected Entity(int x, int y){
         this.x = x;
         this.y = y;
-        this.angle = 80;
-        this.speed = 2;
-        this.rotation = 0;
+        setSpeed(1);
     }
 
     public int getSpeed() {

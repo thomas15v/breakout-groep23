@@ -5,9 +5,13 @@ package edu.howest.breakout.client;
  */
 public class FpsCalculator {
 
+    private final int TARGET_FPS = 60;
+    private final int TARGET_DELAY = 1000/TARGET_FPS;
+    private int delay = TARGET_DELAY;
+
     private long lastTime;
     private int ticks;
-    private int lastfps;
+    private int lastfps = TARGET_FPS;
 
     public FpsCalculator(){
         lastTime = System.currentTimeMillis();
@@ -22,6 +26,7 @@ public class FpsCalculator {
             lastTime = System.currentTimeMillis();
             lastfps = ticks;
             ticks = 0;
+            updateDelay();
         }
         ticks++;
     }
@@ -30,4 +35,16 @@ public class FpsCalculator {
         return lastfps;
     }
 
+    private void updateDelay(){
+        if (lastfps > TARGET_FPS)
+            delay++;
+        else if (lastfps < TARGET_FPS && delay > 0)
+            delay--;
+
+        System.out.println(delay);
+    }
+
+    public int getDelay(){
+        return delay;
+    }
 }
