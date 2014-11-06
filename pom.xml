@@ -115,7 +115,7 @@
                             <name>org.jooq.util.mysql.MySQLDatabase</name>
                             <includes>.*</includes>
                             <excludes></excludes>
-                            <inputSchema>breakoutdb</inputSchema>
+                            <inputSchema>breakout</inputSchema>
                            </database>
                         <target>
                             <packageName>edu.howest.breakout.database</packageName>
