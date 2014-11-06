@@ -7,15 +7,18 @@ import java.awt.geom.Ellipse2D;
 
 public class RenderBall extends Render {
 
-    public RenderBall(Entity entity) {
-        super(entity);
+    Ellipse2D ball;
+
+    public RenderBall(Entity e) {
+        super(e);
+        ball = new Ellipse2D.Double(e.getX(), e.getY(),e.getSizex(),e.getSizey());
     }
 
     @Override
     public void render(Graphics2D g) {
         Entity e = getEntity();
+        ball.setFrame(e.getX(), e.getY(),e.getSizex(),e.getSizey());
         g.setColor(e.getColor());
-        g.fill(new Ellipse2D.Double(e.getX(), e.getY(),e.getSizex(),e.getSizey()));
-        Ellipse2D t = new Ellipse2D.Double(e.getX(), e.getY(),e.getSizex(),e.getSizey());
+        g.fill(ball);
     }
 }

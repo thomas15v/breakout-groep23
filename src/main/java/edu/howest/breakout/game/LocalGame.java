@@ -23,9 +23,9 @@ public class LocalGame extends Game implements Runnable {
 
     public LocalGame(GameProperties properties) {
         super(properties);
-        for (int i = 0; i < 3000; i++)
+        for (int i = 0; i < 10; i++)
             entities.add(new EntityBall(10,10));
-        entities.add(new EntityBlock(10,10, Color.black, 20,20));
+        entities.add(new EntityBlock(10,10, Color.black, 80,80));
     }
 
     public void run() {

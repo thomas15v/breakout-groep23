@@ -11,6 +11,8 @@ public class EntityBlock extends Entity {
 
     public EntityBlock(int x, int y, Color color, int width, int height) {
         super(x, y);
+        setSizex(width);
+        setSizey(height);
         setColor(Color.CYAN);
     }
 
