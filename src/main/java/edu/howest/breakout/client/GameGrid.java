@@ -59,6 +59,7 @@ public class GameGrid extends JPanel implements Observer, Runnable  {
     }
 
     private void paintDebug(Graphics2D g){
+        g.setColor(Color.BLACK);
         g.drawString("fps: " + game.getFpsCalculator().getFps(), 0,10);
         g.drawString("tickduration: " + game.getFpsCalculator().getDelay(), 0,20);
     }
