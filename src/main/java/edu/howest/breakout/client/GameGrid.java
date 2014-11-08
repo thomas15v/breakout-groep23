@@ -53,9 +53,9 @@ public class GameGrid extends JPanel implements Observer, Runnable  {
         super.paintComponent(g);
         Graphics2D graphics2D = (Graphics2D) g;
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        paintDebug(graphics2D);
         for (Render e : renders)
             e.render(graphics2D);
+        paintDebug(graphics2D);
     }
 
     private void paintDebug(Graphics2D g){

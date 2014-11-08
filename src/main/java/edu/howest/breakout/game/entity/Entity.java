@@ -29,7 +29,7 @@ public abstract class Entity {
         return speed;
     }
 
-    protected void setSpeed(int speed) {
+    public void setSpeed(int speed) {
         this.speed = speed;
         this.vX = speed * Math.sin(Math.toRadians(angle)) * 0.5;
         this.vY = speed * Math.cos(Math.toRadians(angle)) * 0.5;

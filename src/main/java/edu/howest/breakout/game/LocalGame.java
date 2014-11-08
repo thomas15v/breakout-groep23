@@ -17,15 +17,14 @@ import java.awt.event.ActionListener;
  */
 public class LocalGame extends Game implements Runnable {
 
-    private long clock = 100/6;
-    private Timer timer;
+
     FpsCalculator fpsCalculator = new FpsCalculator();
 
     public LocalGame(GameProperties properties) {
         super(properties);
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 1; i++)
             entities.add(new EntityBall(10,10));
-        entities.add(new EntityBlock(10,10, Color.black, 80,80));
+        entities.add(new EntityBlock(100,100, Color.black, 250,250));
     }
 
     public void run() {
@@ -48,24 +47,12 @@ public class LocalGame extends Game implements Runnable {
         notifyObservers();
     }
 
-    @Deprecated
-    public void actionPerformed(ActionEvent e) {
-        try {
-            tick();
-            timer.setDelay(fpsCalculator.getDelay());
-        }catch (Exception err){
-            err.printStackTrace();
-            this.setGameState(GameState.Errored);
-        }
-    }
-
     @Override
     public void setGameState(GameState gameState) {
         if (gameState != GameState.Running) {
             System.out.println("Game Thread stopped!");
         }
         super.setGameState(gameState);
-
     }
 
     @Override

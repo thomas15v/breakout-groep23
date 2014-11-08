@@ -11,27 +11,65 @@ public class EntityBall extends Entity {
         setColor(Color.RED);
         setSizex(20);
         setSizey(20);
-        setSpeed(50);
-        setAngle(new Random().nextInt());
+        setSpeed(10);
+        setAngle(45);
+        //setAngle(new Random().nextInt());
     }
 
     @Override
     public void tick(Game game) {
-        if(getX()<=0 || getX()>game.getDimension().getWidth()-(2*getSizex())){
-            setAngle(getAngle()*-1);
-        }
-        if(getY()<=0 || getY()>game.getDimension().getHeight()-(3*getSizey())){
-            setAngle(180-getAngle());
-        }
-        for (Entity e : game.getEntities()){
-            if (!e.equals(this) && e instanceof EntityBlock){
-
-            }
-        }
         setX(getX() + getXdir());
         setY(getY() + getYdir());
+        if (getX() <= 0 || getX() > game.getDimension().getWidth() - (2 * getSizex())) {
+            bounceX();
+        }
+        if (getY() <= 0 || getY() > game.getDimension().getHeight() - (3 * getSizey())) {
+            bounceY();
+        }
+        for (Entity e : game.getEntities()) {
+            if (e instanceof EntityBlock) {
+                if (collide(e, getX() + getStraalX(), getY() + getSizey())) {
+                    bounceY();
+                    setY(e.getY() - getSizey());
+
+                }else if (collide(e, getX() + getStraalX() , getY())) {
+                    bounceY();
+                    setY(e.getY() + e.getSizey());
+                }
+                else if (collide(e, getX(), getY() + getStraalY())) {
+                    bounceX();
+                    setX(e.getX() + e.getSizex());
+                }
+                else if (collide(e, getX() + getSizex(), getY() + getStraalY())) {
+                    bounceX();
+                    setX(e.getX() - getSizey());
+                }
+            }
+        }
+       // System.out.println();
+        //System.out.println(this + ": x:" + getX() + " y: " + getY());
     }
 
+    private void bounceX(){
+        setAngle(getAngle() * -1);
+        System.out.println("Bx");
+    }
 
+    private void bounceY(){
+        setAngle(180 - getAngle());
+        System.out.println("By");
+    }
 
+    private boolean collide(Entity e, double x, double y){
+        //System.out.println("x:" + x  + "y: " + y);
+        return e.getX() < x && e.getSizex() + e.getX() > x && e.getY() < y && e.getSizey() + e.getY() > y;
+    }
+
+    public int getStraalX(){
+        return getSizex() / 2;
+    }
+
+    public int getStraalY(){
+        return getSizey() / 2;
+    }
 }
