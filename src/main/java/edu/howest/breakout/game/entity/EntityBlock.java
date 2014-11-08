@@ -15,6 +15,9 @@ public class EntityBlock extends Entity {
 
     @Override
     public void tick(Game game) {
+    }
 
+    public void DoAction(Game game, Entity entity){
+        setDistroyed(true);
     }
 }

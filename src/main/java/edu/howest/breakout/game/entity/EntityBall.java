@@ -28,6 +28,7 @@ public class EntityBall extends Entity {
         }
         for (Entity e : game.getEntities()) {
             if (e instanceof EntityBlock) {
+                boolean hadbounce = true;
                 if (collide(e, getX() + getStraalX(), getY() + getSizey())) {
                     bounceY();
                     setY(e.getY() - getSizey());
@@ -43,7 +44,12 @@ public class EntityBall extends Entity {
                 else if (collide(e, getX() + getSizex(), getY() + getStraalY())) {
                     bounceX();
                     setX(e.getX() - getSizey());
+                }else
+                {
+                    hadbounce = false;
                 }
+                if (hadbounce)
+                    ((EntityBlock) e).DoAction(game, this);
             }
         }
        // System.out.println();

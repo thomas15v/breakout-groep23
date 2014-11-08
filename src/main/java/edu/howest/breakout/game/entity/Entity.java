@@ -18,11 +18,13 @@ public abstract class Entity {
     private Color color;
     private double vX;
     private double vY;
+    private boolean distroyed;
 
     protected Entity(int x, int y){
         this.x = x;
         this.y = y;
         setSpeed(1);
+        distroyed = false;
     }
 
     public int getSpeed() {
@@ -109,5 +111,13 @@ public abstract class Entity {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public boolean isDistroyed() {
+        return distroyed;
+    }
+
+    public void setDistroyed(boolean distroyed) {
+        this.distroyed = distroyed;
     }
 }

@@ -21,8 +21,10 @@ public class RenderBlock extends Render {
     @Override
     public void render(Graphics2D g) {
         Entity e = getEntity();
-        block.setFrame(e.getX(), e.getY(), e.getSizex(), e.getSizey());
-        g.setColor(e.getColor());
-        g.fill(block);
+        if (!e.isDistroyed()) {
+            block.setFrame(e.getX(), e.getY(), e.getSizex(), e.getSizey());
+            g.setColor(e.getColor());
+            g.fill(block);
+        }
     }
 }
