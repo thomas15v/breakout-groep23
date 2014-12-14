@@ -1,9 +1,9 @@
-package edu.howest.breakout.client;
+package edu.howest.breakout.game;
 
 /**
  * Created by thomas on 05/11/2014.
  */
-public class FpsCalculator {
+public class TickCalculator {
 
     private final int TARGET_FPS = 59;
     private final int TARGET_DELAY = 1000/TARGET_FPS;
@@ -13,7 +13,7 @@ public class FpsCalculator {
     private int ticks;
     private int lastfps = TARGET_FPS;
 
-    public FpsCalculator(){
+    public TickCalculator(){
         lastTime = System.currentTimeMillis();
     }
 

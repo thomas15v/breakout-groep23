@@ -35,6 +35,7 @@ public class BreakOutFrame extends JFrame implements Observer {
             });
             setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             pack();
+            new Thread(gameGrid).start();
             game.run();
         }catch (Exception e){
             e.printStackTrace();

@@ -13,6 +13,5 @@ public class EntityWall extends Entity {
 
     @Override
     public void tick(Game game) {
-
     }
 }

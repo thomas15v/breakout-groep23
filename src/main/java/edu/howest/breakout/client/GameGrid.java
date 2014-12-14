@@ -9,6 +9,7 @@ import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.entity.EntityBall;
 import edu.howest.breakout.game.entity.EntityBlock;
 import edu.howest.breakout.game.entity.EntityPanel;
+import edu.howest.breakout.game.TickCalculator;
 import edu.howest.breakout.game.info.GameState;
 
 import javax.swing.*;
@@ -17,30 +18,29 @@ import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.List;
 
-public class GameGrid extends JPanel implements Observer, Runnable  {
+public class GameGrid extends JPanel implements Runnable  {
 
     private List<Render> renders = new ArrayList<Render>();
     private Map<Class<? extends Entity>, Class<? extends Render>> renderclasses = new HashMap<Class<? extends Entity>, Class<? extends Render>>();
     private Game game;
+    private TickCalculator tickCalculator;
 
     public GameGrid(Game game) throws Exception {
         this.game = game;
-        this.game.addObserver(this);
         registerRenders();
         for (Entity entity : game.getEntities())
             addEntity(entity);
         setBackground(Color.white);
+        tickCalculator = new TickCalculator();
     }
 
     private void registerRenders(){
         registerRender(EntityBall.class, RenderBall.class);
         registerRender(EntityBlock.class, RenderBlock.class);
         registerRender(EntityPanel.class, RenderPanel.class);
-
     }
 
     public void addEntity(Entity entity) throws Exception {
-        System.out.println("added entity: " + entity.getClass().getName() );
         if (!renderclasses.containsKey(entity.getClass()))
             throw new ClassNotFoundException("We didn't find a renderclass for " + entity.getClass().getName() + ". I gues you forgot registering it!");
         Constructor c = renderclasses.get(entity.getClass()).getConstructor(Entity.class);
@@ -70,13 +70,10 @@ public class GameGrid extends JPanel implements Observer, Runnable  {
 
     private void paintDebug(Graphics2D g){
         g.setColor(Color.BLACK);
-        g.drawString("fps: " + game.getFpsCalculator().getFps(), 0,10);
-        g.drawString("tickduration: " + game.getFpsCalculator().getDelay(), 0,20);
-    }
-
-    @Override
-    public void update (Observable o, Object arg) {
-        repaint();
+        g.drawString("server fps: " + game.getTickCalculator().getFps(), 0,10);
+        g.drawString("server tickduration: " + game.getTickCalculator().getDelay(), 0,20);
+        g.drawString("client fps: " + tickCalculator.getFps(), 0,30);
+        g.drawString("client tickduration: " + tickCalculator.getDelay(), 0,40);
     }
 
     @Override
@@ -84,8 +81,9 @@ public class GameGrid extends JPanel implements Observer, Runnable  {
         while (game.getGameState() == GameState.Running)
         {
             repaint();
+            tickCalculator.tick();
             try {
-                Thread.sleep(25);
+                Thread.sleep(tickCalculator.getDelay());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

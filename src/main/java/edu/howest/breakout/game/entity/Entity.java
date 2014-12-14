@@ -70,7 +70,7 @@ public abstract class Entity {
         this.rotation = rotation;
     }
 
-    public abstract void tick(Game game);
+    public void tick(Game game){}
 
     protected Point getPosition(){
         return new Point((int)getX(), (int)getY());

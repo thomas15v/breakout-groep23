@@ -13,10 +13,6 @@ public class EntityBlock extends Entity {
         setColor(Color.CYAN);
     }
 
-    @Override
-    public void tick(Game game) {
-    }
-
     public void DoAction(Game game, Entity entity){
         setDestroyed(true);
     }

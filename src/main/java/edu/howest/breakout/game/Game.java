@@ -1,32 +1,29 @@
 package edu.howest.breakout.game;
 
-import edu.howest.breakout.client.FpsCalculator;
 import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.info.GameProperties;
 import edu.howest.breakout.game.info.GameState;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Logger;
 
-/***
- * Future class in case we would implement multiplayer
- */
-public abstract class Game extends Observable {
+public abstract class Game extends Observable implements Runnable {
     protected GameProperties gameProperties;
     private List<Entity> entities;
     private List<Entity> removeentities;
     protected GameState gameState;
     protected Dimension dimension = new Dimension(500,500);
+    private TickCalculator tickCalculator;
+    private Logger logger = Logger.getLogger("GAME");
 
     public Game(GameProperties properties){
         this.entities = new CopyOnWriteArrayList<Entity>();
         this.gameProperties = properties;
         gameState = GameState.Running;
+        tickCalculator = new TickCalculator();
     }
 
     public List<Entity> getEntities() {
@@ -54,8 +51,11 @@ public abstract class Game extends Observable {
         notifyObservers();
     }
 
-    public abstract FpsCalculator getFpsCalculator();
+    public TickCalculator getTickCalculator() {
+        return tickCalculator;
+    }
 
-    public abstract void run();
-
+    public Logger getLogger() {
+        return logger;
+    }
 }

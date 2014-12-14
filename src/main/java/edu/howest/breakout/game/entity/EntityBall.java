@@ -60,12 +60,10 @@ public class EntityBall extends Entity {
 
     private void bounceX(){
         setAngle(getAngle() * -1);
-        System.out.println("Bx");
     }
 
     private void bounceY(){
         setAngle(180 - getAngle());
-        System.out.println("By");
     }
 
     private boolean collide(Entity e, double x, double y){

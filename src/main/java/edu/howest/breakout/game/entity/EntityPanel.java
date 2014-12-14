@@ -11,7 +11,6 @@ public class EntityPanel extends Entity {
         setSizex(width);
         setSizey(height);
         setColor(Color.BLUE);
-
     }
 
     @Override
