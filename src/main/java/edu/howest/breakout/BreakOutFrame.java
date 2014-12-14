@@ -69,6 +69,6 @@ public class BreakOutFrame extends JFrame implements Observer {
         setVisible(false);
         dispose();
         if (error)
-            System.out.println("Program exited unexpectedly, lets hope this didn't happened while demonstration!!");
+            System.out.println("Program exited unexpectedly, lets hope this didn't happen during demonstration!!");
     }
 }

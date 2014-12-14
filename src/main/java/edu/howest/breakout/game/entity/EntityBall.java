@@ -27,7 +27,7 @@ public class EntityBall extends Entity {
             bounceY();
         }
         for (Entity e : game.getEntities()) {
-            if (e instanceof EntityBlock) {
+            if (e instanceof EntityBlock || e instanceof EntityPanel) {
                 boolean hadbounce = true;
                 if (collide(e, getX() + getStraalX(), getY() + getSizey())) {
                     bounceY();
@@ -48,8 +48,10 @@ public class EntityBall extends Entity {
                 {
                     hadbounce = false;
                 }
-                if (hadbounce)
+                if (e instanceof EntityBlock && hadbounce)
                     ((EntityBlock) e).DoAction(game, this);
+
+
             }
         }
        // System.out.println();

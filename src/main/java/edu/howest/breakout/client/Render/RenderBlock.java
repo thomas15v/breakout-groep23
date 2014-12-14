@@ -4,7 +4,6 @@ import edu.howest.breakout.game.entity.Entity;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.util.Random;
 
 /**
  * Created by thomas on 05/11/2014.
@@ -21,7 +20,7 @@ public class RenderBlock extends Render {
     @Override
     public void render(Graphics2D g) {
         Entity e = getEntity();
-        if (!e.isDistroyed()) {
+        if (!e.isDestroyed()) {
             block.setFrame(e.getX(), e.getY(), e.getSizex(), e.getSizey());
             g.setColor(e.getColor());
             g.fill(block);

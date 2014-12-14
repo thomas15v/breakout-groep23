@@ -4,9 +4,11 @@ import edu.howest.breakout.client.Render.RenderBlock;
 import edu.howest.breakout.game.Game;
 import edu.howest.breakout.client.Render.Render;
 import edu.howest.breakout.client.Render.RenderBall;
+import edu.howest.breakout.client.Render.RenderPanel;
 import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.entity.EntityBall;
 import edu.howest.breakout.game.entity.EntityBlock;
+import edu.howest.breakout.game.entity.EntityPanel;
 import edu.howest.breakout.game.info.GameState;
 
 import javax.swing.*;
@@ -33,12 +35,14 @@ public class GameGrid extends JPanel implements Observer, Runnable  {
     private void registerRenders(){
         registerRender(EntityBall.class, RenderBall.class);
         registerRender(EntityBlock.class, RenderBlock.class);
+        registerRender(EntityPanel.class, RenderPanel.class);
+
     }
 
     public void addEntity(Entity entity) throws Exception {
         System.out.println("added entity: " + entity.getClass().getName() );
         if (!renderclasses.containsKey(entity.getClass()))
-            throw new ClassNotFoundException("We didn't found a renderclass for " + entity.getClass().getName() + ". I gues you forgot registering it!");
+            throw new ClassNotFoundException("We didn't find a renderclass for " + entity.getClass().getName() + ". I gues you forgot registering it!");
         Constructor c = renderclasses.get(entity.getClass()).getConstructor(Entity.class);
         c.setAccessible(true);
         renders.add((Render) c.newInstance(entity));
@@ -56,7 +60,7 @@ public class GameGrid extends JPanel implements Observer, Runnable  {
         Iterator<Render> it = this.renders.iterator();
         while (it.hasNext()) {
             Render r = it.next();
-            if (r.isDistroyed())
+            if (r.isDestroyed())
                 it.remove();
             else
                 r.render(graphics2D);

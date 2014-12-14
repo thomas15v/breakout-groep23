@@ -18,7 +18,7 @@ public abstract class Render {
         return entity;
     }
 
-    public boolean isDistroyed(){
-        return getEntity().isDistroyed();
+    public boolean isDestroyed(){
+        return getEntity().isDestroyed();
     }
 }

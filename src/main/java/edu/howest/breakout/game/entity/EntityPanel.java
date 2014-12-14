@@ -4,13 +4,14 @@ import edu.howest.breakout.game.Game;
 
 import java.awt.*;
 
-public class EntityBlock extends Entity {
+public class EntityPanel extends Entity {
 
-    public EntityBlock(int x, int y, Color color, int width, int height) {
+    public EntityPanel(int x, int y, Color color, int width, int height) {
         super(x, y);
         setSizex(width);
         setSizey(height);
-        setColor(Color.CYAN);
+        setColor(Color.BLUE);
+
     }
 
     @Override
@@ -20,4 +21,6 @@ public class EntityBlock extends Entity {
     public void DoAction(Game game, Entity entity){
         setDestroyed(true);
     }
+
+
 }
