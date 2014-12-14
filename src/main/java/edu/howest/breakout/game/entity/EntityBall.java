@@ -27,7 +27,7 @@ public class EntityBall extends Entity {
             bounceY();
         }
         for (Entity e : game.getEntities()) {
-            if (e instanceof EntityBlock || e instanceof EntityPanel) {
+            if (e instanceof EntityBlock) {
                 boolean hadbounce = true;
                 if (collide(e, getX() + getStraalX(), getY() + getSizey())) {
                     bounceY();
@@ -54,14 +54,11 @@ public class EntityBall extends Entity {
 
             }
         }
-       // System.out.println();
-        //System.out.println(this + ": x:" + getX() + " y: " + getY());
     }
 
     private void bounceX(){
         setAngle(getAngle() * -1);
     }
-
     private void bounceY(){
         setAngle(180 - getAngle());
     }

@@ -21,6 +21,7 @@ public class LocalGame extends Game {
         for (int x = 0; x < 8; x++)
             for (int y = 0; y < 4; y++)
                 add(new EntityBlock(x * 52 + 10, y * 52 + 10, Color.black, 50, 50));
+        getEntities().add(new EntityPanel(50, 440, Color.RED, 150, 15));
     }
 
 

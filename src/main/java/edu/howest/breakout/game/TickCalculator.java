@@ -40,7 +40,6 @@ public class TickCalculator {
             delay++;
         else if (lastfps < TARGET_FPS && delay > 0)
             delay--;
-        System.out.println(delay);
     }
 
     public int getDelay(){
