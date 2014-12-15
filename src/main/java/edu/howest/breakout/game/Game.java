@@ -4,7 +4,6 @@ import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.entity.EntityBall;
 import edu.howest.breakout.game.info.GameProperties;
 import edu.howest.breakout.game.info.GameState;
-import edu.howest.breakout.game.input.InputManager;
 
 import java.awt.*;
 import java.util.List;
@@ -15,7 +14,6 @@ import java.util.logging.Logger;
 public abstract class Game extends Observable implements Runnable {
     protected GameProperties gameProperties;
     private List<Entity> entities;
-    private List<Entity> removeentities;
     protected GameState gameState;
     protected Dimension dimension = new Dimension(500,500);
     private TickCalculator tickCalculator;
@@ -34,7 +32,7 @@ public abstract class Game extends Observable implements Runnable {
 
     public void add(Entity entity){
         entities.add(entity);
-        System.out.println("remove " + entity);
+        System.out.println("add " + entity);
         setChanged();
         notifyObservers(entity);
     }

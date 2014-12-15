@@ -10,11 +10,13 @@ import edu.howest.breakout.game.info.GameState;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.List;
 
-public class GameGrid extends JPanel implements Runnable, Observer  {
+public class GameGrid extends JPanel implements Runnable, Observer {
 
     private List<Render> renders = new ArrayList<Render>();
     private Map<Class<? extends Entity>, Class<? extends Render>> renderclasses = new HashMap<Class<? extends Entity>, Class<? extends Render>>();
@@ -29,6 +31,7 @@ public class GameGrid extends JPanel implements Runnable, Observer  {
             addEntity(entity);
         setBackground(Color.white);
         tickCalculator = new TickCalculator();
+        //setPreferredSize(new Dimension(5000,500));
     }
 
     private void registerRenders(){
@@ -67,10 +70,10 @@ public class GameGrid extends JPanel implements Runnable, Observer  {
 
     private void paintDebug(Graphics2D g){
         g.setColor(Color.BLACK);
-        g.drawString("server fps: " + game.getTickCalculator().getFps(), 0,10);
-        g.drawString("server tickduration: " + game.getTickCalculator().getDelay(), 0,20);
         g.drawString("client fps: " + tickCalculator.getFps(), 0,30);
         g.drawString("client tickduration: " + tickCalculator.getDelay(), 0,40);
+        g.drawString("server fps: " + game.getTickCalculator().getFps(), 0, 10);
+        g.drawString("server tickduration: " + game.getTickCalculator().getDelay(), 0, 20);
     }
 
     @Override
@@ -96,5 +99,9 @@ public class GameGrid extends JPanel implements Runnable, Observer  {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+    }
+
+    public List<Render> getRenders() {
+        return renders;
     }
 }

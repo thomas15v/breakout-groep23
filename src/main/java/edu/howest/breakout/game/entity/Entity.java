@@ -120,4 +120,9 @@ public abstract class Entity {
     public void setDestroyed(boolean destroyed) {
         this.destroyed = destroyed;
     }
+
+    @Override
+    public String toString() {
+        return "Entity@" + Integer.toHexString(hashCode());
+    }
 }

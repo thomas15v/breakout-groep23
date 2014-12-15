@@ -39,7 +39,7 @@ create table `levels` (
   `width` int not NULL,
   `lenght` int not NULL,
   PRIMARY KEY (Id)
-)
+);
 
 create table `level_map` (
   `Level_Id` int NOT NULL,
@@ -48,5 +48,5 @@ create table `level_map` (
   `lenght` int not NULL,
   `x` int not NULL,
   `y` int not NULL
-)
+);
 
