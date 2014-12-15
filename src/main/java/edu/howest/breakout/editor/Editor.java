@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -25,6 +27,13 @@ public class Editor extends JFrame implements Observer, KeyListener {
         setContentPane(RootPannel);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                game.setGameState(GameState.closed);
+            }
+        });
+        gameGrid.addMouseListener(new ClickManager(this));
     }
 
     public static void main(String[] args){
@@ -33,6 +42,10 @@ public class Editor extends JFrame implements Observer, KeyListener {
 
     public GameGrid getGameGrid() {
         return gameGrid;
+    }
+
+    public EditorGame getGame() {
+        return game;
     }
 
     @Override
@@ -87,11 +100,12 @@ public class Editor extends JFrame implements Observer, KeyListener {
     private void createUIComponents() throws Exception {
         tweakStyle();
         this.game = new EditorGame();
-        for (int x = 0; x < 8; x++)
-            for (int y = 0; y < 4; y++)
-                game.add(new EntityBlock(x * 52 + 10, y * 52 + 10, Color.black, 50, 50));
         this.editorPannel = new EditorPannel(game);
         this.gameGrid = new GameGrid(game);
         new Thread(gameGrid).start();
+    }
+
+    public EditorPannel getEditorPannel() {
+        return editorPannel;
     }
 }

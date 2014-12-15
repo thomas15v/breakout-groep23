@@ -41,7 +41,7 @@ public abstract class Entity {
         return x;
     }
 
-    protected void setX(double x) {
+    public void setX(double x) {
         this.x = x;
     }
 
@@ -49,7 +49,7 @@ public abstract class Entity {
         return y;
     }
 
-    protected void setY(double y) {
+    public void setY(double y) {
         this.y = y;
     }
 
