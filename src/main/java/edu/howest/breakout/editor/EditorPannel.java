@@ -11,6 +11,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by thomas15v on 15/12/14.
@@ -39,6 +41,7 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
         this.game = game;
         this.componentList.setModel(game.getListModel());
         this.componentList.addListSelectionListener(this);
+        this.componentList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         this.yValue.addChangeListener(this);
         this.xValue.addChangeListener(this);
         this.widthValue.setValue(50);
@@ -48,7 +51,8 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (componentList.getSelectedValue() != null)
-                    game.remove(componentList.getSelectedValue());
+                    for (Entity entity : componentList.getSelectedValuesList())
+                        game.remove(entity);
                     repaint();
             }
         });
@@ -60,8 +64,16 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
         });
     }
 
-    public void select(Entity entity){
-        componentList.setSelectedValue(entity, true);
+    public void select(Entity entity, boolean ctrlDown){
+        if (ctrlDown) {
+            System.out.println("more");
+            int index = game.getListModel().indexOf(entity);
+            componentList.getSelectionModel().addSelectionInterval(index, index);
+        }
+        else {
+            componentList.clearSelection();
+            componentList.setSelectedValue(entity, true);
+        }
     }
 
     @Override
@@ -76,16 +88,16 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        if (!componentList.isSelectionEmpty() && canchange == true){
+        if (!componentList.isSelectionEmpty() && canchange == true) {
             for (Entity entity : componentList.getSelectedValuesList()) {
-                entity.setX(componentList.getSelectedValue().getX() + entity.getX() + getInteger(xValue));
-                entity.setY(componentList.getSelectedValue().getY() + entity.getY() + getInteger(yValue));
+                entity.setX(getInteger(xValue));
+                entity.setY(getInteger(yValue));
             }
         }
     }
 
     private int getInteger(JSpinner spinner){
-      return  ((SpinnerNumberModel) spinner.getModel()).getNumber().intValue();
+      return ((SpinnerNumberModel) spinner.getModel()).getNumber().intValue();
     }
 
 

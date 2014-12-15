@@ -19,10 +19,12 @@ public class Editor extends JFrame implements Observer, KeyListener {
     private EditorPannel editorPannel;
     private JPanel RootPannel;
     private GameGrid gameGrid;
+    private ClickManager clickManager;
 
     public Editor(){
         setVisible(true);
         addKeyListener(this);
+
         setLayout(new GridBagLayout());
         setContentPane(RootPannel);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -33,7 +35,9 @@ public class Editor extends JFrame implements Observer, KeyListener {
                 game.setGameState(GameState.closed);
             }
         });
-        gameGrid.addMouseListener(new ClickManager(this));
+        this.clickManager = new ClickManager(this);
+        gameGrid.addMouseListener(clickManager);
+        gameGrid.addMouseMotionListener(clickManager);
     }
 
     public static void main(String[] args){
