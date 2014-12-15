@@ -1,8 +1,10 @@
 package edu.howest.breakout.game;
 
 import edu.howest.breakout.game.entity.Entity;
+import edu.howest.breakout.game.entity.EntityBall;
 import edu.howest.breakout.game.info.GameProperties;
 import edu.howest.breakout.game.info.GameState;
+import edu.howest.breakout.game.input.InputManager;
 
 import java.awt.*;
 import java.util.List;
@@ -32,10 +34,14 @@ public abstract class Game extends Observable implements Runnable {
 
     public void add(Entity entity){
         entities.add(entity);
+        System.out.println("remove " + entity);
+        setChanged();
+        notifyObservers(entity);
     }
 
     public void remove(Entity entity){
-        removeentities.add(entity);
+        System.out.println("remove " + entity);
+        entities.remove(entity);
     }
 
     public Dimension getDimension() {
@@ -57,5 +63,9 @@ public abstract class Game extends Observable implements Runnable {
 
     public Logger getLogger() {
         return logger;
+    }
+
+    public void lostlife(){
+        add(new EntityBall(250, 400));
     }
 }

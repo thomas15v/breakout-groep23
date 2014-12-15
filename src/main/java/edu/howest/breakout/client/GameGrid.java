@@ -4,10 +4,7 @@ import edu.howest.breakout.client.Render.RenderBlock;
 import edu.howest.breakout.game.Game;
 import edu.howest.breakout.client.Render.Render;
 import edu.howest.breakout.client.Render.RenderBall;
-import edu.howest.breakout.game.entity.Entity;
-import edu.howest.breakout.game.entity.EntityBall;
-import edu.howest.breakout.game.entity.EntityBlock;
-import edu.howest.breakout.game.entity.EntityPanel;
+import edu.howest.breakout.game.entity.*;
 import edu.howest.breakout.game.TickCalculator;
 import edu.howest.breakout.game.info.GameState;
 
@@ -17,7 +14,7 @@ import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.List;
 
-public class GameGrid extends JPanel implements Runnable  {
+public class GameGrid extends JPanel implements Runnable, Observer  {
 
     private List<Render> renders = new ArrayList<Render>();
     private Map<Class<? extends Entity>, Class<? extends Render>> renderclasses = new HashMap<Class<? extends Entity>, Class<? extends Render>>();
@@ -27,6 +24,7 @@ public class GameGrid extends JPanel implements Runnable  {
     public GameGrid(Game game) throws Exception {
         this.game = game;
         registerRenders();
+        game.addObserver(this);
         for (Entity entity : game.getEntities())
             addEntity(entity);
         setBackground(Color.white);
@@ -36,7 +34,7 @@ public class GameGrid extends JPanel implements Runnable  {
     private void registerRenders(){
         registerRender(EntityBall.class, RenderBall.class);
         registerRender(EntityBlock.class, RenderBlock.class);
-        registerRender(EntityPanel.class, RenderBlock.class);
+        registerRender(EntityPad.class, RenderBlock.class);
     }
 
     public void addEntity(Entity entity) throws Exception {
@@ -87,5 +85,16 @@ public class GameGrid extends JPanel implements Runnable  {
                 e.printStackTrace();
             }
         }
+        System.out.println("Client Render Thread stopped!");
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof Entity)
+            try {
+                addEntity((Entity) arg);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
     }
 }

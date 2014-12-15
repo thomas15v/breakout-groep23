@@ -5,6 +5,7 @@ import edu.howest.breakout.game.Game;
 import edu.howest.breakout.game.info.GameProperties;
 import edu.howest.breakout.game.info.GameState;
 import edu.howest.breakout.game.LocalGame;
+import edu.howest.breakout.game.input.InputManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +24,9 @@ public class BreakOutFrame extends JFrame implements Observer {
         try {
             setPreferredSize(new Dimension(500,500));
             setVisible(true);
-            this.game = new LocalGame(GameProperties.BASIC_PROPERTIES);
+            InputManager inputManager = new InputManager();
+            addKeyListener(inputManager);
+            this.game = new LocalGame(GameProperties.BASIC_PROPERTIES, inputManager);
             this.gameGrid = new GameGrid(game);
             game.addObserver(this);
             add(gameGrid);

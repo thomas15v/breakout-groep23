@@ -1,30 +1,46 @@
 package edu.howest.breakout.game.entity;
 
 import edu.howest.breakout.game.Game;
+import edu.howest.breakout.game.info.Wall;
 
-import java.awt.*;
+import java.awt.*;;
 import java.util.Random;
 
 public class EntityBall extends Entity {
-    public EntityBall(int x, int y) {
+
+    private boolean lostBall = false;
+    private Wall wall;
+
+    public EntityBall(int x, int y){
+        this(x, y, Wall.bottom);
+    }
+
+    public EntityBall(int x, int y, Wall wall) {
         super(x, y);
+        this.wall = wall;
         setColor(Color.RED);
         setSizex(20);
         setSizey(20);
         setSpeed(10);
-        setAngle(45);
-        //setAngle(new Random().nextInt());
+        setAngle(new Random().nextInt());
     }
 
     @Override
     public void tick(Game game) {
         setX(getX() + getXdir());
         setY(getY() + getYdir());
-        if (getX() <= 0 || getX() > game.getDimension().getWidth() - (2 * getSizex())) {
-            bounceX();
-        }
-        if (getY() <= 0 || getY() > game.getDimension().getHeight() - (3 * getSizey())) {
-            bounceY();
+        if (getX() <= 0)
+            bounceX(Wall.left);
+        else if(getX() > game.getDimension().getWidth() - (2 * getSizex()))
+            bounceX(Wall.right);
+        else if (getY() <= 0)
+            bounceY(Wall.top);
+        else if (getY() > game.getDimension().getHeight() - (3 * getSizey()))
+            bounceY(Wall.bottom);
+
+        if (lostBall) {
+            game.lostlife();
+            setDestroyed(true);
         }
         for (Entity e : game.getEntities()) {
             if (e instanceof EntityBlock) {
@@ -59,8 +75,23 @@ public class EntityBall extends Entity {
     private void bounceX(){
         setAngle(getAngle() * -1);
     }
+    //needs refactor
+    private void bounceX(Wall wall){
+        if (wall != this.wall)
+            bounceX();
+        else
+            lostBall = true;
+    }
+
     private void bounceY(){
         setAngle(180 - getAngle());
+    }
+    //needs refactor
+    private void bounceY(Wall wall){
+        if (wall != this.wall)
+            bounceY();
+        else
+            lostBall = true;
     }
 
     private boolean collide(Entity e, double x, double y){
