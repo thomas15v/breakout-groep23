@@ -19,10 +19,10 @@ public class EntityBall extends Entity {
         super(x, y);
         this.wall = wall;
         setColor(Color.RED);
-        setSizex(20);
-        setSizey(20);
+        setWidth(20);
+        setHeight(20);
         setSpeed(10);
-        setAngle(new Random().nextInt());
+        setAngle(/*new Random().nextInt()*/ 45);
     }
 
     @Override
@@ -31,11 +31,11 @@ public class EntityBall extends Entity {
         setY(getY() + getYdir());
         if (getX() <= 0)
             bounceX(Wall.left);
-        else if(getX() > game.getDimension().getWidth() - (2 * getSizex()))
+        else if(getX() > game.getDimension().getWidth() - (2 * getWidth()))
             bounceX(Wall.right);
         else if (getY() <= 0)
             bounceY(Wall.top);
-        else if (getY() > game.getDimension().getHeight() - (3 * getSizey()))
+        else if (getY() > game.getDimension().getHeight() - (2 * getHeight()))
             bounceY(Wall.bottom);
 
         if (lostBall) {
@@ -45,21 +45,21 @@ public class EntityBall extends Entity {
         for (Entity e : game.getEntities()) {
             if (e instanceof EntityBlock) {
                 boolean hadbounce = true;
-                if (collide(e, getX() + getStraalX(), getY() + getSizey())) {
+                if (collide(e, getX() + getStraalX(), getY() + getHeight())) {
                     bounceY();
-                    setY(e.getY() - getSizey());
+                    setY(e.getY() - getHeight());
 
                 }else if (collide(e, getX() + getStraalX() , getY())) {
                     bounceY();
-                    setY(e.getY() + e.getSizey());
+                    setY(e.getY() + e.getHeight());
                 }
                 else if (collide(e, getX(), getY() + getStraalY())) {
                     bounceX();
-                    setX(e.getX() + e.getSizex());
+                    setX(e.getX() + e.getWidth());
                 }
-                else if (collide(e, getX() + getSizex(), getY() + getStraalY())) {
+                else if (collide(e, getX() + getWidth(), getY() + getStraalY())) {
                     bounceX();
-                    setX(e.getX() - getSizey());
+                    setX(e.getX() - getHeight());
                 }else
                 {
                     hadbounce = false;
@@ -96,14 +96,14 @@ public class EntityBall extends Entity {
 
     private boolean collide(Entity e, double x, double y){
         //System.out.println("x:" + x  + "y: " + y);
-        return e.getX() < x && e.getSizex() + e.getX() > x && e.getY() < y && e.getSizey() + e.getY() > y;
+        return e.getX() < x && e.getWidth() + e.getX() > x && e.getY() < y && e.getHeight() + e.getY() > y;
     }
 
     public int getStraalX(){
-        return getSizex() / 2;
+        return getWidth() / 2;
     }
 
     public int getStraalY(){
-        return getSizey() / 2;
+        return getHeight() / 2;
     }
 }

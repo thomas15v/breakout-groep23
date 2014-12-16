@@ -4,6 +4,7 @@ import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.entity.EntityBall;
 import edu.howest.breakout.game.info.GameProperties;
 import edu.howest.breakout.game.info.GameState;
+import edu.howest.breakout.game.info.Level;
 
 import java.awt.*;
 import java.util.List;
@@ -14,8 +15,9 @@ import java.util.logging.Logger;
 public abstract class Game extends Observable implements Runnable {
     protected GameProperties gameProperties;
     private List<Entity> entities;
+    private Level level;
     protected GameState gameState;
-    protected Dimension dimension = new Dimension(500,500);
+    protected Dimension dimension = new Dimension(1200,700);
     private TickCalculator tickCalculator;
     private Logger logger = Logger.getLogger("GAME");
 
@@ -24,6 +26,12 @@ public abstract class Game extends Observable implements Runnable {
         this.gameProperties = properties;
         gameState = GameState.Running;
         tickCalculator = new TickCalculator();
+    }
+
+    public Game(GameProperties properties, Level level){
+        this(properties);
+        this.level = level;
+        loadLevel(level);
     }
 
     public List<Entity> getEntities() {
@@ -65,5 +73,12 @@ public abstract class Game extends Observable implements Runnable {
 
     public void lostlife(){
         add(new EntityBall(250, 400));
+    }
+
+    public void loadLevel(Level level){
+        for (Entity entity : getEntities())
+            remove(entity);
+        for (Entity entity : level.getBlockList())
+            add(entity);
     }
 }

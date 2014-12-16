@@ -1,6 +1,7 @@
 package edu.howest.breakout.editor;
 
 import edu.howest.breakout.client.GameGrid;
+import edu.howest.breakout.game.Database;
 import edu.howest.breakout.game.entity.EntityBlock;
 import edu.howest.breakout.game.info.GameState;
 
@@ -20,11 +21,11 @@ public class Editor extends JFrame implements Observer, KeyListener {
     private JPanel RootPannel;
     private GameGrid gameGrid;
     private ClickManager clickManager;
+    private Database database;
 
     public Editor(){
         setVisible(true);
         addKeyListener(this);
-
         setLayout(new GridBagLayout());
         setContentPane(RootPannel);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -38,6 +39,7 @@ public class Editor extends JFrame implements Observer, KeyListener {
         this.clickManager = new ClickManager(this);
         gameGrid.addMouseListener(clickManager);
         gameGrid.addMouseMotionListener(clickManager);
+        new Thread(gameGrid).start();
     }
 
     public static void main(String[] args){
@@ -104,9 +106,9 @@ public class Editor extends JFrame implements Observer, KeyListener {
     private void createUIComponents() throws Exception {
         tweakStyle();
         this.game = new EditorGame();
-        this.editorPannel = new EditorPannel(game);
+        this.database = new Database("root", "", "jdbc:mysql://localhost:3306/breakout");
+        this.editorPannel = new EditorPannel(game, database);
         this.gameGrid = new GameGrid(game);
-        new Thread(gameGrid).start();
     }
 
     public EditorPannel getEditorPannel() {

@@ -11,13 +11,13 @@ public class RenderBall extends Render {
 
     public RenderBall(Entity e) {
         super(e);
-        ball = new Ellipse2D.Double(e.getX(), e.getY(),e.getSizex(),e.getSizey());
+        ball = new Ellipse2D.Double(e.getX(), e.getY(),e.getWidth(),e.getHeight());
     }
 
     @Override
     public void render(Graphics2D g) {
         Entity e = getEntity();
-        ball.setFrame(e.getX(), e.getY(),e.getSizex(),e.getSizey());
+        ball.setFrame(e.getX(), e.getY(),e.getWidth(),e.getHeight());
         g.setColor(e.getColor());
         g.fill(ball);
     }

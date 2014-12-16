@@ -1,6 +1,7 @@
 package edu.howest.breakout;
 
 import edu.howest.breakout.client.GameGrid;
+import edu.howest.breakout.game.Database;
 import edu.howest.breakout.game.Game;
 import edu.howest.breakout.game.info.GameProperties;
 import edu.howest.breakout.game.info.GameState;
@@ -22,11 +23,13 @@ public class BreakOutFrame extends JFrame implements Observer {
 
     public BreakOutFrame(){
         try {
-            setPreferredSize(new Dimension(500,500));
+            Database database = new Database("root", "", "jdbc:mysql://localhost:3306/breakout");
+            setPreferredSize(new Dimension(1200,700));
             setVisible(true);
             InputManager inputManager = new InputManager();
             addKeyListener(inputManager);
-            this.game = new LocalGame(GameProperties.BASIC_PROPERTIES, inputManager);
+
+            this.game = new LocalGame(GameProperties.BASIC_PROPERTIES, inputManager, database.getLevel(1));
             this.gameGrid = new GameGrid(game);
             game.addObserver(this);
             add(gameGrid);

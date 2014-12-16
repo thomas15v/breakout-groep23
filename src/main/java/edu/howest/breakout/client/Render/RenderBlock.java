@@ -14,13 +14,13 @@ public class RenderBlock extends Render {
 
     public RenderBlock(Entity e) {
         super(e);
-        this.block = new Rectangle2D.Double(e.getX(), e.getY(), e.getSizex(), e.getSizey());
+        this.block = new Rectangle2D.Double(e.getX(), e.getY(), e.getWidth(), e.getHeight());
     }
 
     @Override
     public void render(Graphics2D g) {
         Entity e = getEntity();
-        block.setFrame(e.getX(), e.getY(), e.getSizex(), e.getSizey());
+        block.setFrame(e.getX(), e.getY(), e.getWidth(), e.getHeight());
         g.setColor(e.getColor());
         g.fill(block);
     }

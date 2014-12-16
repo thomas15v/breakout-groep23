@@ -13,8 +13,8 @@ public class EntityPad extends EntityBlock {
     private Wall wall;
     private Direction MovementDirection;
 
-    public EntityPad(Wall wall, Color color, int width, int height) {
-        super(0, 0, color, width, height);
+    public EntityPad(Wall wall, Color color, int width, int height, int gamehight) {
+        super(0, 0, width, height, color);
         int x = 0;
         int y = 0;
         this.wall = wall;
@@ -22,7 +22,7 @@ public class EntityPad extends EntityBlock {
         switch (wall){
             case bottom:
                 x = 50;
-                y = 440;
+                y = gamehight - width;
                 break;
         }
         setX(x);

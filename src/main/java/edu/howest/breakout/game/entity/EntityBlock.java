@@ -6,14 +6,25 @@ import java.awt.*;
 
 public class EntityBlock extends Entity {
 
-    public EntityBlock(int x, int y, Color color, int width, int height) {
+    private int blockCat;
+
+    public EntityBlock(int id, int x, int y, int width, int height, int blockcat){
+        this(x,y,width,height,Color.cyan);
+        this.blockCat = blockcat;
+    }
+
+    public EntityBlock(int x, int y, int width, int height, Color color) {
         super(x, y);
-        setSizex(width);
-        setSizey(height);
+        setWidth(width);
+        setHeight(height);
         setColor(Color.CYAN);
     }
 
     public void DoAction(Game game, Entity entity){
         setDestroyed(true);
+    }
+
+    public int getBlockCat() {
+        return blockCat;
     }
 }

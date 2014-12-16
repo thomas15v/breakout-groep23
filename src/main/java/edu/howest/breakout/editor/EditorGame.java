@@ -2,9 +2,13 @@ package edu.howest.breakout.editor;
 
 import edu.howest.breakout.game.Game;
 import edu.howest.breakout.game.entity.Entity;
+import edu.howest.breakout.game.entity.EntityBlock;
+import edu.howest.breakout.game.info.Level;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by thomas15v on 15/12/14.
@@ -28,6 +32,7 @@ public class EditorGame extends Game {
 
     @Override
     public void add(Entity entity) {
+        entity.setDestroyed(false);
         defaultListModel.addElement(entity);
         super.add(entity);
     }
@@ -39,6 +44,19 @@ public class EditorGame extends Game {
         super.remove(entity);
     }
 
+    public Level getLevel(String name){
+        List<EntityBlock> blocks = new ArrayList<EntityBlock>();
+        for (Entity entity : getEntities())
+            if (entity instanceof EntityBlock)
+                blocks.add((EntityBlock) entity);
+        return new Level(name, 500, 500, blocks);
+    }
+
+
+    public void clearEntities(){
+        for (Entity entity : getEntities())
+            remove(entity);
+    }
     public DefaultListModel<Entity> getListModel(){
         return defaultListModel;
     }

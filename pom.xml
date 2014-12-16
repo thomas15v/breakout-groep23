@@ -175,6 +175,9 @@
                             <packageName>edu.howest.breakout.database</packageName>
                             <directory>target/generated-sources/jooq</directory>
                         </target>
+                        <generate>
+                            <relations>true</relations>
+                        </generate>
                     </generator>
                 </configuration>
             </plugin>

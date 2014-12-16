@@ -13,8 +13,8 @@ public abstract class Entity {
     private double y;
     private int angle;
     private int rotation;
-    private int sizex;
-    private int sizey;
+    private int width;
+    private int height;
     private Color color;
     private double vX;
     private double vY;
@@ -89,20 +89,20 @@ public abstract class Entity {
         return vY;
     }
 
-    public int getSizex() {
-        return sizex;
+    public int getWidth() {
+        return width;
     }
 
-    public int getSizey() {
-        return sizey;
+    public int getHeight() {
+        return height;
     }
 
-    public void setSizex(int sizex) {
-        this.sizex = sizex;
+    public void setWidth(int width) {
+        this.width = width;
     }
 
-    public void setSizey(int sizey) {
-        this.sizey = sizey;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public Color getColor() {

@@ -1,7 +1,6 @@
 package edu.howest.breakout.editor;
 
 import edu.howest.breakout.game.entity.Entity;
-import edu.howest.breakout.game.entity.EntityBall;
 import edu.howest.breakout.game.entity.EntityBlock;
 
 import java.awt.*;
@@ -34,8 +33,8 @@ public class ClickManager implements MouseListener, MouseMotionListener {
     public void mousePressed(MouseEvent e) {
         for (Entity entity : editor.getGame().getEntities())
             if (entity instanceof EntityBlock)
-                if (e.getPoint().getX() > entity.getX() && e.getPoint().getX() < entity.getX() + entity.getSizex() &&
-                        e.getPoint().getY() > entity.getY() && e.getPoint().getY() < entity.getY() + entity.getSizey()) {
+                if (e.getPoint().getX() > entity.getX() && e.getPoint().getX() < entity.getX() + entity.getWidth() &&
+                        e.getPoint().getY() > entity.getY() && e.getPoint().getY() < entity.getY() + entity.getHeight()) {
                     this.pressedentity = entity;
                     this.startpoint = e.getPoint();
                     editor.getEditorPannel().select(pressedentity, e.isControlDown());
@@ -50,7 +49,6 @@ public class ClickManager implements MouseListener, MouseMotionListener {
         this.editor.getEditorPannel().select(pressedentity, e.isControlDown());
         this.pressedentity = null;
         this.startpoint = null;
-        System.out.println("setnull");
     }
 
     @Override
@@ -72,14 +70,14 @@ public class ClickManager implements MouseListener, MouseMotionListener {
             if (e.isShiftDown()) {
                 int xd = (int) (e.getX() - startpoint.getX());
                 int yd = (int) (e.getY() - startpoint.getX());
+                //most shitty part, its almost over .... I am so sorry
                 if (xd > yd)
-                    pressedentity.setX(e.getX() - this.xd);
+                    editor.getEditorPannel().moveSelection(e.getX() - this.xd, (int) editor.getEditorPannel().getSelectedValue().getY());
                 else
-                    pressedentity.setY(e.getY() - this.yd);
+                    editor.getEditorPannel().moveSelection((int) editor.getEditorPannel().getSelectedValue().getX(), e.getY() - this.yd);
             }
             else {
-                pressedentity.setX(e.getX() - xd);
-                pressedentity.setY(e.getY() - yd);
+                editor.getEditorPannel().moveSelection(e.getX() - xd, e.getY() - yd);
             }
         }
     }

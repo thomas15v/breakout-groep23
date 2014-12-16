@@ -34,19 +34,19 @@ create table `gametype` (
 );
 
 create table `levels` (
-  `Id` int not NULL UNIQUE AUTO_INCREMENT,
+  `id` int not NULL UNIQUE AUTO_INCREMENT,
   `Name` char(32) NOT NULL,
-  `width` int not NULL,
-  `lenght` int not NULL,
-  PRIMARY KEY (Id)
+  `Width` int not NULL,
+  `Height` int not NULL,
+  PRIMARY KEY (id)
 );
 
 create table `level_map` (
-  `Level_Id` int NOT NULL,
-  `blockcat` int not null,
-  `width` int not NULL,
-  `lenght` int not NULL,
-  `x` int not NULL,
-  `y` int not NULL
+  `id` int NOT NULL,
+  `X` int not NULL,
+  `Y` int not NULL,
+  `Width` int not NULL,
+  `Height` int not NULL,
+  `BlockCat` int not NULL DEFAULT 0
 );
 

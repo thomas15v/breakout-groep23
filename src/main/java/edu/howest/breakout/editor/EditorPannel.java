@@ -1,7 +1,9 @@
 package edu.howest.breakout.editor;
 
+import edu.howest.breakout.game.Database;
 import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.entity.EntityBlock;
+import edu.howest.breakout.game.info.Level;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -11,8 +13,6 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by thomas15v on 15/12/14.
@@ -34,14 +34,23 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
     private JSpinner xValue;
     private JSpinner widthValue;
     private JSpinner heightValue;
+    private JTextField LevelName;
+    private JButton storeLevelbutton;
+    private JButton removeLevelButton;
+    private JList LevelList;
+    private JButton newLevelButton;
+    private JButton loadLevelButton;
     private boolean canchange = true;
+    private Database database;
 
-    public EditorPannel(final EditorGame game){
+    public EditorPannel(final EditorGame game, final Database database){
         setVisible(true);
         this.game = game;
+        this.database = database;
         this.componentList.setModel(game.getListModel());
         this.componentList.addListSelectionListener(this);
         this.componentList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        updateLevels();
         this.yValue.addChangeListener(this);
         this.xValue.addChangeListener(this);
         this.widthValue.setValue(50);
@@ -53,15 +62,52 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
                 if (componentList.getSelectedValue() != null)
                     for (Entity entity : componentList.getSelectedValuesList())
                         game.remove(entity);
-                    repaint();
+
             }
         });
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                game.add(new EntityBlock(getInteger(yValue), getInteger(xValue), Color.black, getInteger(widthValue), getInteger(heightValue)));
+                game.add(new EntityBlock(getInteger(yValue), getInteger(xValue), getInteger(widthValue), getInteger(heightValue), Color.black));
+                yValue.setValue(getInteger(yValue) + getInteger(widthValue) + 2);
             }
         });
+        loadLevelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!LevelList.isSelectionEmpty())
+                    game.loadLevel((Level) LevelList.getSelectedValue());
+            }
+        });
+        newLevelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                game.clearEntities();
+            }
+        });
+        storeLevelbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                database.addLevel(game.getLevel(LevelName.getText()));
+                updateLevels();
+            }
+        });
+        removeLevelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!LevelList.isSelectionEmpty())
+                    database.removeLevel((Level) LevelList.getSelectedValue());
+                updateLevels();
+            }
+        });
+    }
+
+    private void updateLevels() {
+        this.LevelList.setListData(database.getLevels().toArray());
+    }
+
+    public void newLevel(){
+        game.getEntities().clear();
     }
 
     public void select(Entity entity, boolean ctrlDown){
@@ -82,17 +128,25 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
         if (!componentList.isSelectionEmpty()) {
             yValue.setValue(componentList.getSelectedValue().getX());
             xValue.setValue(componentList.getSelectedValue().getY());
+            widthValue.setValue(componentList.getSelectedValue().getWidth());
+            heightValue.setValue(componentList.getSelectedValue().getHeight());
         }
+        repaint();
         this.canchange = true;
     }
 
     @Override
     public void stateChanged(ChangeEvent e) {
         if (!componentList.isSelectionEmpty() && canchange == true) {
-            for (Entity entity : componentList.getSelectedValuesList()) {
-                entity.setX(getInteger(xValue));
-                entity.setY(getInteger(yValue));
-            }
+            moveSelection(getInteger(xValue), getInteger(yValue));
+            resizeSelection(getInteger(widthValue), getInteger(heightValue));
+        }
+    }
+
+    private void resizeSelection(int width, int heigth) {
+        for (Entity entity : componentList.getSelectedValuesList()) {
+            entity.setWidth(width);
+            entity.setHeight(heigth);
         }
     }
 
@@ -100,5 +154,21 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
       return ((SpinnerNumberModel) spinner.getModel()).getNumber().intValue();
     }
 
+    public void moveSelection(int x2, int y2){
+        int x1 = (int) componentList.getSelectedValue().getX();
+        int y1 = (int) componentList.getSelectedValue().getY();
+        if (!componentList.isSelectionEmpty()) {
+            for (Entity entity : componentList.getSelectedValuesList()) {
+                int dx = (int) (entity.getX() - x1);
+                int dy = (int) (entity.getY() - y1);
+                entity.setX(x2 + dx);
+                entity.setY(y2 + dy);
+            }
+        }
+    }
+
+    public Entity getSelectedValue(){
+        return componentList.getSelectedValue();
+    }
 
 }
