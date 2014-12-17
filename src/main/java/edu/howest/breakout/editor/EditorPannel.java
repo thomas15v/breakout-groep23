@@ -128,8 +128,8 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
     public void valueChanged(ListSelectionEvent e) {
         this.canchange = false;
         if (!componentList.isSelectionEmpty()) {
-            yValue.setValue(componentList.getSelectedValue().getX());
-            xValue.setValue(componentList.getSelectedValue().getY());
+            xValue.setValue(componentList.getSelectedValue().getX());
+            yValue.setValue(componentList.getSelectedValue().getY());
             widthValue.setValue(componentList.getSelectedValue().getWidth());
             heightValue.setValue(componentList.getSelectedValue().getHeight());
         }
