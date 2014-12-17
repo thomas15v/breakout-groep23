@@ -40,6 +40,8 @@ public class EntityBall extends Entity {
             bounceY(Wall.bottom);
 
         if (getY()<0){setY(0);}
+        if (getX()<0){setX(0);}
+        if (getX()>game.getDimension().width-getWidth()){setX(game.getDimension().width-getWidth());}
 
         if (lostBall) {
             game.lostlife();
