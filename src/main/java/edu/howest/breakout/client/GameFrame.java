@@ -23,8 +23,6 @@ public class GameFrame extends JPanel{
         this.add(rootPannel);
         this.inputManager = new InputManager();
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(inputManager);
-        setFocusable(true);
-        requestFocusInWindow();
         this.setGame(new LocalGame(inputManager, level));
         scorePanel.setGame(game);
         this.renderThread = new Thread(gameGrid);
@@ -38,7 +36,7 @@ public class GameFrame extends JPanel{
     private void setGame(Game game) {
         this.game = game;
         gameGrid.setGame(game);
-        setMinimumSize(game.getDimension());
+        //setMinimumSize(game.getDimension());
         this.gameThread = new Thread(game);
         gameThread.start();
     }

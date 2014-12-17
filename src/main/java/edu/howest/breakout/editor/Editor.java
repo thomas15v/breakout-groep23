@@ -26,7 +26,6 @@ public class Editor extends JFrame implements Observer, KeyListener {
     public Editor(){
         setVisible(true);
         addKeyListener(this);
-        setLayout(new GridBagLayout());
         setContentPane(RootPannel);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();

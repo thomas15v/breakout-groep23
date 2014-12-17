@@ -46,7 +46,7 @@ public class GameGrid extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D graphics2D = (Graphics2D) g;
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        graphics2D.scale(getHeight() / game.getDimension().getHeight(), getWidth() / game.getDimension().getWidth());
+        //graphics2D.scale(getHeight() / game.getDimension().getHeight(), getWidth() / game.getDimension().getWidth()); //NOPE NOPE NOPE NOPPPPE !!!
         Iterator<Entity> it = this.game.getEntities().iterator();
         while (it.hasNext()) {
             Entity entity = it.next();
