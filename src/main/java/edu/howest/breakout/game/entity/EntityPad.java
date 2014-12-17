@@ -40,6 +40,12 @@ public class EntityPad extends EntityBlock {
             if (this.wall == bottom || this.wall == top)
                 setX(getX() + motion);
         }
+        if(getX()<0){
+            setX(0);
+        }
+        if(getX()+getWidth()>game.getDimension().width){
+            setX(game.getDimension().width-getWidth());
+        }
     }
 
     @Override

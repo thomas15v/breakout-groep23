@@ -32,7 +32,7 @@ public class EntityBall extends Entity {
         setY(getY() + getYdir());
         if (getX() <= 0)
             bounceX(Wall.left);
-        else if(getX() > (game.getDimension().getWidth() - getStraalX()))
+        else if(getX() > (game.getDimension().getWidth() - 2*getStraalX()))
             bounceX(Wall.right);
         else if (getY() <= 0)
             bounceY(Wall.top);

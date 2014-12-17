@@ -30,7 +30,7 @@ public class LocalGame extends Game {
         this.entityPad = new EntityPad(Wall.bottom, Color.RED, 150, 15, (int) getDimension().getHeight());
         this.inputManager.addController(new PadController(entityPad));
         add(entityPad);
-        entityPad.setSpeed(5);
+        entityPad.setSpeed(15);
     }
 
 
