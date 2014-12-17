@@ -22,6 +22,11 @@ public class EntityBlock extends Entity {
 
     public void DoAction(Game game, Entity entity){
         setDestroyed(true);
+        game.addScore(calculateScore());
+    }
+
+    public int calculateScore(){
+        return (getWidth()*getHeight())/5;
     }
 
     public int getBlockCat() {

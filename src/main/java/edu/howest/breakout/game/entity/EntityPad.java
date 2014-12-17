@@ -22,7 +22,7 @@ public class EntityPad extends EntityBlock {
         switch (wall){
             case bottom:
                 x = 50;
-                y = gamehight - height;
+                y = gamehight - height - 10;
                 break;
         }
         setX(x);

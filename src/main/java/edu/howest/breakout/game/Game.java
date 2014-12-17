@@ -19,6 +19,7 @@ public abstract class Game extends Observable implements Runnable {
     protected Dimension dimension = new Dimension(1000,700);
     private TickCalculator tickCalculator;
     private Logger logger = Logger.getLogger("GAME");
+    private int score;
 
     public Game(){
         this.entities = new CopyOnWriteArrayList<Entity>();
@@ -78,5 +79,15 @@ public abstract class Game extends Observable implements Runnable {
             remove(entity);
         for (Entity entity : level.getBlockList())
             add(entity);
+    }
+
+    public void addScore(int i){
+        score+=i;
+        setChanged();
+        notifyObservers();
+    }
+
+    public int getScore() {
+        return score;
     }
 }

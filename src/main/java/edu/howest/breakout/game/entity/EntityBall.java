@@ -22,7 +22,7 @@ public class EntityBall extends Entity {
         setColor(Color.RED);
         setWidth(20);
         setHeight(20);
-        setSpeed(10);
+        setSpeed(15);
         setAngle(/*new Random().nextInt()*/ 160);
     }
 

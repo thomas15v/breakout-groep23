@@ -16,6 +16,7 @@ public class GameGrid extends JPanel implements Runnable {
     private Map<Class<? extends Entity>, Render> renders = new HashMap<Class<? extends Entity>, Render>();
     private Game game;
     private TickCalculator tickCalculator;
+    private String title;
 
     public GameGrid(){
         registerRenders();
@@ -45,12 +46,13 @@ public class GameGrid extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D graphics2D = (Graphics2D) g;
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        graphics2D.scale(getHeight() / game.getDimension().getHeight(), getWidth() / game.getDimension().getWidth());
         Iterator<Entity> it = this.game.getEntities().iterator();
         while (it.hasNext()) {
             Entity entity = it.next();
             renders.get(entity.getClass()).render(graphics2D, entity);
         }
-        //paintDebug(graphics2D);
+        paintDebug(graphics2D);
     }
 
     private void paintDebug(Graphics2D g){
@@ -59,6 +61,7 @@ public class GameGrid extends JPanel implements Runnable {
         g.drawString("client tickduration: " + tickCalculator.getDelay(), 0,40);
         g.drawString("server fps: " + game.getTickCalculator().getFps(), 0, 10);
         g.drawString("server tickduration: " + game.getTickCalculator().getDelay(), 0, 20);
+        g.drawString("score " + game.getScore(), 0, 50);
     }
 
     @Override
@@ -73,6 +76,11 @@ public class GameGrid extends JPanel implements Runnable {
                 e.printStackTrace();
             }
         }
+        if (game.getGameState() == GameState.EndWon)
+            setTitle("You won the Game!");
+        else if (game.getGameState() == GameState.EndLost)
+            setTitle("Game Over!");
+        repaint();
         System.out.println("Client render Thread stopped!");
     }
 
@@ -84,5 +92,8 @@ public class GameGrid extends JPanel implements Runnable {
     public Game getGame() {
         return game;
     }
-}
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+}

@@ -34,7 +34,7 @@ public class MainMenuPannel extends JFrame implements Observer {
 
         setVisible(true);
         setContentPane(RootPanel);
-        setSize(1000, 700);
+        setMinimumSize(new Dimension(1000, 700));
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
         singlePlayerButton.addActionListener(new ActionListener() {

@@ -13,8 +13,9 @@ public class GameFrame extends JPanel{
     private Game game;
     private JPanel rootPannel;
     private GameGrid gameGrid;
-    private InputManager inputManager;
+    private ScorePanel scorePanel;
 
+    private InputManager inputManager;
     private Thread gameThread;
     private Thread renderThread;
 
@@ -25,6 +26,7 @@ public class GameFrame extends JPanel{
         setFocusable(true);
         requestFocusInWindow();
         this.setGame(new LocalGame(inputManager, level));
+        scorePanel.setGame(game);
         this.renderThread = new Thread(gameGrid);
         this.renderThread.start();
     }

@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <nested-form id="6c48b" form-file="edu/howest/breakout/client/ScorePanel.form">
+      <nested-form id="6c48b" form-file="edu/howest/breakout/client/ScorePanel.form" binding="scorePanel">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
