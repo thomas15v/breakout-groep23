@@ -1,6 +1,5 @@
 package edu.howest.breakout.client;
 
-import com.sun.istack.internal.Nullable;
 import edu.howest.breakout.client.render.RenderBlock;
 import edu.howest.breakout.game.Game;
 import edu.howest.breakout.client.render.Render;
@@ -12,7 +11,6 @@ import edu.howest.breakout.game.info.GameState;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 public class GameGrid extends JPanel implements Runnable {
     private Map<Class<? extends Entity>, Render> renders = new HashMap<Class<? extends Entity>, Render>();
@@ -21,6 +19,7 @@ public class GameGrid extends JPanel implements Runnable {
 
     public GameGrid(){
         registerRenders();
+        setVisible(true);
         setBackground(Color.white);
         tickCalculator = new TickCalculator();
     }

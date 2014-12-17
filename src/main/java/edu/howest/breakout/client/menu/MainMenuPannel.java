@@ -1,6 +1,7 @@
 package edu.howest.breakout.client.menu;
 
 
+import edu.howest.breakout.client.GameFrame;
 import edu.howest.breakout.client.GameGrid;
 import edu.howest.breakout.game.Database;
 import edu.howest.breakout.game.Game;
@@ -18,39 +19,35 @@ import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 
-public class MainPanel extends JFrame implements Observer {
+public class MainMenuPannel extends JFrame implements Observer {
     private JButton exitButton;
     private JButton highScoresButton;
     private JButton multiPlayerButton;
     private JButton singlePlayerButton;
     private JPanel RootPanel;
-    private Game game;
-    private GameGrid gameGrid;
+
+    Database database;
 
 
-    public MainPanel(){
+    public MainMenuPannel(){
+        this.database = new Database("root", "", "jdbc:mysql://localhost:3306/breakout");
 
         setVisible(true);
         setContentPane(RootPanel);
-    }
+        setSize(1000, 700);
+        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
-    public static void main(String[] args){
-        final MainPanel frame = new MainPanel();
-        frame.setSize(1000,700);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-        frame.singlePlayerButton.addActionListener(new ActionListener() {
+        singlePlayerButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 System.out.println("Start Single Player");
-                frame.startSinglePlayer();
+                startSinglePlayer();
             }
         });
 
 
-        frame.multiPlayerButton.addActionListener(new ActionListener() {
+        multiPlayerButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -59,7 +56,7 @@ public class MainPanel extends JFrame implements Observer {
         });
 
 
-        frame.highScoresButton.addActionListener(new ActionListener() {
+        highScoresButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -68,7 +65,7 @@ public class MainPanel extends JFrame implements Observer {
         });
 
 
-        frame.exitButton.addActionListener(new ActionListener() {
+        exitButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -76,46 +73,33 @@ public class MainPanel extends JFrame implements Observer {
                 System.exit(0);
             }
         });
+        pack();
 
+    }
+
+    public static void main(String[] args){
+        MainMenuPannel frame = new MainMenuPannel();
     }
 
 
     public void startSinglePlayer(){
-
-
         try {
-            Database database = new Database("root", "", "jdbc:mysql://localhost:3306/breakout");
-            setPreferredSize(new Dimension(1000,700));
-            setVisible(true);
-            InputManager inputManager = new InputManager();
-            addKeyListener(inputManager);
-
-            this.game = new LocalGame(GameProperties.BASIC_PROPERTIES, inputManager, database.getLevel(2));
-            this.gameGrid = new GameGrid(game);
-            game.addObserver(this);
-            add(gameGrid);
+            final GameFrame gameFrame = new GameFrame(database.getLevel(1));
             addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    game.setGameState(GameState.closed);
+                    System.out.println("gave shutdown signal");
+                    gameFrame.getGame().setGameState(GameState.closed);
                 }
             });
             setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            pack();
-            new Thread(gameGrid).start();
-            game.run();
+            RootPanel.setVisible(false);
+            setContentPane(gameFrame);
+            rootPane.setVisible(true);
         }catch (Exception e){
             e.printStackTrace();
             close(true);
         }
-    }
-
-    public Game getGame() {
-        return game;
-    }
-
-    public GameGrid getGameGrid() {
-        return gameGrid;
     }
 
     public void update(Observable o, Object arg) {

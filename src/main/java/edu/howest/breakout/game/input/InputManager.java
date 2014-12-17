@@ -1,14 +1,14 @@
 package edu.howest.breakout.game.input;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by thomas15v on 13/12/14.
  */
-public class InputManager implements KeyListener {
+public class InputManager implements KeyEventDispatcher {
 
     private List<Controller> controllerList = new ArrayList<Controller>();
 
@@ -20,22 +20,35 @@ public class InputManager implements KeyListener {
         controllerList.remove(controller);
     }
 
-    @Override
     public void keyTyped(KeyEvent e) {
+        System.out.println("ya");
         for (Controller controller : controllerList)
             controller.keyTyped(e);
     }
 
-    @Override
     public void keyPressed(KeyEvent e) {
         for (Controller controller : controllerList)
             controller.keyPressed(e);
     }
 
-    @Override
     public void keyReleased(KeyEvent e) {
         for (Controller controller : controllerList)
             controller.keyReleased(e);
     }
 
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent e) {
+        switch (e.getID()) {
+            case KeyEvent.KEY_PRESSED:
+                keyPressed(e);
+                break;
+            case KeyEvent.KEY_TYPED:
+                keyTyped(e);
+                break;
+            case KeyEvent.KEY_RELEASED:
+                keyReleased(e);
+                break;
+        }
+        return false;
+    }
 }
