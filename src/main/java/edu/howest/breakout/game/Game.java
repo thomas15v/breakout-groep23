@@ -20,11 +20,13 @@ public abstract class Game extends Observable implements Runnable {
     private TickCalculator tickCalculator;
     private Logger logger = Logger.getLogger("GAME");
     private int score;
+    private int lives;
 
     public Game(){
         this.entities = new CopyOnWriteArrayList<Entity>();
         gameState = GameState.Running;
         tickCalculator = new TickCalculator();
+        lives = 5;
     }
 
     public Game(Level level){
@@ -72,7 +74,8 @@ public abstract class Game extends Observable implements Runnable {
 
     public void lostlife(){
         add(new EntityBall(250, 400));
-        
+        lives-=1;
+
     }
 
     public void loadLevel(Level level){
@@ -91,4 +94,6 @@ public abstract class Game extends Observable implements Runnable {
     public int getScore() {
         return score;
     }
+
+    public int getLives(){return lives;}
 }
