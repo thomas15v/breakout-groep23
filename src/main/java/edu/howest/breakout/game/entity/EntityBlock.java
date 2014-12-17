@@ -17,7 +17,7 @@ public class EntityBlock extends Entity {
         super(x, y);
         setWidth(width);
         setHeight(height);
-        setColor(Color.CYAN);
+        setColor(color);
     }
 
     public void DoAction(Game game, Entity entity){

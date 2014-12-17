@@ -88,7 +88,7 @@ public class MainMenuPannel extends JFrame implements Observer {
 
     public void startSinglePlayer(){
         try {
-            final GameFrame gameFrame = new GameFrame(database.getLevel(5));
+            final GameFrame gameFrame = new GameFrame(database.getLevel(1));
             addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {

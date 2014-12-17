@@ -39,9 +39,13 @@ public class EntityBall extends Entity {
         else if (getY() > (game.getDimension().getHeight() - getStraalY()))
             bounceY(Wall.bottom);
 
+        if (getY()<0){setY(0);}
+
         if (lostBall) {
             game.lostlife();
             setDestroyed(true);
+
+
         }
         for (Entity e : game.getEntities()) {
             if (e instanceof EntityBlock) {

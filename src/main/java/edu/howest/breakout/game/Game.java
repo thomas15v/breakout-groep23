@@ -72,6 +72,7 @@ public abstract class Game extends Observable implements Runnable {
 
     public void lostlife(){
         add(new EntityBall(250, 400));
+        
     }
 
     public void loadLevel(Level level){
