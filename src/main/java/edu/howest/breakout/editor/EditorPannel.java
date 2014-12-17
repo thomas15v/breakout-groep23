@@ -69,7 +69,9 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
             @Override
             public void actionPerformed(ActionEvent e) {
                 game.add(new EntityBlock(getInteger(yValue), getInteger(xValue), getInteger(widthValue), getInteger(heightValue), Color.black));
+                canchange = false;
                 yValue.setValue(getInteger(yValue) + getInteger(widthValue) + 2);
+                canchange = true;
             }
         });
         loadLevelButton.addActionListener(new ActionListener() {
