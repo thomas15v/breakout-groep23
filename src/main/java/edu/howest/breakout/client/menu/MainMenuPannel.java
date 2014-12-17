@@ -34,8 +34,10 @@ public class MainMenuPannel extends JFrame implements Observer {
 
         setVisible(true);
         setContentPane(RootPanel);
+
         setMinimumSize(new Dimension(1000, 700));
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+
 
         singlePlayerButton.addActionListener(new ActionListener() {
 
@@ -73,7 +75,9 @@ public class MainMenuPannel extends JFrame implements Observer {
                 System.exit(0);
             }
         });
+
         pack();
+        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
     }
 
@@ -84,7 +88,7 @@ public class MainMenuPannel extends JFrame implements Observer {
 
     public void startSinglePlayer(){
         try {
-            final GameFrame gameFrame = new GameFrame(database.getLevel(1));
+            final GameFrame gameFrame = new GameFrame(database.getLevel(5));
             addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {

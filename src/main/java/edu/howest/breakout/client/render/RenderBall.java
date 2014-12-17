@@ -18,6 +18,8 @@ public class RenderBall implements Render {
         ball.setFrame(entity.getX(), entity.getY(), entity.getWidth(), entity.getHeight());
         g.setColor(entity.getColor());
         g.fill(ball);
+        g.setColor(Color.black);
+        g.draw(ball);
     }
 
 }

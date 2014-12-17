@@ -22,7 +22,10 @@ public class EntityPad extends EntityBlock {
         switch (wall){
             case bottom:
                 x = 50;
+
                 y = gamehight - height - 10;
+
+
                 break;
         }
         setX(x);
@@ -43,8 +46,8 @@ public class EntityPad extends EntityBlock {
         if(getX()<0){
             setX(0);
         }
-        if(getX()+getWidth()>game.getDimension().width){
-            setX(game.getDimension().width-getWidth());
+        if(getX()+getWidth()>game.getDimension().width-1){
+            setX(game.getDimension().width-getWidth()-1);
         }
     }
 

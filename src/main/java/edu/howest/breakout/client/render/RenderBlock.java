@@ -21,5 +21,10 @@ public class RenderBlock implements Render {
         block.setFrame(entity.getX(), entity.getY(), entity.getWidth(), entity.getHeight());
         g.setColor(entity.getColor());
         g.fill(block);
+
+        g.setColor(Color.black);
+        g.draw(block);
+
+
     }
 }
