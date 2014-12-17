@@ -13,23 +13,21 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 
 public abstract class Game extends Observable implements Runnable {
-    protected GameProperties gameProperties;
     private List<Entity> entities;
     private Level level;
     protected GameState gameState;
-    protected Dimension dimension = new Dimension(1200,700);
+    protected Dimension dimension = new Dimension(1000,700);
     private TickCalculator tickCalculator;
     private Logger logger = Logger.getLogger("GAME");
 
-    public Game(GameProperties properties){
+    public Game(){
         this.entities = new CopyOnWriteArrayList<Entity>();
-        this.gameProperties = properties;
         gameState = GameState.Running;
         tickCalculator = new TickCalculator();
     }
 
-    public Game(GameProperties properties, Level level){
-        this(properties);
+    public Game(Level level){
+        this();
         this.level = level;
         loadLevel(level);
     }

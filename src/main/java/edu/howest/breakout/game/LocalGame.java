@@ -22,8 +22,8 @@ public class LocalGame extends Game {
     private EntityPad entityPad;
     private InputManager manager;
 
-    public LocalGame(GameProperties properties, InputManager manager, Level level) {
-        super(properties, level);
+    public LocalGame(InputManager manager, Level level) {
+        super(level);
         this.manager = manager;
         add(new EntityBall(250, 400));
         /*for (int x = 0; x < 8; x++)

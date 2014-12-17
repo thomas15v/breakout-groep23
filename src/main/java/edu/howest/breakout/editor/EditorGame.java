@@ -19,7 +19,7 @@ public class EditorGame extends Game {
     DefaultListModel<Entity> defaultListModel = new DefaultListModel<Entity>();
 
     public EditorGame() {
-        super(null);
+        super();
     }
 
     private DefaultListModel<Entity> entityList;

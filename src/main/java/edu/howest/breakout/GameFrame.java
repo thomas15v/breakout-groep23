@@ -3,36 +3,36 @@ package edu.howest.breakout;
 import edu.howest.breakout.client.GameGrid;
 import edu.howest.breakout.game.Database;
 import edu.howest.breakout.game.Game;
-import edu.howest.breakout.game.info.GameProperties;
 import edu.howest.breakout.game.info.GameState;
 import edu.howest.breakout.game.LocalGame;
 import edu.howest.breakout.game.input.InputManager;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.Observable;
 import java.util.Observer;
 
-public class BreakOutFrame extends JFrame implements Observer {
+public class GameFrame extends JFrame implements Observer {
 
     private Game game;
+    private JPanel rootPannel;
     private GameGrid gameGrid;
 
-    public BreakOutFrame(){
+    public GameFrame(){
         try {
             Database database = new Database("root", "", "jdbc:mysql://localhost:3306/breakout");
-            setPreferredSize(new Dimension(1200,700));
-            setVisible(true);
             InputManager inputManager = new InputManager();
             addKeyListener(inputManager);
 
-            this.game = new LocalGame(GameProperties.BASIC_PROPERTIES, inputManager, database.getLevel(1));
-            this.gameGrid = new GameGrid(game);
+            this.game = new LocalGame(inputManager, database.getLevel(2));
+            gameGrid.setGame(game);
             game.addObserver(this);
-            add(gameGrid);
+
+            setMinimumSize(game.getDimension());
+            setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+            setVisible(true);
+            setContentPane(rootPannel);
             addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -50,15 +50,11 @@ public class BreakOutFrame extends JFrame implements Observer {
     }
 
     public static void main(String[] args){
-        BreakOutFrame frame = new BreakOutFrame();
+        GameFrame frame = new GameFrame();
     }
 
     public Game getGame() {
         return game;
-    }
-
-    public GameGrid getGameGrid() {
-        return gameGrid;
     }
 
     @Override
@@ -77,5 +73,9 @@ public class BreakOutFrame extends JFrame implements Observer {
         dispose();
         if (error)
             System.out.println("Program exited unexpectedly, lets hope this didn't happen during demonstration!!");
+    }
+
+    private void createUIComponents() {
+        gameGrid = new GameGrid();
     }
 }

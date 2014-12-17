@@ -1,55 +1,44 @@
 package edu.howest.breakout.client;
 
-import edu.howest.breakout.client.Render.RenderBlock;
+import com.sun.istack.internal.Nullable;
+import edu.howest.breakout.client.render.RenderBlock;
 import edu.howest.breakout.game.Game;
-import edu.howest.breakout.client.Render.Render;
-import edu.howest.breakout.client.Render.RenderBall;
+import edu.howest.breakout.client.render.Render;
+import edu.howest.breakout.client.render.RenderBall;
 import edu.howest.breakout.game.entity.*;
 import edu.howest.breakout.game.TickCalculator;
 import edu.howest.breakout.game.info.GameState;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.List;
 
-public class GameGrid extends JPanel implements Runnable, Observer {
-
-    private List<Render> renders = new ArrayList<Render>();
-    private Map<Class<? extends Entity>, Class<? extends Render>> renderclasses = new HashMap<Class<? extends Entity>, Class<? extends Render>>();
+public class GameGrid extends JPanel implements Runnable {
+    private Map<Class<? extends Entity>, Render> renders = new HashMap<Class<? extends Entity>, Render>();
     private Game game;
     private TickCalculator tickCalculator;
 
-    public GameGrid(Game game) throws Exception {
-        this.game = game;
+    public GameGrid(){
         registerRenders();
-        game.addObserver(this);
-        for (Entity entity : game.getEntities())
-            addEntity(entity);
         setBackground(Color.white);
         tickCalculator = new TickCalculator();
-        //setPreferredSize(new Dimension(5000,500));
+    }
+
+    public GameGrid(Game game){
+        this();
+        setGame(game);
     }
 
     private void registerRenders(){
-        registerRender(EntityBall.class, RenderBall.class);
-        registerRender(EntityBlock.class, RenderBlock.class);
-        registerRender(EntityPad.class, RenderBlock.class);
+        RenderBlock renderBlock = new RenderBlock();
+        registerRender(EntityBall.class, new RenderBall());
+        registerRender(EntityBlock.class, renderBlock );
+        registerRender(EntityPad.class, renderBlock );
     }
 
-    public void addEntity(Entity entity) throws Exception {
-        if (!renderclasses.containsKey(entity.getClass()))
-            throw new ClassNotFoundException("We didn't find a renderclass for " + entity.getClass().getName() + ". I gues you forgot registering it!");
-        Constructor c = renderclasses.get(entity.getClass()).getConstructor(Entity.class);
-        c.setAccessible(true);
-        renders.add((Render) c.newInstance(entity));
-    }
-
-    public void registerRender(Class entity, Class render){
-            renderclasses.put(entity, render);
+    public void registerRender(Class entity, Render render){
+            renders.put(entity, render);
     }
 
     @Override
@@ -57,15 +46,12 @@ public class GameGrid extends JPanel implements Runnable, Observer {
         super.paintComponent(g);
         Graphics2D graphics2D = (Graphics2D) g;
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        Iterator<Render> it = this.renders.iterator();
+        Iterator<Entity> it = this.game.getEntities().iterator();
         while (it.hasNext()) {
-            Render r = it.next();
-            if (r.isDestroyed())
-                it.remove();
-            else
-                r.render(graphics2D);
+            Entity entity = it.next();
+            renders.get(entity.getClass()).render(graphics2D, entity);
         }
-        paintDebug(graphics2D);
+        //paintDebug(graphics2D);
     }
 
     private void paintDebug(Graphics2D g){
@@ -88,20 +74,16 @@ public class GameGrid extends JPanel implements Runnable, Observer {
                 e.printStackTrace();
             }
         }
-        System.out.println("Client Render Thread stopped!");
+        System.out.println("Client render Thread stopped!");
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        if (arg instanceof Entity)
-            try {
-                addEntity((Entity) arg);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    public void setGame(Game game) {
+        setPreferredSize(game.getDimension());
+        this.game = game;
     }
 
-    public List<Render> getRenders() {
-        return renders;
+    public Game getGame() {
+        return game;
     }
 }
+

@@ -23,7 +23,7 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
     private JList<Entity> componentList;
     private JButton addButton;
     private JButton removeButton;
-    private JPanel RootPannel;
+    private JPanel RootPanel;
     private JPanel AddPannel;
     private JLabel xlabel;
     private JLabel ylabel;
@@ -53,9 +53,11 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
         updateLevels();
         this.yValue.addChangeListener(this);
         this.xValue.addChangeListener(this);
+        this.widthValue.addChangeListener(this);
+        this.heightValue.addChangeListener(this);
         this.widthValue.setValue(50);
         this.heightValue.setValue(50);
-        add(RootPannel);
+        add(RootPanel);
         removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
