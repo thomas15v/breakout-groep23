@@ -12,11 +12,14 @@ public class EntityPad extends EntityBlock {
 
     private Wall wall;
     private Direction MovementDirection;
+    private EntityBall ball;
+    private boolean hasBall;
 
     public EntityPad(Wall wall, Color color, int width, int height, int gamehight) {
         super(0, 0, width, height, color);
         int x = 0;
         int y = 0;
+        this.hasBall = false;
         this.wall = wall;
         this.MovementDirection = Direction.none;
         switch (wall){
@@ -49,6 +52,10 @@ public class EntityPad extends EntityBlock {
         if(getX()+getWidth()>game.getDimension().width-1){
             setX(game.getDimension().width-getWidth()-1);
         }
+        if (hasBall) {
+            ball.setX(getX() + getWidth()/2);
+            ball.setY(getY() - getHeight() - 10);
+        }
     }
 
     @Override
@@ -60,4 +67,20 @@ public class EntityPad extends EntityBlock {
         this.MovementDirection = direction;
     }
 
+    public void launchBall(){
+        if (hasBall) {
+            ball.setSpeed(15);
+            ball.setAngle(190);
+            hasBall = false;
+        }
+    }
+
+    public Wall getWall() {
+        return wall;
+    }
+
+    public void setBall(EntityBall ball) {
+        hasBall = true;
+        this.ball = ball;
+    }
 }

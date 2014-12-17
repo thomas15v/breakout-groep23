@@ -4,26 +4,39 @@ import edu.howest.breakout.game.Game;
 import edu.howest.breakout.game.info.Wall;
 
 import java.awt.*;;
+import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.Random;
 
 public class EntityBall extends Entity {
 
     private boolean lostBall = false;
-    private Wall wall;
+    private EnumSet<Wall> walls;
     private int bereik = 90;
+    EntityPad owner;
 
-    public EntityBall(int x, int y){
-        this(x, y, Wall.bottom);
+    private EntityBall(int x, int y){
+        this(x, y, EnumSet.of(Wall.bottom));
     }
 
-    public EntityBall(int x, int y, Wall wall) {
+    public EntityBall(int x, int y, Wall wall){
+        this(x, y, EnumSet.of(wall));
+    }
+
+    public EntityBall(int x, int y, EnumSet<Wall> walls) {
         super(x, y);
-        this.wall = wall;
+        this.walls = walls;
         setColor(Color.RED);
         setWidth(20);
         setHeight(20);
         setSpeed(15);
         setAngle(/*new Random().nextInt()*/ 160);
+    }
+
+    public EntityBall(EntityPad owner){
+        this(-80,-80 , owner.getWall());
+        this.owner = owner;
+        setSpeed(0);
     }
 
     @Override
@@ -44,10 +57,8 @@ public class EntityBall extends Entity {
         if (getX()>game.getDimension().width-getWidth()){setX(game.getDimension().width-getWidth());}
 
         if (lostBall) {
-            game.lostlife();
+            game.lostlife(owner);
             setDestroyed(true);
-
-
         }
         for (Entity e : game.getEntities()) {
             if (e instanceof EntityBlock) {
@@ -101,7 +112,7 @@ public class EntityBall extends Entity {
     }
     //needs refactor
     private void bounceX(Wall wall){
-        if (wall != this.wall)
+        if (!walls.contains(wall))
             bounceX();
         else
             lostBall = true;
@@ -112,7 +123,7 @@ public class EntityBall extends Entity {
     }
     //needs refactor
     private void bounceY(Wall wall){
-        if (wall != this.wall)
+        if (!walls.contains(wall))
             bounceY();
         else
             lostBall = true;

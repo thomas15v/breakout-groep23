@@ -24,6 +24,8 @@ public class PadController implements Controller {
             controller.setMovement(Direction.left);
         if (e.getKeyCode() == KeyEvent.VK_RIGHT)
             controller.setMovement(Direction.right);
+        if (e.getKeyCode() == KeyEvent.VK_SPACE)
+            controller.launchBall();
     }
 
     @Override

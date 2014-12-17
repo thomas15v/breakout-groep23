@@ -50,7 +50,6 @@ public class Database {
 
     public void addLevel(Level level){
         int id = create.insertInto(LEVELS).set(create.newRecord(LEVELS, level)).returning(LEVELS.ID).fetchOne().getValue(LEVELS.ID);
-        System.out.print(id);
         for (EntityBlock block : level.getBlockList())
             create.insertInto(LEVEL_MAP).set(create.newRecord(LEVEL_MAP, block)).set(LEVEL_MAP.ID, id).execute();
     }

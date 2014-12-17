@@ -2,6 +2,7 @@ package edu.howest.breakout.game;
 
 import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.entity.EntityBall;
+import edu.howest.breakout.game.entity.EntityPad;
 import edu.howest.breakout.game.info.GameProperties;
 import edu.howest.breakout.game.info.GameState;
 import edu.howest.breakout.game.info.Level;
@@ -72,9 +73,14 @@ public abstract class Game extends Observable implements Runnable {
         return logger;
     }
 
-    public void lostlife(){
-        add(new EntityBall(250, 400));
-        lives-=1;
+    public void lostlife(EntityPad pad){
+        if (lives > 0) {
+            EntityBall ball = new EntityBall(pad);
+            pad.setBall(ball);
+            add(ball);
+            lives -= 1;
+        }else
+            setGameState(GameState.EndLost);
 
     }
 
