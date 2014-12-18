@@ -103,12 +103,14 @@ public abstract class Game extends Observable implements Runnable {
         return score;
     }
 
+    @Deprecated
     public int getLives(){return lives;}
 
     public Difficulty getDifficulty() {
         return difficulty;
     }
 
+    @Deprecated
     public void setLives(int lives) {
         this.lives = lives;
     }
