@@ -2,6 +2,7 @@ package edu.howest.breakout.client;
 
 import edu.howest.breakout.game.Game;
 import edu.howest.breakout.game.LocalGame;
+import edu.howest.breakout.game.MultiPlayerGame;
 import edu.howest.breakout.game.difficulty.Difficulty;
 import edu.howest.breakout.game.info.Level;
 import edu.howest.breakout.game.input.InputManager;
@@ -26,6 +27,16 @@ public class GameFrame extends JPanel{
         this.inputManager = new InputManager();
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(inputManager);
         this.setGame(new LocalGame(inputManager, level, difficulty));
+        scorePanel.setGame(game);
+        this.renderThread = new Thread(gameGrid);
+        this.renderThread.start();
+    }
+
+    public GameFrame(Level level, Difficulty difficulty, Boolean multiplayer) {
+        this.add(rootPannel);
+        this.inputManager = new InputManager();
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(inputManager);
+        this.setGame(new MultiPlayerGame(inputManager, level, difficulty));
         scorePanel.setGame(game);
         this.renderThread = new Thread(gameGrid);
         this.renderThread.start();

@@ -65,4 +65,8 @@ public class LocalGame extends Game {
         }
         super.setGameState(gameState);
     }
+
+    public InputManager getInputManager() {
+        return inputManager;
+    }
 }

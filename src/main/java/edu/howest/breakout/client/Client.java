@@ -67,7 +67,10 @@ public class Client extends JFrame implements Observer {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 System.out.println("Start Multi Player");
+                startMultiPlayer();
             }
+
+
         });
 
 
@@ -91,6 +94,27 @@ public class Client extends JFrame implements Observer {
 
         pack();
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+
+    }
+
+    private void startMultiPlayer() {
+        try {
+            final GameFrame gameFrame = new GameFrame(database.getLevel(1), difficulty, true);
+            addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    System.out.println("gave shutdown signal");
+                    gameFrame.getGame().setGameState(GameState.closed);
+                }
+            });
+            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            RootPanel.setVisible(false);
+            setContentPane(gameFrame);
+            rootPane.setVisible(true);
+        }catch (Exception e){
+            e.printStackTrace();
+            close(true);
+        }
 
     }
 

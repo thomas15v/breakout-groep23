@@ -78,6 +78,8 @@ public class EntityBall extends Entity {
                 }else if (collide(e, getX() + getStraalX() , getY())) { //collision met onderkant
                     if (e instanceof EntityPad){
                         changeAngle(e);
+                        bounceY();
+
                     }
                     bounceY();
                     setY(e.getY() + e.getHeight());
