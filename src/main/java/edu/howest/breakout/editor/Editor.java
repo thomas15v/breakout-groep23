@@ -32,7 +32,7 @@ public class Editor extends JFrame implements Observer, KeyListener {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                game.setGameState(GameState.closed);
+                game.setGameState(GameState.EndGame);
             }
         });
         this.clickManager = new ClickManager(this);
@@ -55,11 +55,10 @@ public class Editor extends JFrame implements Observer, KeyListener {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg != null)
-        {
+        if (arg != null){
             if (arg.equals(GameState.Errored))
                 close(true);
-            else if (arg.equals(GameState.closed))
+            else if (arg.equals(GameState.EndGame))
                 close(false);
         }
     }

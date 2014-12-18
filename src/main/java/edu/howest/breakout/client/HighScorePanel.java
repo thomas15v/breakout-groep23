@@ -18,16 +18,9 @@ public class HighScorePanel extends  JPanel {
 
     public HighScorePanel(){
         add(panel1);
-       // panel1.setPreferredSize(getSize());
-
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                System.out.println("back");
-            }
-        });
     }
 
-
-
+    public JButton getBackButton() {
+        return backButton;
+    }
 }

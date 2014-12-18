@@ -2,10 +2,8 @@ package edu.howest.breakout.game;
 
 import edu.howest.breakout.game.difficulty.Difficulty;
 import edu.howest.breakout.game.entity.Entity;
-import edu.howest.breakout.game.entity.EntityBall;
 import edu.howest.breakout.game.entity.EntityBlock;
 import edu.howest.breakout.game.entity.EntityPad;
-import edu.howest.breakout.game.info.GameProperties;
 import edu.howest.breakout.game.info.GameState;
 import edu.howest.breakout.game.info.Level;
 import edu.howest.breakout.game.input.InputManager;
@@ -30,6 +28,7 @@ public abstract class Game extends Observable implements Runnable {
     private boolean paused;
     private InputManager inputManager;
     private ScoreManager scoreManager;
+    private boolean won;
 
     public Game(Difficulty difficulty){
         this.entities = new CopyOnWriteArrayList<Entity>();
@@ -73,7 +72,8 @@ public abstract class Game extends Observable implements Runnable {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
-        notifyObservers();
+        setChanged();
+        notifyObservers(gameState);
     }
 
     public TickCalculator getTickCalculator() {
@@ -87,8 +87,9 @@ public abstract class Game extends Observable implements Runnable {
     public void lostlife(){
         if (lives > 0) {
             lives -= 1;
-        }else{
-            setGameState(GameState.EndLost);
+        }else {
+            setGameState(GameState.EndGame);
+            won = false;
         }
 
     }
@@ -103,12 +104,14 @@ public abstract class Game extends Observable implements Runnable {
     public void checkWin() {
         int blocksleft = 0;
         for (Entity e : this.getEntities()) {
-            if (e instanceof EntityBlock && !(e instanceof  EntityPad)) {
+            if (e instanceof EntityBlock && !(e instanceof EntityPad)) {
                 blocksleft++;
             }
         }
-        if (blocksleft == 1)
-            setGameState(GameState.EndWon);
+        if (blocksleft == 1) {
+            won = true;
+            setGameState(GameState.EndGame);
+        }
 
 
     }
@@ -151,6 +154,7 @@ public abstract class Game extends Observable implements Runnable {
         return scoreManager;
     }
 
-
-
+    public boolean isWon() {
+        return won;
+    }
 }

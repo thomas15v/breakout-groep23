@@ -12,10 +12,8 @@ public class GameFrame extends JPanel{
     private GameGrid gameGrid;
     private ScorePanel scorePanel;
 
-
     private Thread gameThread;
     private Thread renderThread;
-
 
     public GameFrame(Game game) {
         this.add(rootPannel);

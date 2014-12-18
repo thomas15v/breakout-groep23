@@ -114,6 +114,7 @@ public class Database {
     }
 
     public void addPlayer(Player player){
-
+        create.insertInto(HIGHSCORES).set(create.newRecord(HIGHSCORES, player)).execute();
+        System.out.print("Updated");
     }
 }

@@ -5,6 +5,6 @@ package edu.howest.breakout.game.info;
  */
 public enum GameState {
     Errored,
-    closed,
-    EndWon, EndLost, Running
+    EndGame,
+    Running
 }

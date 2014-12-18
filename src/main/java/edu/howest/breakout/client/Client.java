@@ -2,6 +2,7 @@ package edu.howest.breakout.client;
 
 
 import edu.howest.breakout.game.Database;
+import edu.howest.breakout.game.Game;
 import edu.howest.breakout.game.LocalGame;
 import edu.howest.breakout.game.MultiPlayerGame;
 import edu.howest.breakout.game.score.Player;
@@ -22,21 +23,28 @@ public class Client extends JFrame implements Observer {
     private JButton highScoresButton;
     private JButton multiPlayerButton;
     private JButton singlePlayerButton;
-    private JPanel RootPanel;
+    private JPanel MainMenuPannel;
     private JComboBox comboBoxDifficulty;
     private JTextField player1Value;
     private JTextField player2Value;
     private Difficulty difficulty;
     private Database database;
-
+    private HighScorePanel highScorePanel;
+    private CardLayout cardLayout;
+    private JPanel RootPannel;
+    private GameFrame gameFrame;
 
     public Client(){
         this.database = new Database("root", "", "jdbc:mysql://localhost:3306/breakout");
-
+        RootPannel = new JPanel();
+        setContentPane(RootPannel);
         this.difficulty = new Difficulty();
         setVisible(true);
-        setContentPane(RootPanel);
-
+        cardLayout = new CardLayout();
+        RootPannel.setLayout(cardLayout);
+        this.highScorePanel = new HighScorePanel();
+        RootPannel.add(MainMenuPannel, "Main");
+        RootPannel.add(highScorePanel, "HighScores");
         setMinimumSize(new Dimension(1000, 700));
         //setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
@@ -78,18 +86,11 @@ public class Client extends JFrame implements Observer {
 
         });
 
-
         highScoresButton.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 System.out.println("Show High Scores");
-                setContentPane(new HighScorePanel());
-                RootPanel.setVisible(false);
-                //repaint();
-                pack();
-                setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
-
+                show(highScorePanel);
             }
         });
 
@@ -103,6 +104,14 @@ public class Client extends JFrame implements Observer {
             }
         });
 
+        highScorePanel.getBackButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                show(MainMenuPannel);
+                repaint();
+            }
+        });
+
         pack();
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
@@ -112,23 +121,28 @@ public class Client extends JFrame implements Observer {
         try {
             Player player1 = new Player(player1Value.getText());
             Player player2 = new Player(player2Value.getText());
-            final GameFrame gameFrame = new GameFrame(new MultiPlayerGame(database.getLevel(1), difficulty, player1, player2));
-            addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    System.out.println("gave shutdown signal");
-                    gameFrame.getGame().setGameState(GameState.closed);
-                }
-            });
-            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            RootPanel.setVisible(false);
-            setContentPane(gameFrame);
-            rootPane.setVisible(true);
+            startGame(new MultiPlayerGame(database.getLevel(1), difficulty, player1, player2));
         }catch (Exception e){
             e.printStackTrace();
             close(true);
         }
+    }
 
+    public void startGame(final Game game){
+        game.addObserver(this);
+        this.gameFrame = new GameFrame(game);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.out.println("gave shutdown signal");
+                game.setGameState(GameState.EndGame);
+            }
+        });
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        MainMenuPannel.setVisible(false);
+        add(gameFrame);
+        gameFrame.setVisible(true);
+        repaint();
     }
 
     public static void main(String[] args){
@@ -139,18 +153,7 @@ public class Client extends JFrame implements Observer {
     public void startSinglePlayer(){
         try {
             Player player = new Player(player1Value.getText());
-            final GameFrame gameFrame = new GameFrame(new LocalGame(database.getLevel(4), difficulty, player));
-            addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    System.out.println("gave shutdown signal");
-                    gameFrame.getGame().setGameState(GameState.closed);
-                }
-            });
-            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            RootPanel.setVisible(false);
-            setContentPane(gameFrame);
-            rootPane.setVisible(true);
+            startGame(new LocalGame(database.getLevel(1), difficulty, player));
         }catch (Exception e){
             e.printStackTrace();
             close(true);
@@ -162,9 +165,21 @@ public class Client extends JFrame implements Observer {
         {
             if (arg.equals(GameState.Errored))
                 close(true);
-            else if (arg.equals(GameState.closed))
-                close(false);
+            else if (arg.equals(GameState.EndGame)) {
+                for (Player player : ((Game) o).getScoreManager().getPlayers())
+                    database.addPlayer(player);
+                show(MainMenuPannel);
+                remove(gameFrame);
+                repaint();
+            }
         }
+    }
+
+    private void show(JPanel panel){
+       for (Component component : RootPannel.getComponents())
+            component.setVisible(false);
+        panel.setVisible(true);
+        repaint();
     }
 
     public void close(Boolean error){

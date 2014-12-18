@@ -78,9 +78,9 @@ public class GameGrid extends JPanel implements Runnable {
                 e.printStackTrace();
             }
         }
-        if (game.getGameState() == GameState.EndWon)
+        if (game.isWon())
             setTitle("You won the Game!");
-        else if (game.getGameState() == GameState.EndLost)
+        else
             setTitle("Game Over!");
         repaint();
         System.out.println("Client render Thread stopped!");
