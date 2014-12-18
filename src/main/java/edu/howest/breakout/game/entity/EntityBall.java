@@ -131,10 +131,10 @@ public class EntityBall extends Entity {
     private void bounceY(Wall wall, Game game){
         if (!walls.contains(wall))
             bounceY();
-        else
+        else{
             lostBall = true;
             game.lostlife();
-
+        }
     }
 
     public int getStraalX(){
