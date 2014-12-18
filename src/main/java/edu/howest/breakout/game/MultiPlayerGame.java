@@ -23,7 +23,7 @@ public class MultiPlayerGame extends LocalGame {
         super(inputManager, level, difficulty);
         //System.out.println("multiplayer started");
 
-        this.entityPadBoven = new EntityPad(Wall.top, Color.BLUE, 150, 15, 0);
+        this.entityPadBoven = new EntityPad(Wall.top, Color.BLUE, 150, 15, this);
         this.getInputManager().addController(new PadController(entityPadBoven, this));
         add(entityPadBoven);
         entityPadBoven.setSpeed(15);
