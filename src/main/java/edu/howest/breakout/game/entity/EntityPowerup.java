@@ -30,7 +30,7 @@ public class EntityPowerup extends Entity {
                     setDestroyed(true);
                     ((EntityPad) e).getPowerUpManager().addPowerUp(powerUp, game);
                 }
-        if (getX() > game.getDimension().getHeight())
+        if (getY() > game.getDimension().getHeight())
             setDestroyed(true);
     }
 }

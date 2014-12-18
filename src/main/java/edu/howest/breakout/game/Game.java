@@ -83,7 +83,6 @@ public abstract class Game extends Observable implements Runnable {
         return logger;
     }
 
-    @Deprecated
     public void lostlife(){
         if (lives > 0) {
             lives -= 1;
