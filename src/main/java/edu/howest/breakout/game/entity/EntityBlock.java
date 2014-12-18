@@ -23,13 +23,14 @@ public class EntityBlock extends Entity {
 
     public void DoAction(Game game, Entity entity){
         setDestroyed(true);
-        game.addScore(calculateScore());
+
+        game.addScore(calculateScore(game));
         if (powerUp.isWorth())
             game.add(new EntityPowerup((int) getX(), (int)getY(), powerUp));
     }
 
-    public int calculateScore(){
-        return (getWidth()*getHeight())/5;
+    public int calculateScore(Game game){
+        return ((getWidth()*getHeight())/5)*game.getDifficulty().getLevel();
     }
 
     public void setPowerUp(PowerUp powerUp) {

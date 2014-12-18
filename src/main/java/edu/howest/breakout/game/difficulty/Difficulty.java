@@ -7,24 +7,27 @@ package edu.howest.breakout.game.difficulty;
 
 public class Difficulty {
 
-    private int difficulty;
+    private int level;
 
     public Difficulty(){
-        difficulty = 2;
+        level = 2;
     }
 
     public int getBallSpeed(){
-        if (difficulty==1){
+        if (level ==1){
             return 10;
-        }else if(difficulty==2){
+        }else if(level ==2){
             return 17;
         }else{
             return 25;
         }
     }
 
-    public void setDifficulty(int i) {
-        this.difficulty = i;
+    public void setLevel(int i) {
+        this.level = i;
     }
 
+    public int getLevel() {
+        return level;
+    }
 }

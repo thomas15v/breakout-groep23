@@ -2,15 +2,9 @@ package edu.howest.breakout.client.menu;
 
 
 import edu.howest.breakout.client.GameFrame;
-import edu.howest.breakout.client.GameGrid;
 import edu.howest.breakout.game.Database;
-import edu.howest.breakout.game.Game;
-import edu.howest.breakout.game.LocalGame;
 import edu.howest.breakout.game.difficulty.Difficulty;
-import edu.howest.breakout.game.info.GameProperties;
 import edu.howest.breakout.game.info.GameState;
-import edu.howest.breakout.game.input.InputManager;
-import org.jooq.util.derby.sys.Sys;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,7 +48,7 @@ public class MainMenuPannel extends JFrame implements Observer {
             public void actionPerformed(ActionEvent actionEvent) {
                 System.out.println("changed difficulty to " + comboBoxDifficulty.getSelectedIndex());
                 System.out.println(difficulty);
-                difficulty.setDifficulty(comboBoxDifficulty.getSelectedIndex() + 1);
+                difficulty.setLevel(comboBoxDifficulty.getSelectedIndex() + 1);
             }
         });
 
