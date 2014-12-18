@@ -26,7 +26,7 @@ public class EntityPowerup extends Entity {
         setY(getY() + getYdir());
         for (Entity e : game.getEntities())
             if (e instanceof EntityPad)
-                if (e.collide(e, e.getX()+ getHeight()/2 , getY())) {
+                if (collide(e, getX() , getY())) {
                     setDestroyed(true);
                     ((EntityPad) e).getPowerUpManager().addPowerUp(powerUp, game);
                 }
