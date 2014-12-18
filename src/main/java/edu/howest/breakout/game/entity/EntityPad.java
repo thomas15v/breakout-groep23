@@ -17,12 +17,14 @@ public class EntityPad extends EntityBlock {
     private Direction MovementDirection;
     private EntityBall ball;
     private boolean hasBall;
+    private boolean ballLess;
     private PowerUpManager powerUpManager;
     private Game game;
 
-    public EntityPad(Wall wall, Color color, int width, int height, Game game) {
+    public EntityPad(Wall wall, Color color, int width, int height, Game game, boolean ballLess) {
         super(0, 0, width, height, color);
         this.game = game;
+        this.ballLess = ballLess;
         this.powerUpManager = new PowerUpManager();
         int x = 0;
         int y = 0;
@@ -41,12 +43,12 @@ public class EntityPad extends EntityBlock {
         }
         setX(x);
         setY(y);
-        newBall();
     }
 
-    public EntityPad(Wall wall, Color color, int width, int height, Game game, EnumSet<Wall> walls){
-        this(wall, color, width, height, game);
-        this.ballWalls = walls;
+    public EntityPad(Wall wall, Color color, int width, int height, Game game, EnumSet<Wall> BallWalls){
+        this(wall, color, width, height, game, false);
+        this.ballWalls = BallWalls;
+        newBall();
     }
 
     @Override
@@ -88,7 +90,7 @@ public class EntityPad extends EntityBlock {
     }
 
     public void launchBall(Game game){
-        if (hasBall) {
+        if (hasBall && !ballLess) {
             ball.setSpeed(game.getDifficulty().getBallSpeed());
             ball.setAngle(180);
             hasBall = false;

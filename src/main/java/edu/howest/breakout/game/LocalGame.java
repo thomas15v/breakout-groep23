@@ -28,7 +28,7 @@ public class LocalGame extends Game {
     }
 
     protected void addPads(){
-        EntityPad entityPad1 = new EntityPad(Wall.bottom, Color.RED, 150, 15, this);
+        EntityPad entityPad1 = new EntityPad(Wall.bottom, Color.RED, 150, 15, this, false);
         getInputManager().addController(new PadController(entityPad1, this));
         add(entityPad1);
         entityPad1.setSpeed(15);
