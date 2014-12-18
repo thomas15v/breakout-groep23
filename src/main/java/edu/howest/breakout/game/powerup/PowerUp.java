@@ -75,7 +75,7 @@ public class PowerUp {
     }
 
     public boolean isWorth(){
-        return !powerUpMessage.equals("");
+        return powerUpMessage != null;
     }
 
     public int getId() {
