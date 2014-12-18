@@ -111,8 +111,6 @@ public abstract class Game extends Observable implements Runnable {
             won = true;
             setGameState(GameState.EndGame);
         }
-
-
     }
 
     public int getLives(){return lives;}

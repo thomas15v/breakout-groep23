@@ -4,15 +4,19 @@ package edu.howest.breakout.game;
 import com.googlecode.flyway.core.Flyway;
 import static edu.howest.breakout.database.Tables.*;
 
+import edu.howest.breakout.database.tables.records.MpgamesRecord;
 import edu.howest.breakout.game.entity.EntityBlock;
 import edu.howest.breakout.game.info.Level;
+import edu.howest.breakout.game.info.MPGame;
 import edu.howest.breakout.game.powerup.PowerUp;
 import edu.howest.breakout.game.score.Player;
+import edu.howest.breakout.game.score.ScoreManager;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
+import sun.security.jca.ProviderList;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -116,5 +120,34 @@ public class Database {
     public void addPlayer(Player player){
         create.insertInto(HIGHSCORES).set(create.newRecord(HIGHSCORES, player)).execute();
         System.out.print("Updated");
+    }
+
+    private int addMPPlayer(Player player){
+        return create.insertInto(MPHIGHSCORES).set(create.newRecord(MPHIGHSCORES, player)).returning(MPHIGHSCORES.ID).fetchOne().getId();
+    }
+
+    private Player getMPPlayer(int id){
+        return create.select().from(MPHIGHSCORES).where(MPHIGHSCORES.ID.eq(id)).fetchOne().into(Player.class);
+    }
+
+    //hey somehow I like this more
+    public void storeMultiplayerGame(ScoreManager scoreManager) {
+        create.insertInto(MPGAMES).
+                set(MPGAMES.PLAYER1, addMPPlayer(scoreManager.getPlayers().get(0))).
+                set(MPGAMES.PLAYER2, addMPPlayer(scoreManager.getPlayers().get(1))).execute();
+    }
+
+    public List<Player> getHighScores() {
+        return create.select().from(HIGHSCORES).orderBy(HIGHSCORES.SCORE.asc()).fetch().into(Player.class);
+    }
+
+    public List<MPGame> getMPHightScores() {
+        return create.select().from(MPGAMES).fetch().map(new RecordMapper<Record, MPGame>() {
+            @Override
+            public MPGame map(Record record) {
+                MpgamesRecord mpgamesRecord = (MpgamesRecord) record;
+                return new MPGame(getMPPlayer(mpgamesRecord.getPlayer1()), getMPPlayer(mpgamesRecord.getPlayer2()));
+            }
+        });
     }
 }

@@ -42,7 +42,7 @@ public class Client extends JFrame implements Observer {
         setVisible(true);
         cardLayout = new CardLayout();
         RootPannel.setLayout(cardLayout);
-        this.highScorePanel = new HighScorePanel();
+        this.highScorePanel = new HighScorePanel(database);
         RootPannel.add(MainMenuPannel, "Main");
         RootPannel.add(highScorePanel, "HighScores");
         setMinimumSize(new Dimension(1000, 700));
@@ -166,8 +166,12 @@ public class Client extends JFrame implements Observer {
             if (arg.equals(GameState.Errored))
                 close(true);
             else if (arg.equals(GameState.EndGame)) {
-                for (Player player : ((Game) o).getScoreManager().getPlayers())
-                    database.addPlayer(player);
+                Game game = (Game) o;
+                if (game instanceof MultiPlayerGame)
+                    database.storeMultiplayerGame(game.getScoreManager());
+                else
+                    for (Player player : game.getScoreManager().getPlayers())
+                        database.addPlayer(player);
                 show(MainMenuPannel);
                 remove(gameFrame);
                 repaint();
