@@ -34,13 +34,12 @@ public class EntityPad extends EntityBlock {
         this.wall = wall;
         this.ballWalls = EnumSet.of(wall);
         this.MovementDirection = Direction.none;
+        x = (int) (game.getDimension().getWidth() / 2);
         switch (wall){
             case bottom:
-                x = 50;
                 y = (int) game.getDimension().getHeight() - height - 10;
                 break;
             case top:
-                x = 50;
                 y = height + 10;
                 break;
         }

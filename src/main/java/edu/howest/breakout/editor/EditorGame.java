@@ -5,6 +5,7 @@ import edu.howest.breakout.game.difficulty.Difficulty;
 import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.entity.EntityBlock;
 import edu.howest.breakout.game.info.Level;
+import edu.howest.breakout.game.score.Player;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.swing.*;
@@ -45,6 +46,9 @@ public class EditorGame extends Game {
         defaultListModel.removeElement(entity);
         super.remove(entity);
     }
+
+    @Override
+    public void addPads(List<Player> players) {}
 
     public Level getLevel(String name){
         List<EntityBlock> blocks = new ArrayList<EntityBlock>();

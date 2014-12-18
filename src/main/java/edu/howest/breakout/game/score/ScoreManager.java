@@ -14,7 +14,7 @@ public class ScoreManager {
         this.players = new ArrayList<Player>();
     }
 
-    public void addPlayer(Player... players){
+    public void addPlayer(List<Player> players){
         for (Player player : players)
             this.players.add(player);
     }

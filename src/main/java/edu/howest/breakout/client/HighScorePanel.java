@@ -29,17 +29,28 @@ public class HighScorePanel extends JPanel {
         singlePlayerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                lstHighScores.setListData(database.getHighScores().toArray());
+               setSP();
             }
         });
         multiPlayerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                lstHighScores.setListData(database.getMPHightScores().toArray());
+               setMP();
             }
         });
+        setSP();
+    }
 
+    public void setTitle(String text){
+
+    }
+
+    public void setSP(){
         lstHighScores.setListData(database.getHighScores().toArray());
+    }
+
+    public void setMP(){
+        lstHighScores.setListData(database.getMPHightScores().toArray());
     }
 
     public JButton getBackButton() {

@@ -7,9 +7,11 @@ import edu.howest.breakout.game.entity.EntityPad;
 import edu.howest.breakout.game.info.GameState;
 import edu.howest.breakout.game.info.Level;
 import edu.howest.breakout.game.input.InputManager;
+import edu.howest.breakout.game.score.Player;
 import edu.howest.breakout.game.score.ScoreManager;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -17,12 +19,12 @@ import java.util.logging.Logger;
 
 public abstract class Game extends Observable implements Runnable {
     private List<Entity> entities;
-    private Level level;
     protected GameState gameState;
     protected Dimension dimension = new Dimension(1000,700);
     private TickCalculator tickCalculator;
     private Logger logger = Logger.getLogger("GAME");
     private int lives;
+    private LevelManager levelManager;
     private Difficulty difficulty;
     private boolean paused;
     private InputManager inputManager;
@@ -40,9 +42,14 @@ public abstract class Game extends Observable implements Runnable {
     }
 
     public Game(Level level, Difficulty difficulty){
+        this(Arrays.asList(level), difficulty);
+    }
+
+    public Game(List<Level> levels, Difficulty difficulty){
         this(difficulty);
-        this.level = level;
-        loadLevel(level);
+        this.levelManager = new LevelManager(levels);
+        this.difficulty = difficulty;
+        loadLevel(levelManager.getCurrentLevel());
     }
 
     public List<Entity> getEntities() {
@@ -108,8 +115,15 @@ public abstract class Game extends Observable implements Runnable {
             }
         }
         if (blocksleft == 1) {
-            won = true;
-            setGameState(GameState.EndGame);
+            if (levelManager.hasNextLevel()) {
+                loadLevel(levelManager.getNextLevel());
+                getInputManager().clearPads();
+                addPads(getScoreManager().getPlayers());
+            }
+            else {
+                won = true;
+                setGameState(GameState.EndGame);
+            }
         }
     }
 
@@ -142,4 +156,11 @@ public abstract class Game extends Observable implements Runnable {
     public boolean isWon() {
         return won;
     }
+
+    public Level getLevel() {
+        return levelManager.getCurrentLevel();
+    }
+
+    public abstract void addPads(List<Player> players);
+
 }

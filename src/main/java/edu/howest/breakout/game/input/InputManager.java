@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -20,6 +21,15 @@ public class InputManager implements KeyEventDispatcher {
 
     public void removeController(Controller controller){
         controllerList.remove(controller);
+    }
+
+    public void clearPads(){
+        Iterator<Controller> controllers = controllerList.iterator();
+        while (controllers.hasNext()) {
+            Controller controller = controllers.next();
+            if (controller instanceof PadController)
+                controllers.remove();
+        }
     }
 
     public void keyTyped(KeyEvent e) {

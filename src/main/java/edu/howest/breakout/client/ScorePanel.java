@@ -1,6 +1,7 @@
 package edu.howest.breakout.client;
 
 import edu.howest.breakout.game.Game;
+import edu.howest.breakout.game.info.Level;
 
 import javax.swing.*;
 import java.util.Observable;
@@ -36,6 +37,7 @@ public class ScorePanel extends JPanel implements Observer {
     public void update(Observable o, Object arg) {
         setScoreLabel(game.getScoreManager().toString());
         setLifesLabel(game.getLives());
+        setLevelLabel(game.getLevel());
     }
 
     public void setScoreLabel(String value) {
@@ -43,5 +45,8 @@ public class ScorePanel extends JPanel implements Observer {
     }
     public void setLifesLabel(int value) {
         this.lifesLabel.setText(String.format("Lives: %d", value));
+    }
+    public void setLevelLabel(Level level){
+        levelLabel.setText(level.toString());
     }
 }

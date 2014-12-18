@@ -12,21 +12,31 @@ import edu.howest.breakout.game.score.Player;
 
 import java.awt.*;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by thomas on 04/11/2014.
  */
 public class LocalGame extends Game {
 
-    public LocalGame(Level level, Difficulty difficulty, Player... player) {
+    @Deprecated
+    public LocalGame(Level level, Difficulty difficulty, List<Player> players) {
         super(level, difficulty);
-        getScoreManager().addPlayer(player);
+        getScoreManager().addPlayer(players);
         getInputManager().addController(new PauseController(this));
-        addPads(player);
+        addPads(players);
     }
 
-    protected void addPads(Player... players){
-        EntityPad entityPad = new EntityPad(Wall.bottom, Color.RED, 150, 15 , this, players[0], false);
+    public LocalGame(List<Level> levels, Difficulty difficulty, List<Player> players) {
+        super(levels, difficulty);
+        getScoreManager().addPlayer(players);
+        getInputManager().addController(new PauseController(this));
+        addPads(players);
+    }
+
+    @Deprecated
+    public void addPads(List<Player> players){
+        EntityPad entityPad = new EntityPad(Wall.bottom, Color.RED, 150, 15 , this, players.get(0), false);
         getInputManager().addController(new PadController(entityPad, this));
         add(entityPad);
         entityPad.setSpeed(15);
@@ -59,7 +69,7 @@ public class LocalGame extends Game {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                gameState = GameState.Errored;
+                setGameState(GameState.Errored);
             }
         }
     }
