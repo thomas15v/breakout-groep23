@@ -12,8 +12,8 @@ public class EntityPowerup extends Entity {
 
     public EntityPowerup(int x, int y, PowerUp powerUp) {
         super(x, y);
-        setWidth(5);
-        setHeight(5);
+        setWidth(7);
+        setHeight(7);
         setSpeed(4);
         setAngle(0);
         this.powerUp = powerUp;

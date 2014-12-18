@@ -3,6 +3,7 @@ package edu.howest.breakout.game;
 import edu.howest.breakout.game.difficulty.Difficulty;
 import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.entity.EntityBall;
+import edu.howest.breakout.game.entity.EntityBlock;
 import edu.howest.breakout.game.entity.EntityPad;
 import edu.howest.breakout.game.info.GameProperties;
 import edu.howest.breakout.game.info.GameState;
@@ -86,8 +87,9 @@ public abstract class Game extends Observable implements Runnable {
     public void lostlife(){
         if (lives > 0) {
             lives -= 1;
-        }else
+        }else{
             setGameState(GameState.EndLost);
+        }
 
     }
 
@@ -96,6 +98,19 @@ public abstract class Game extends Observable implements Runnable {
             remove(entity);
         for (Entity entity : level.getBlockList())
             add(entity);
+    }
+
+    public void checkWin() {
+        int blocksleft = 0;
+        for (Entity e : this.getEntities()) {
+            if (e instanceof EntityBlock && !(e instanceof  EntityPad)) {
+                blocksleft++;
+            }
+        }
+        if (blocksleft == 1)
+            setGameState(GameState.EndWon);
+
+
     }
 
     @Deprecated
@@ -135,4 +150,7 @@ public abstract class Game extends Observable implements Runnable {
     public ScoreManager getScoreManager() {
         return scoreManager;
     }
+
+
+
 }
