@@ -84,6 +84,12 @@ public class Client extends JFrame implements Observer {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 System.out.println("Show High Scores");
+                setContentPane(new HighScorePanel());
+                RootPanel.setVisible(false);
+                //repaint();
+                pack();
+                setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+
             }
         });
 

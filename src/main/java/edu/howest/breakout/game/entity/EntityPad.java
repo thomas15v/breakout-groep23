@@ -78,6 +78,8 @@ public class EntityPad extends EntityBlock {
                     ball.setY(getY() - getHeight() - 10);
             }
         }
+
+        powerUpManager.tick(game, this);
     }
 
     @Override

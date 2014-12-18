@@ -58,7 +58,7 @@ public class PowerUp {
     }
 
     public void undo(Game game, EntityPad entityPad){
-        if (needsundo)
+        if (needsundo && isWorth())
             execute(game, entityPad, -1);
     }
 

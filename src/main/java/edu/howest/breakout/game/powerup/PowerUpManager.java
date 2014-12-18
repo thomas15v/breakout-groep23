@@ -23,7 +23,7 @@ public class PowerUpManager {
 
     public void addPowerUp(PowerUp powerUp, Game game){
         powerUp.execute(game, entityPad);
-        powerUps.add(powerUp);
+
     }
 
     public void tick(Game game, EntityPad entityPad){
