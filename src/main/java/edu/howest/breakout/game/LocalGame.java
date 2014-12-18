@@ -18,12 +18,9 @@ import java.util.Iterator;
  */
 public class LocalGame extends Game {
 
-    private InputManager inputManager;
-
-    public LocalGame(InputManager inputManager, Level level, Difficulty difficulty) {
+    public LocalGame(Level level, Difficulty difficulty) {
         super(level, difficulty);
-        this.inputManager = inputManager;
-        inputManager.addController(new PauseController(this));
+        getInputManager().addController(new PauseController(this));
         addPads();
     }
 
@@ -72,9 +69,5 @@ public class LocalGame extends Game {
             System.out.println("Game Thread stopped!");
         }
         super.setGameState(gameState);
-    }
-
-    public InputManager getInputManager() {
-        return inputManager;
     }
 }

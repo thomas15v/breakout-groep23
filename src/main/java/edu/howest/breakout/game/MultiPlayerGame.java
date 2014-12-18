@@ -19,9 +19,8 @@ public class MultiPlayerGame extends LocalGame {
 
     private EntityPad entityPad2;
 
-    public MultiPlayerGame(InputManager inputManager, Level level, Difficulty difficulty) {
-        super(inputManager, level, difficulty);
-        //System.out.println("multiplayer started");
+    public MultiPlayerGame(Level level, Difficulty difficulty) {
+        super(level, difficulty);
         MoveBlocks();
     }
 
