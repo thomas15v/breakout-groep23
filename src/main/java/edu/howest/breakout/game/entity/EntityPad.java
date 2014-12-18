@@ -47,7 +47,6 @@ public class EntityPad extends EntityBlock {
     public EntityPad(Wall wall, Color color, int width, int height, Game game, EnumSet<Wall> walls){
         this(wall, color, width, height, game);
         this.ballWalls = walls;
-
     }
 
     @Override
@@ -68,7 +67,14 @@ public class EntityPad extends EntityBlock {
         }
         if (hasBall) {
             ball.setX(getX() + getWidth()/2 - ball.getWidth()/2);
-            ball.setY(getY() - getHeight() - 10);
+            switch (wall) {
+                case top:
+                    ball.setY(getY() + 10 + getHeight());
+                    break;
+                case bottom:
+                    ball.setY(getY() - getHeight() - 10);
+            }
+
         }
     }
 

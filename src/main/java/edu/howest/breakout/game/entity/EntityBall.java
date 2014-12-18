@@ -105,18 +105,15 @@ public class EntityBall extends Entity {
 
     private void changeAngle(Entity e){ //op basis van positie op pad
         double locatiePad = ((getX() - e.getX() + getWidth()/2)/e.getWidth())*bereik;
-        //int oldAngle = getAngle();
-
-
         int newAngle = ((int)locatiePad)-bereik/2;
         setAngle(newAngle);
-
     }
 
 
     private void bounceX(){
         setAngle(getAngle() * -1);
     }
+
     //needs refactor
     private void bounceX(Wall wall){
         if (!walls.contains(wall))
@@ -128,6 +125,7 @@ public class EntityBall extends Entity {
     private void bounceY(){
         setAngle(180 - getAngle());
     }
+
     //needs refactor
     private void bounceY(Wall wall){
         if (!walls.contains(wall))

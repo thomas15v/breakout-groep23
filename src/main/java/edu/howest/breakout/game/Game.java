@@ -24,6 +24,7 @@ public abstract class Game extends Observable implements Runnable {
     private int score;
     private int lives;
     private Difficulty difficulty;
+    private boolean paused;
 
     public Game(Difficulty difficulty){
         this.entities = new CopyOnWriteArrayList<Entity>();
@@ -110,5 +111,13 @@ public abstract class Game extends Observable implements Runnable {
 
     public void setLives(int lives) {
         this.lives = lives;
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 }

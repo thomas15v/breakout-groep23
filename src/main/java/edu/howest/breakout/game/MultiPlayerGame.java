@@ -2,7 +2,6 @@ package edu.howest.breakout.game;
 
 import edu.howest.breakout.game.difficulty.Difficulty;
 import edu.howest.breakout.game.entity.Entity;
-import edu.howest.breakout.game.entity.EntityBall;
 import edu.howest.breakout.game.entity.EntityBlock;
 import edu.howest.breakout.game.entity.EntityPad;
 import edu.howest.breakout.game.info.Level;
@@ -11,23 +10,33 @@ import edu.howest.breakout.game.input.InputManager;
 import edu.howest.breakout.game.input.PadController;
 
 import java.awt.*;
+import java.util.EnumSet;
 
 /**
  * Created by Administrator on 18/12/2014.
  */
 public class MultiPlayerGame extends LocalGame {
 
-    private EntityPad entityPadBoven;
+    private EntityPad entityPad2;
 
     public MultiPlayerGame(InputManager inputManager, Level level, Difficulty difficulty) {
         super(inputManager, level, difficulty);
         //System.out.println("multiplayer started");
 
-        this.entityPadBoven = new EntityPad(Wall.top, Color.BLUE, 150, 15, this);
-        this.getInputManager().addController(new PadController(entityPadBoven, this));
-        add(entityPadBoven);
-        entityPadBoven.setSpeed(15);
+
         MoveBlocks();
+    }
+
+    @Override
+    protected void addPads() {
+        EntityPad entityPad1 = new EntityPad(Wall.bottom, Color.RED, 150, 15, this, EnumSet.of(Wall.top, Wall.bottom));
+        getInputManager().addController(new PadController(entityPad1, this));
+        add(entityPad1);
+        entityPad1.setSpeed(15);
+        this.entityPad2 = new EntityPad(Wall.top, Color.BLUE, 150, 15, this, EnumSet.of(Wall.top, Wall.bottom));
+        this.getInputManager().addController(new PadController(entityPad2, this));
+        add(entityPad2);
+        entityPad2.setSpeed(15);
     }
 
     public void MoveBlocks(){
