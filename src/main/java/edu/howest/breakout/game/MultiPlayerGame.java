@@ -34,7 +34,7 @@ public class MultiPlayerGame extends LocalGame {
         getInputManager().addController(new PadController(entityPad1, this, PadController.PadKeyMap.MPplayer1));
         add(entityPad1);
         entityPad1.setSpeed(15);
-        EntityPad entityPad2 = new EntityPad(Wall.top, Color.BLUE, 150, 15, this,players.get(0), /*true*/ EnumSet.of(Wall.top, Wall.bottom));
+        EntityPad entityPad2 = new EntityPad(Wall.top, Color.BLUE, 150, 15, this,players.get(1), /*true*/ EnumSet.of(Wall.top, Wall.bottom));
         this.getInputManager().addController(new PadController(entityPad2, this, PadController.PadKeyMap.MPplayer2));
         add(entityPad2);
         entityPad2.setSpeed(15);
