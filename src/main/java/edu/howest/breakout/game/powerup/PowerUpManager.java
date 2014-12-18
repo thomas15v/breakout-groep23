@@ -1,6 +1,7 @@
 package edu.howest.breakout.game.powerup;
 
 import edu.howest.breakout.game.Game;
+import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.entity.EntityPad;
 
 import java.util.ArrayList;
@@ -13,12 +14,15 @@ import java.util.List;
 public class PowerUpManager {
 
     private List<PowerUp> powerUps;
+    private EntityPad entityPad;
 
-    public PowerUpManager(){
+    public PowerUpManager(EntityPad entityPad){
         this.powerUps = new ArrayList<PowerUp>();
+        this.entityPad = entityPad;
     }
 
-    public void addPowerUp(PowerUp powerUp){
+    public void addPowerUp(PowerUp powerUp, Game game){
+        powerUp.execute(game, entityPad);
         powerUps.add(powerUp);
     }
 

@@ -147,6 +147,7 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
             yValue.setValue(componentList.getSelectedValue().getY());
             widthValue.setValue(componentList.getSelectedValue().getWidth());
             heightValue.setValue(componentList.getSelectedValue().getHeight());
+            powerUpBox.setSelectedItem(((EntityBlock) componentList.getSelectedValue()).getPowerUp());
         }
         repaint();
         this.canchange = true;
@@ -157,6 +158,9 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
         if (!componentList.isSelectionEmpty() && canchange == true) {
             moveSelection(getInteger(xValue), getInteger(yValue));
             resizeSelection(getInteger(widthValue), getInteger(heightValue));
+            for (Entity entity : componentList.getSelectedValuesList())
+                if (entity instanceof EntityBlock)
+                    ((EntityBlock) entity).setPowerUp((PowerUp) powerUpBox.getSelectedItem());
         }
     }
 

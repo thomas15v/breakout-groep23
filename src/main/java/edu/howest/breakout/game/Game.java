@@ -93,12 +93,14 @@ public abstract class Game extends Observable implements Runnable {
             add(entity);
     }
 
+    @Deprecated
     public void addScore(int i){
         score+=i;
         setChanged();
         notifyObservers();
     }
 
+    @Deprecated
     public int getScore() {
         return score;
     }

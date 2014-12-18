@@ -5,6 +5,7 @@ package edu.howest.breakout.game;
  */
 public class Player {
     private int score;
+    private int Levens;
     private String name;
 
     public Player(String name){

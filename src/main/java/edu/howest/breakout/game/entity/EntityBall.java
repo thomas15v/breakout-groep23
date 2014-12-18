@@ -26,7 +26,6 @@ public class EntityBall extends Entity {
     public EntityBall(int x, int y, EnumSet<Wall> walls) {
         super(x, y);
         this.walls = walls;
-        setColor(Color.RED);
         setWidth(20);
         setHeight(20);
         setSpeed(15);
@@ -41,6 +40,7 @@ public class EntityBall extends Entity {
     public EntityBall(EntityPad owner){
         this((int) owner.getX(), (int) owner.getY() + 10, owner.getWall());
         this.owner = owner;
+        setColor(owner.getColor());
         setSpeed(0);
     }
 

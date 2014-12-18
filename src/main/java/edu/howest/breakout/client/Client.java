@@ -22,7 +22,7 @@ public class Client extends JFrame implements Observer {
     private JPanel RootPanel;
     private JComboBox comboBoxDifficulty;
     private Difficulty difficulty;
-    Database database;
+    private Database database;
 
 
     public Client(){

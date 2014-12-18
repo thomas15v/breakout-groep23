@@ -46,7 +46,7 @@ public class PowerUp {
         game.setLives(game.getLives() + modifier*extralive);
         entityPad.setWidth(entityPad.getWidth() + modifier*extrawidth);
         //todo: fix this when pad is on the left or right side
-        entityPad.setX(entityPad.getWidth() + modifier*(extrawidth/2));
+        entityPad.setX(entityPad.getX() + modifier*(extrawidth/2));
         for (Entity ball : game.getEntities())
             if (ball instanceof EntityBall)
                 ball.setSpeed(ball.getSpeed() + modifier*extraballspeed);

@@ -22,19 +22,17 @@ public class MultiPlayerGame extends LocalGame {
     public MultiPlayerGame(InputManager inputManager, Level level, Difficulty difficulty) {
         super(inputManager, level, difficulty);
         //System.out.println("multiplayer started");
-
-
         MoveBlocks();
     }
 
     @Override
     protected void addPads() {
         EntityPad entityPad1 = new EntityPad(Wall.bottom, Color.RED, 150, 15, this, EnumSet.of(Wall.top, Wall.bottom));
-        getInputManager().addController(new PadController(entityPad1, this));
+        getInputManager().addController(new PadController(entityPad1, this, PadController.PadKeyMap.MPplayer1));
         add(entityPad1);
         entityPad1.setSpeed(15);
-        this.entityPad2 = new EntityPad(Wall.top, Color.BLUE, 150, 15, this, false);
-        this.getInputManager().addController(new PadController(entityPad2, this));
+        this.entityPad2 = new EntityPad(Wall.top, Color.BLUE, 150, 15, this, /*true*/ EnumSet.of(Wall.top, Wall.bottom));
+        this.getInputManager().addController(new PadController(entityPad2, this, PadController.PadKeyMap.MPplayer2));
         add(entityPad2);
         entityPad2.setSpeed(15);
     }
@@ -43,9 +41,7 @@ public class MultiPlayerGame extends LocalGame {
         for (Entity e : this.getEntities()) {
             if (e instanceof EntityBlock && !(e instanceof EntityPad)) {
                 e.setY(e.getY()+200);
-
             }
         }
-
     }
 }

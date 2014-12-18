@@ -23,7 +23,6 @@ public class EntityBlock extends Entity {
 
     public void DoAction(Game game, Entity entity){
         setDestroyed(true);
-
         game.addScore(calculateScore(game));
         if (powerUp.isWorth())
             game.add(new EntityPowerup((int) getX() + getWidth() / 2, (int)getY() + getHeight() / 2, powerUp));
@@ -35,6 +34,7 @@ public class EntityBlock extends Entity {
 
     public void setPowerUp(PowerUp powerUp) {
         this.powerUp = powerUp;
+        setColor(powerUp.getColor());
     }
 
     public boolean hasPowerup(){
@@ -43,5 +43,9 @@ public class EntityBlock extends Entity {
 
     public int getPowerUpType(){
         return powerUp.getId();
+    }
+
+    public PowerUp getPowerUp() {
+        return powerUp;
     }
 }

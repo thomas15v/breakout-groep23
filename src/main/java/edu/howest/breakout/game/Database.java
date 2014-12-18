@@ -111,4 +111,8 @@ public class Database {
         System.out.println(id);
         return create.select().from(POWERUPS).where(POWERUPS.ID.eq(id)).fetchOne().into(PowerUp.class);
     }
+
+    public void addPlayer(Player player){
+
+    }
 }

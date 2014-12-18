@@ -21,6 +21,7 @@ public class EditorGame extends Game {
 
     public EditorGame() {
         super(new Difficulty());
+        getDimension().setSize(getDimension().getWidth(), getDimension().getHeight() - 200);
     }
 
     private DefaultListModel<Entity> entityList;

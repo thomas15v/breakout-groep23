@@ -5,33 +5,52 @@ import edu.howest.breakout.game.entity.EntityPad;
 import edu.howest.breakout.game.info.Direction;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.util.BitSet;
 
 public class PadController implements Controller {
 
     private EntityPad controller;
     private Game game;
+    private PadKeyMap padKeyMap;
 
-    public PadController(EntityPad controller, Game game){
+    public enum PadKeyMap {
+        MPplayer1(KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_DOWN),
+        MPplayer2(KeyEvent.VK_Q, KeyEvent.VK_D, KeyEvent.VK_S),
+        Splayer(KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE);
+
+        private int leftKey;
+        private int rightKey;
+        private int spaceKey;
+
+        private PadKeyMap(int leftKey, int rightKey, int spaceKey) {
+            this.leftKey = leftKey;
+            this.rightKey = rightKey;
+            this.spaceKey = spaceKey;
+        }
+    }
+
+    public PadController(EntityPad controller, Game game, PadKeyMap padKeyMap){
         this.controller = controller;
         this.game = game;
+        this.padKeyMap = padKeyMap;
+    }
+
+    public PadController(EntityPad controller, Game game){
+        this(controller, game, PadKeyMap.MPplayer1);
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {}
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_LEFT)
+    public void keyPressed(BitSet e) {
+        if (e.get(padKeyMap.leftKey))
             controller.setMovement(Direction.left);
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+        if (e.get(padKeyMap.rightKey))
             controller.setMovement(Direction.right);
-        if (e.getKeyCode() == KeyEvent.VK_SPACE)
+        if (e.get(padKeyMap.spaceKey))
             controller.launchBall(game);
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(BitSet e) {
         controller.setMovement(Direction.none);
     }
 }

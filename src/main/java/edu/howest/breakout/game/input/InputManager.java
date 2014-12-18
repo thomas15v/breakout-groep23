@@ -3,6 +3,7 @@ package edu.howest.breakout.game.input;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 
 /**
@@ -10,6 +11,7 @@ import java.util.List;
  */
 public class InputManager implements KeyEventDispatcher {
 
+    private BitSet keybits = new BitSet(265);
     private List<Controller> controllerList = new ArrayList<Controller>();
 
     public void addController(Controller controller){
@@ -21,18 +23,19 @@ public class InputManager implements KeyEventDispatcher {
     }
 
     public void keyTyped(KeyEvent e) {
-        for (Controller controller : controllerList)
-            controller.keyTyped(e);
+        //Nope nope and nope, I hate you
     }
 
     public void keyPressed(KeyEvent e) {
+        keybits.set(e.getKeyCode());
         for (Controller controller : controllerList)
-            controller.keyPressed(e);
+            controller.keyPressed(keybits);
     }
 
     public void keyReleased(KeyEvent e) {
         for (Controller controller : controllerList)
-            controller.keyReleased(e);
+            controller.keyReleased(keybits);
+        keybits.clear(e.getKeyCode());
     }
 
     @Override
