@@ -39,7 +39,7 @@ public class Client extends JFrame implements Observer {
 
         for (int i = 0; i < difficultyList.length; i++)
             	    comboBoxDifficulty.addItem(difficultyList[i]);
-        comboBoxDifficulty.setSelectedIndex(1);
+        comboBoxDifficulty.setSelectedIndex(2);
 
         comboBoxDifficulty.addActionListener(new ActionListener() {
 

@@ -24,11 +24,11 @@ public class EntityPowerup extends Entity {
     public void tick(Game game) {
         setX(getX() + getXdir());
         setY(getY() + getYdir());
-        for (Entity entity : game.getEntities())
-            if (entity instanceof EntityPad)
-                if (entity.collide(entity, + getHeight()/2 , getY())) {
+        for (Entity e : game.getEntities())
+            if (e instanceof EntityPad)
+                if (e.collide(e, e.getX()+ getHeight()/2 , getY())) {
                     setDestroyed(true);
-                    ((EntityPad) entity).getPowerUpManager().addPowerUp(powerUp);
+                    ((EntityPad) e).getPowerUpManager().addPowerUp(powerUp);
                 }
         if (getX() > game.getDimension().getHeight())
             setDestroyed(true);
