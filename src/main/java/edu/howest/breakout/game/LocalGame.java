@@ -1,5 +1,6 @@
 package edu.howest.breakout.game;
 
+import edu.howest.breakout.game.difficulty.Difficulty;
 import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.entity.EntityBall;
 import edu.howest.breakout.game.entity.EntityPad;
@@ -20,8 +21,8 @@ public class LocalGame extends Game {
     private EntityPad entityPad;
     private InputManager inputManager;
 
-    public LocalGame(InputManager inputManager, Level level) {
-        super(level);
+    public LocalGame(InputManager inputManager, Level level, Difficulty difficulty) {
+        super(level, difficulty);
         this.inputManager = inputManager;
 
         /*for (int x = 0; x < 8; x++)
@@ -30,7 +31,7 @@ public class LocalGame extends Game {
         this.entityPad = new EntityPad(Wall.bottom, Color.RED, 150, 15, (int) getDimension().getHeight());
         EntityBall ball = new EntityBall(entityPad);
         add(ball);
-        this.inputManager.addController(new PadController(entityPad));
+        this.inputManager.addController(new PadController(entityPad, this));
         entityPad.setBall(ball);
         add(entityPad);
         entityPad.setSpeed(15);

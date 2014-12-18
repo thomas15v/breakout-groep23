@@ -53,7 +53,7 @@ public class EntityPad extends EntityBlock {
             setX(game.getDimension().width-getWidth()-1);
         }
         if (hasBall) {
-            ball.setX(getX() + getWidth()/2);
+            ball.setX(getX() + getWidth()/2 - ball.getWidth()/2);
             ball.setY(getY() - getHeight() - 10);
         }
     }
@@ -67,10 +67,10 @@ public class EntityPad extends EntityBlock {
         this.MovementDirection = direction;
     }
 
-    public void launchBall(){
+    public void launchBall(Game game){
         if (hasBall) {
-            ball.setSpeed(15);
-            ball.setAngle(190);
+            ball.setSpeed(game.getDifficulty().getBallSpeed());
+            ball.setAngle(180);
             hasBall = false;
         }
     }

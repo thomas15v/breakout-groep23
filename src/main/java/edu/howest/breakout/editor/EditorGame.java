@@ -1,6 +1,7 @@
 package edu.howest.breakout.editor;
 
 import edu.howest.breakout.game.Game;
+import edu.howest.breakout.game.difficulty.Difficulty;
 import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.entity.EntityBlock;
 import edu.howest.breakout.game.info.Level;
@@ -19,7 +20,7 @@ public class EditorGame extends Game {
     DefaultListModel<Entity> defaultListModel = new DefaultListModel<Entity>();
 
     public EditorGame() {
-        super();
+        super(new Difficulty());
     }
 
     private DefaultListModel<Entity> entityList;

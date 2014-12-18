@@ -6,9 +6,11 @@ import edu.howest.breakout.client.GameGrid;
 import edu.howest.breakout.game.Database;
 import edu.howest.breakout.game.Game;
 import edu.howest.breakout.game.LocalGame;
+import edu.howest.breakout.game.difficulty.Difficulty;
 import edu.howest.breakout.game.info.GameProperties;
 import edu.howest.breakout.game.info.GameState;
 import edu.howest.breakout.game.input.InputManager;
+import org.jooq.util.derby.sys.Sys;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,18 +27,36 @@ public class MainMenuPannel extends JFrame implements Observer {
     private JButton multiPlayerButton;
     private JButton singlePlayerButton;
     private JPanel RootPanel;
-
+    private JComboBox comboBoxDifficulty;
+    private Difficulty difficulty;
     Database database;
 
 
     public MainMenuPannel(){
         this.database = new Database("root", "", "jdbc:mysql://localhost:3306/breakout");
 
+        this.difficulty = new Difficulty();
         setVisible(true);
         setContentPane(RootPanel);
 
         setMinimumSize(new Dimension(1000, 700));
-        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        //setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+
+        String[] difficultyList = { "Easy","Normal","Hard" };
+
+        for (int i = 0; i < difficultyList.length; i++)
+            	    comboBoxDifficulty.addItem(difficultyList[i]);
+        comboBoxDifficulty.setSelectedIndex(1);
+
+        comboBoxDifficulty.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.out.println("changed difficulty to " + comboBoxDifficulty.getSelectedIndex());
+                System.out.println(difficulty);
+                difficulty.setDifficulty(comboBoxDifficulty.getSelectedIndex() + 1);
+            }
+        });
 
 
         singlePlayerButton.addActionListener(new ActionListener() {
@@ -88,7 +108,7 @@ public class MainMenuPannel extends JFrame implements Observer {
 
     public void startSinglePlayer(){
         try {
-            final GameFrame gameFrame = new GameFrame(database.getLevel(1));
+            final GameFrame gameFrame = new GameFrame(database.getLevel(1), difficulty);
             addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {

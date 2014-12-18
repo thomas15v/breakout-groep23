@@ -1,5 +1,6 @@
 package edu.howest.breakout.game;
 
+import edu.howest.breakout.game.difficulty.Difficulty;
 import edu.howest.breakout.game.entity.Entity;
 import edu.howest.breakout.game.entity.EntityBall;
 import edu.howest.breakout.game.entity.EntityPad;
@@ -22,16 +23,19 @@ public abstract class Game extends Observable implements Runnable {
     private Logger logger = Logger.getLogger("GAME");
     private int score;
     private int lives;
+    private Difficulty difficulty;
 
-    public Game(){
+    public Game(Difficulty difficulty){
         this.entities = new CopyOnWriteArrayList<Entity>();
         gameState = GameState.Running;
         tickCalculator = new TickCalculator();
         lives = 5;
+        this.difficulty = difficulty;
+
     }
 
-    public Game(Level level){
-        this();
+    public Game(Level level, Difficulty difficulty){
+        this(difficulty);
         this.level = level;
         loadLevel(level);
     }
@@ -102,4 +106,8 @@ public abstract class Game extends Observable implements Runnable {
     }
 
     public int getLives(){return lives;}
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
 }
