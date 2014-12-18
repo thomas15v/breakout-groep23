@@ -1,12 +1,6 @@
 package edu.howest.breakout.client;
 
 import edu.howest.breakout.game.Game;
-import edu.howest.breakout.game.LocalGame;
-import edu.howest.breakout.game.MultiPlayerGame;
-import edu.howest.breakout.game.Player;
-import edu.howest.breakout.game.difficulty.Difficulty;
-import edu.howest.breakout.game.info.Level;
-import edu.howest.breakout.game.input.InputManager;
 
 import javax.swing.*;
 import java.awt.*;

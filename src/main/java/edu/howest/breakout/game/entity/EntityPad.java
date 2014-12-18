@@ -4,6 +4,7 @@ import edu.howest.breakout.game.Game;
 import edu.howest.breakout.game.info.Direction;
 import edu.howest.breakout.game.info.Wall;
 import edu.howest.breakout.game.powerup.PowerUpManager;
+import edu.howest.breakout.game.score.Player;
 
 import java.awt.*;
 import java.util.EnumSet;
@@ -20,10 +21,12 @@ public class EntityPad extends EntityBlock {
     private boolean ballLess;
     private PowerUpManager powerUpManager;
     private Game game;
+    private Player player;
 
-    public EntityPad(Wall wall, Color color, int width, int height, Game game, boolean ballLess) {
+    public EntityPad(Wall wall, Color color, int width, int height, Game game, Player player , boolean ballLess) {
         super(0, 0, width, height, color);
         this.game = game;
+        this.player = player;
         this.ballLess = ballLess;
         this.powerUpManager = new PowerUpManager(this);
         int x = 0;
@@ -47,8 +50,8 @@ public class EntityPad extends EntityBlock {
             newBall();
     }
 
-    public EntityPad(Wall wall, Color color, int width, int height, Game game, EnumSet<Wall> BallWalls){
-        this(wall, color, width, height, game, false);
+    public EntityPad(Wall wall, Color color, int width, int height, Game game,Player player , EnumSet<Wall> BallWalls){
+        this(wall, color, width, height, game,player , false);
         this.ballWalls = BallWalls;
     }
 
@@ -83,8 +86,7 @@ public class EntityPad extends EntityBlock {
     }
 
     @Override
-    public void DoAction(Game game, Entity entity){
-        System.out.println("bouncy bouncy");
+    public void DoAction(Game game, EntityBall entity){
     }
 
     public void setMovement(Direction direction){
@@ -111,5 +113,9 @@ public class EntityPad extends EntityBlock {
 
     public PowerUpManager getPowerUpManager() {
         return powerUpManager;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

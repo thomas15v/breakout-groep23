@@ -6,9 +6,9 @@ import edu.howest.breakout.game.entity.EntityPad;
 import edu.howest.breakout.game.info.GameState;
 import edu.howest.breakout.game.info.Level;
 import edu.howest.breakout.game.info.Wall;
-import edu.howest.breakout.game.input.InputManager;
 import edu.howest.breakout.game.input.PadController;
 import edu.howest.breakout.game.input.PauseController;
+import edu.howest.breakout.game.score.Player;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -18,17 +18,18 @@ import java.util.Iterator;
  */
 public class LocalGame extends Game {
 
-    public LocalGame(Level level, Difficulty difficulty) {
+    public LocalGame(Level level, Difficulty difficulty, Player... player) {
         super(level, difficulty);
+        getScoreManager().addPlayer(player);
         getInputManager().addController(new PauseController(this));
-        addPads();
+        addPads(player);
     }
 
-    protected void addPads(){
-        EntityPad entityPad1 = new EntityPad(Wall.bottom, Color.RED, 150, 15, this, false);
-        getInputManager().addController(new PadController(entityPad1, this));
-        add(entityPad1);
-        entityPad1.setSpeed(15);
+    protected void addPads(Player... players){
+        EntityPad entityPad = new EntityPad(Wall.bottom, Color.RED, 150, 15 , this, players[0], false);
+        getInputManager().addController(new PadController(entityPad, this));
+        add(entityPad);
+        entityPad.setSpeed(15);
     }
 
 

@@ -8,6 +8,7 @@ import edu.howest.breakout.game.info.GameProperties;
 import edu.howest.breakout.game.info.GameState;
 import edu.howest.breakout.game.info.Level;
 import edu.howest.breakout.game.input.InputManager;
+import edu.howest.breakout.game.score.ScoreManager;
 
 import java.awt.*;
 import java.util.List;
@@ -27,6 +28,7 @@ public abstract class Game extends Observable implements Runnable {
     private Difficulty difficulty;
     private boolean paused;
     private InputManager inputManager;
+    private ScoreManager scoreManager;
 
     public Game(Difficulty difficulty){
         this.entities = new CopyOnWriteArrayList<Entity>();
@@ -35,6 +37,7 @@ public abstract class Game extends Observable implements Runnable {
         lives = 5;
         this.difficulty = difficulty;
         this.inputManager = new InputManager();
+        this.scoreManager = new ScoreManager();
     }
 
     public Game(Level level, Difficulty difficulty){
@@ -108,14 +111,12 @@ public abstract class Game extends Observable implements Runnable {
         return score;
     }
 
-    @Deprecated
     public int getLives(){return lives;}
 
     public Difficulty getDifficulty() {
         return difficulty;
     }
 
-    @Deprecated
     public void setLives(int lives) {
         this.lives = lives;
     }
@@ -130,5 +131,9 @@ public abstract class Game extends Observable implements Runnable {
 
     public InputManager getInputManager() {
         return inputManager;
+    }
+
+    public ScoreManager getScoreManager() {
+        return scoreManager;
     }
 }

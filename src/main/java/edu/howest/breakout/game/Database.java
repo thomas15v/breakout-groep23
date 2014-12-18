@@ -7,6 +7,7 @@ import static edu.howest.breakout.database.Tables.*;
 import edu.howest.breakout.game.entity.EntityBlock;
 import edu.howest.breakout.game.info.Level;
 import edu.howest.breakout.game.powerup.PowerUp;
+import edu.howest.breakout.game.score.Player;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.RecordMapper;

@@ -34,12 +34,12 @@ public class ScorePanel extends JPanel implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        setScoreLabel(game.getScore());
+        setScoreLabel(game.getScoreManager().toString());
         setLifesLabel(game.getLives());
     }
 
-    public void setScoreLabel(int value) {
-        this.scoreLabel.setText(String.format("Score: %d", value));
+    public void setScoreLabel(String value) {
+        this.scoreLabel.setText(value);
     }
     public void setLifesLabel(int value) {
         this.lifesLabel.setText(String.format("Lives: %d", value));

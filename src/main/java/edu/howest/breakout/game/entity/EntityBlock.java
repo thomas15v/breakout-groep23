@@ -21,9 +21,9 @@ public class EntityBlock extends Entity {
         setColor(color);
     }
 
-    public void DoAction(Game game, Entity entity){
+    public void DoAction(Game game, EntityBall entity){
         setDestroyed(true);
-        game.addScore(calculateScore(game));
+        entity.getOwner().getPlayer().addScore(calculateScore(game));
         if (powerUp.isWorth())
             game.add(new EntityPowerup((int) getX() + getWidth() / 2, (int)getY() + getHeight() / 2, powerUp));
     }

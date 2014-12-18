@@ -4,7 +4,7 @@ package edu.howest.breakout.client;
 import edu.howest.breakout.game.Database;
 import edu.howest.breakout.game.LocalGame;
 import edu.howest.breakout.game.MultiPlayerGame;
-import edu.howest.breakout.game.Player;
+import edu.howest.breakout.game.score.Player;
 import edu.howest.breakout.game.difficulty.Difficulty;
 import edu.howest.breakout.game.info.GameState;
 
@@ -110,7 +110,9 @@ public class Client extends JFrame implements Observer {
 
     private void startMultiPlayer() {
         try {
-            final GameFrame gameFrame = new GameFrame(new MultiPlayerGame(database.getLevel(1), difficulty));
+            Player player1 = new Player(player1Value.getText());
+            Player player2 = new Player(player2Value.getText());
+            final GameFrame gameFrame = new GameFrame(new MultiPlayerGame(database.getLevel(1), difficulty, player1, player2));
             addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -137,7 +139,7 @@ public class Client extends JFrame implements Observer {
     public void startSinglePlayer(){
         try {
             Player player = new Player(player1Value.getText());
-            final GameFrame gameFrame = new GameFrame(new LocalGame(database.getLevel(2), difficulty));
+            final GameFrame gameFrame = new GameFrame(new LocalGame(database.getLevel(4), difficulty, player));
             addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {

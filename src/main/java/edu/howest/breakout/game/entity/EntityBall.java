@@ -19,11 +19,11 @@ public class EntityBall extends Entity {
         this(x, y, EnumSet.of(Wall.bottom));
     }
 
-    public EntityBall(int x, int y, Wall wall){
+    private EntityBall(int x, int y, Wall wall){
         this(x, y, EnumSet.of(wall));
     }
 
-    public EntityBall(int x, int y, EnumSet<Wall> walls) {
+    private EntityBall(int x, int y, EnumSet<Wall> walls) {
         super(x, y);
         this.walls = walls;
         setWidth(20);
@@ -143,5 +143,9 @@ public class EntityBall extends Entity {
 
     public int getStraalY(){
         return getHeight() / 2;
+    }
+
+    public EntityPad getOwner() {
+        return owner;
     }
 }
