@@ -54,7 +54,7 @@ public class GameGrid extends JPanel implements Runnable {
             Entity entity = it.next();
             renders.get(entity.getClass()).render(graphics2D, entity);
         }
-        paintDebug(graphics2D);
+        //paintDebug(graphics2D);
     }
 
     private void paintDebug(Graphics2D g){
@@ -63,7 +63,6 @@ public class GameGrid extends JPanel implements Runnable {
         g.drawString("client tickduration: " + tickCalculator.getDelay(), 0,40);
         g.drawString("server fps: " + game.getTickCalculator().getFps(), 0, 10);
         g.drawString("server tickduration: " + game.getTickCalculator().getDelay(), 0, 20);
-        g.drawString("score " + game.getScore(), 0, 50);
     }
 
     @Override

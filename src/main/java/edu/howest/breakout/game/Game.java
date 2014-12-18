@@ -22,7 +22,6 @@ public abstract class Game extends Observable implements Runnable {
     protected Dimension dimension = new Dimension(1000,700);
     private TickCalculator tickCalculator;
     private Logger logger = Logger.getLogger("GAME");
-    private int score;
     private int lives;
     private Difficulty difficulty;
     private boolean paused;
@@ -114,18 +113,6 @@ public abstract class Game extends Observable implements Runnable {
         }
 
 
-    }
-
-    @Deprecated
-    public void addScore(int i){
-        score+=i;
-        setChanged();
-        notifyObservers();
-    }
-
-    @Deprecated
-    public int getScore() {
-        return score;
     }
 
     public int getLives(){return lives;}
