@@ -2,6 +2,7 @@ package edu.howest.breakout.client;
 
 
 import edu.howest.breakout.game.Database;
+import edu.howest.breakout.game.Player;
 import edu.howest.breakout.game.difficulty.Difficulty;
 import edu.howest.breakout.game.info.GameState;
 
@@ -21,6 +22,8 @@ public class Client extends JFrame implements Observer {
     private JButton singlePlayerButton;
     private JPanel RootPanel;
     private JComboBox comboBoxDifficulty;
+    private JTextField player1Value;
+    private JTextField player2Value;
     private Difficulty difficulty;
     private Database database;
 
@@ -126,6 +129,7 @@ public class Client extends JFrame implements Observer {
     public void startSinglePlayer(){
         try {
             final GameFrame gameFrame = new GameFrame(database.getLevel(2), difficulty);
+            Player player = new Player(player1Value.getText());
             addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
