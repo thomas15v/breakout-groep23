@@ -31,7 +31,6 @@ public abstract class Game extends Observable implements Runnable {
         tickCalculator = new TickCalculator();
         lives = 5;
         this.difficulty = difficulty;
-
     }
 
     public Game(Level level, Difficulty difficulty){

@@ -24,6 +24,8 @@ public class EntityBlock extends Entity {
     public void DoAction(Game game, Entity entity){
         setDestroyed(true);
         game.addScore(calculateScore());
+        if (powerUp.isWorth())
+            game.add(new EntityPowerup((int) getX(), (int)getY(), powerUp));
     }
 
     public int calculateScore(){
@@ -36,5 +38,9 @@ public class EntityBlock extends Entity {
 
     public boolean hasPowerup(){
         return powerUp != null;
+    }
+
+    public int getPowerUpType(){
+        return powerUp.getId();
     }
 }

@@ -74,6 +74,14 @@ public class PowerUp {
         return color;
     }
 
+    public boolean isWorth(){
+        return !powerUpMessage.equals("");
+    }
+
+    public int getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return String.format("%s %d", powerUpMessage == null ? "None" : powerUpMessage, id);

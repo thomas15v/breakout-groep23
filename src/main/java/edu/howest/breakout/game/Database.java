@@ -66,7 +66,7 @@ public class Database {
                         record.getValue(LEVEL_MAP.Y).intValue(),
                         record.getValue(LEVEL_MAP.WIDTH).intValue(),
                         record.getValue(LEVEL_MAP.HEIGHT).intValue(),
-                        getPowerUp(record.getValue(LEVEL_MAP.BLOCKCAT).intValue()));
+                        getPowerUp(record.getValue(LEVEL_MAP.POWERUPTYPE).intValue()));
             }
         });
         level.setBlockList(blocks);
@@ -84,7 +84,7 @@ public class Database {
                             record.getValue(LEVEL_MAP.Y).intValue(),
                             record.getValue(LEVEL_MAP.WIDTH).intValue(),
                             record.getValue(LEVEL_MAP.HEIGHT).intValue(),
-                            getPowerUp(record.getValue(LEVEL_MAP.BLOCKCAT).intValue()));
+                            getPowerUp(record.getValue(LEVEL_MAP.POWERUPTYPE).intValue()));
                 }
             });
             level.setBlockList(blocks);
@@ -108,6 +108,7 @@ public class Database {
     }
 
     public PowerUp getPowerUp(int id){
+        System.out.println(id);
         return create.select().from(POWERUPS).where(POWERUPS.ID.eq(id)).fetchOne().into(PowerUp.class);
     }
 }

@@ -112,7 +112,7 @@ public class EntityBall extends Entity {
     }
     //needs refactor
     private void bounceX(Wall wall){
-        if (!            walls.contains(wall))
+        if (!walls.contains(wall))
             bounceX();
         else
             lostBall = true;
@@ -127,11 +127,6 @@ public class EntityBall extends Entity {
             bounceY();
         else
             lostBall = true;
-    }
-
-    private boolean collide(Entity e, double x, double y){
-        //System.out.println("x:" + x  + "y: " + y);
-        return e.getX() < x && e.getWidth() + e.getX() > x && e.getY() < y && e.getHeight() + e.getY() > y;
     }
 
     public int getStraalX(){

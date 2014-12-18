@@ -10,7 +10,6 @@ public class Difficulty {
     private int difficulty;
 
     public Difficulty(){
-
         difficulty = 2;
     }
 

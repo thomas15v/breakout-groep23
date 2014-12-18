@@ -125,4 +125,8 @@ public abstract class Entity {
     public String toString() {
         return "Entity@" + Integer.toHexString(hashCode());
     }
+
+    protected boolean collide(Entity e, double x, double y){
+        return e.getX() < x && e.getWidth() + e.getX() > x && e.getY() < y && e.getHeight() + e.getY() > y;
+    }
 }
