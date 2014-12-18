@@ -1,16 +1,17 @@
 package edu.howest.breakout.game.entity;
 
 import edu.howest.breakout.game.Game;
+import edu.howest.breakout.game.powerup.PowerUp;
 
 import java.awt.*;
 
 public class EntityBlock extends Entity {
 
-    private int blockCat;
+    private PowerUp powerUp;
 
-    public EntityBlock(int id, int x, int y, int width, int height, int blockcat){
-        this(x,y,width,height,Color.cyan);
-        this.blockCat = blockcat;
+    public EntityBlock(int x, int y, int width, int height, PowerUp powerUp){
+        this(x,y,width,height, powerUp.getColor());
+        setPowerUp(powerUp);
     }
 
     public EntityBlock(int x, int y, int width, int height, Color color) {
@@ -29,7 +30,11 @@ public class EntityBlock extends Entity {
         return (getWidth()*getHeight())/5;
     }
 
-    public int getBlockCat() {
-        return blockCat;
+    public void setPowerUp(PowerUp powerUp) {
+        this.powerUp = powerUp;
+    }
+
+    public boolean hasPowerup(){
+        return powerUp != null;
     }
 }

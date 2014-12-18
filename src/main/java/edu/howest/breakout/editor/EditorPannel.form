@@ -89,10 +89,10 @@
               </grid>
             </constraints>
             <properties>
-              <text value="type"/>
+              <text value="PowerUp:"/>
             </properties>
           </component>
-          <component id="9df3" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+          <component id="9df3" class="javax.swing.JComboBox" binding="powerUpBox">
             <constraints>
               <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>

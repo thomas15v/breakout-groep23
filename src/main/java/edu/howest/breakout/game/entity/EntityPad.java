@@ -3,6 +3,7 @@ package edu.howest.breakout.game.entity;
 import edu.howest.breakout.game.Game;
 import edu.howest.breakout.game.info.Direction;
 import edu.howest.breakout.game.info.Wall;
+import edu.howest.breakout.game.powerup.PowerUpManager;
 
 import java.awt.*;
 
@@ -14,9 +15,11 @@ public class EntityPad extends EntityBlock {
     private Direction MovementDirection;
     private EntityBall ball;
     private boolean hasBall;
+    private PowerUpManager powerUpManager;
 
     public EntityPad(Wall wall, Color color, int width, int height, int gamehight) {
         super(0, 0, width, height, color);
+        this.powerUpManager = new PowerUpManager();
         int x = 0;
         int y = 0;
         this.hasBall = false;
@@ -25,10 +28,11 @@ public class EntityPad extends EntityBlock {
         switch (wall){
             case bottom:
                 x = 50;
-
                 y = gamehight - height - 10;
-
-
+                break;
+            case top:
+                x = 50;
+                y = height + 10;
                 break;
         }
         setX(x);
@@ -82,5 +86,9 @@ public class EntityPad extends EntityBlock {
     public void setBall(EntityBall ball) {
         hasBall = true;
         this.ball = ball;
+    }
+
+    public PowerUpManager getPowerUpManager() {
+        return powerUpManager;
     }
 }

@@ -110,4 +110,8 @@ public abstract class Game extends Observable implements Runnable {
     public Difficulty getDifficulty() {
         return difficulty;
     }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
 }

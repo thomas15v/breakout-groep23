@@ -15,7 +15,7 @@ public class EntityBall extends Entity {
     private int bereik = 90;
     EntityPad owner;
 
-    private EntityBall(int x, int y){
+    public EntityBall(int x, int y){
         this(x, y, EnumSet.of(Wall.bottom));
     }
 
@@ -54,7 +54,7 @@ public class EntityBall extends Entity {
 
         if (getY()<0){setY(0);}
         if (getX()<0){setX(0);}
-        if (getX()>game.getDimension().width-getWidth()){setX(game.getDimension().width-getWidth());}
+        if (getX()>game.getDimension().width-getWidth()){setX(game.getDimension().width - getWidth());}
 
         if (lostBall) {
             game.lostlife(owner);
@@ -112,7 +112,7 @@ public class EntityBall extends Entity {
     }
     //needs refactor
     private void bounceX(Wall wall){
-        if (!walls.contains(wall))
+        if (!            walls.contains(wall))
             bounceX();
         else
             lostBall = true;

@@ -6,7 +6,10 @@ import static edu.howest.breakout.database.Tables.*;
 
 import edu.howest.breakout.game.entity.EntityBlock;
 import edu.howest.breakout.game.info.Level;
+import edu.howest.breakout.game.powerup.PowerUp;
 import org.jooq.DSLContext;
+import org.jooq.Record;
+import org.jooq.RecordMapper;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
@@ -56,7 +59,16 @@ public class Database {
 
     public Level getLevel(int id){
         Level level = create.select().from(LEVELS).where(LEVELS.ID.eq(id)).fetchOne().into(Level.class);
-        List<EntityBlock> blocks = create.select().from(LEVEL_MAP).where(LEVEL_MAP.ID.eq(id)).fetch().into(EntityBlock.class);
+        List<EntityBlock> blocks = create.select().from(LEVEL_MAP).where(LEVEL_MAP.ID.eq(level.getId())).fetch().map(new RecordMapper<Record, EntityBlock>() {
+            @Override
+            public EntityBlock map(Record record) {
+                return new EntityBlock(record.getValue(LEVEL_MAP.X).intValue(),
+                        record.getValue(LEVEL_MAP.Y).intValue(),
+                        record.getValue(LEVEL_MAP.WIDTH).intValue(),
+                        record.getValue(LEVEL_MAP.HEIGHT).intValue(),
+                        getPowerUp(record.getValue(LEVEL_MAP.BLOCKCAT).intValue()));
+            }
+        });
         level.setBlockList(blocks);
         System.out.println(blocks);
         return level;
@@ -65,7 +77,16 @@ public class Database {
     public List<Level> getLevels(){
         List<Level> levels = create.select().from(LEVELS).fetch().into(Level.class);
         for (Level level : levels){
-            List<EntityBlock> blocks = create.select().from(LEVEL_MAP).where(LEVEL_MAP.ID.eq(level.getId())).fetch().into(EntityBlock.class);
+            List<EntityBlock> blocks = create.select().from(LEVEL_MAP).where(LEVEL_MAP.ID.eq(level.getId())).fetch().map(new RecordMapper<Record, EntityBlock>() {
+                @Override
+                public EntityBlock map(Record record) {
+                    return new EntityBlock(record.getValue(LEVEL_MAP.X).intValue(),
+                            record.getValue(LEVEL_MAP.Y).intValue(),
+                            record.getValue(LEVEL_MAP.WIDTH).intValue(),
+                            record.getValue(LEVEL_MAP.HEIGHT).intValue(),
+                            getPowerUp(record.getValue(LEVEL_MAP.BLOCKCAT).intValue()));
+                }
+            });
             level.setBlockList(blocks);
         }
         return levels;
@@ -76,5 +97,17 @@ public class Database {
             return;
         create.delete(LEVELS).where(LEVELS.ID.eq(level.getId())).execute();
         create.delete(LEVEL_MAP).where(LEVEL_MAP.ID.eq(level.getId())).execute();
+    }
+
+    public List<PowerUp> getPowerUpList(){
+        return create.select().from(POWERUPS).fetch().into(PowerUp.class);
+    }
+
+    public void storePowerup(PowerUp powerUp){
+        create.insertInto(POWERUPS).set(create.newRecord(POWERUPS, powerUp));
+    }
+
+    public PowerUp getPowerUp(int id){
+        return create.select().from(POWERUPS).where(POWERUPS.ID.eq(id)).fetchOne().into(PowerUp.class);
     }
 }

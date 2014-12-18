@@ -2,8 +2,10 @@ package edu.howest.breakout.editor;
 
 import edu.howest.breakout.game.Database;
 import edu.howest.breakout.game.entity.Entity;
+import edu.howest.breakout.game.entity.EntityBall;
 import edu.howest.breakout.game.entity.EntityBlock;
 import edu.howest.breakout.game.info.Level;
+import edu.howest.breakout.game.powerup.PowerUp;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -29,7 +31,7 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
     private JLabel ylabel;
     private JLabel widthLabel;
     private JLabel lengthLabel;
-    private JComboBox comboBox1;
+    private JComboBox powerUpBox;
     private JSpinner yValue;
     private JSpinner xValue;
     private JSpinner widthValue;
@@ -57,6 +59,17 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
         this.heightValue.addChangeListener(this);
         this.widthValue.setValue(50);
         this.heightValue.setValue(50);
+        for (PowerUp powerUp : database.getPowerUpList())
+            this.powerUpBox.addItem(powerUp);
+        this.powerUpBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!componentList.isSelectionEmpty())
+                    for (Entity entity : componentList.getSelectedValuesList())
+                        if (entity instanceof EntityBlock)
+                            ((EntityBlock) entity).setPowerUp((PowerUp) powerUpBox.getSelectedItem());
+            }
+        });
         add(RootPanel);
         removeButton.addActionListener(new ActionListener() {
             @Override
@@ -70,7 +83,7 @@ public class EditorPannel extends JPanel implements ListSelectionListener, Chang
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                game.add(new EntityBlock(getInteger(yValue), getInteger(xValue), getInteger(widthValue), getInteger(heightValue), Color.black));
+                game.add(new EntityBlock(getInteger(yValue), getInteger(xValue), getInteger(widthValue), getInteger(heightValue), (PowerUp) powerUpBox.getSelectedItem()));
                 canchange = false;
                 yValue.setValue(getInteger(yValue) + getInteger(widthValue) + 2);
                 canchange = true;

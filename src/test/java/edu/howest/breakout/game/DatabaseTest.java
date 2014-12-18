@@ -2,6 +2,7 @@ package edu.howest.breakout.game;
 
 import edu.howest.breakout.game.entity.EntityBlock;
 import edu.howest.breakout.game.info.Level;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.awt.*;
@@ -18,6 +19,12 @@ public class DatabaseTest {
             for (int y = 0; y < 4; y++)
                 blocks.add(new EntityBlock(x * 52 + 10, y * 52 + 10, 50, 50, Color.black));
         database.addLevel(new Level("lol",0,0, blocks));
+    }
+
+    @Test
+    public void testPowerUps(){
+        Database database = new Database("root", "", "jdbc:mysql://localhost:3306/breakout");
+        Assert.assertNotNull(database.getPowerUpList());
     }
 
 }
