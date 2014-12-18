@@ -53,9 +53,9 @@ public class EntityBall extends Entity {
         else if(getX() > (game.getDimension().getWidth() - 2*getStraalX()))
             bounceX(Wall.right);
         else if (getY() <= 0)
-            bounceY(Wall.top);
+            bounceY(Wall.top, game);
         else if (getY() > (game.getDimension().getHeight() - getStraalY()))
-            bounceY(Wall.bottom);
+            bounceY(Wall.bottom, game);
 
         if (getY()<0){setY(0);}
         if (getX()<0){setX(0);}
@@ -120,6 +120,7 @@ public class EntityBall extends Entity {
             bounceX();
         else
             lostBall = true;
+
     }
 
     private void bounceY(){
@@ -127,11 +128,13 @@ public class EntityBall extends Entity {
     }
 
     //needs refactor
-    private void bounceY(Wall wall){
+    private void bounceY(Wall wall, Game game){
         if (!walls.contains(wall))
             bounceY();
         else
             lostBall = true;
+            game.lostlife();
+
     }
 
     public int getStraalX(){

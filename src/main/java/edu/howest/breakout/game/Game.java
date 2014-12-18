@@ -81,7 +81,7 @@ public abstract class Game extends Observable implements Runnable {
     }
 
     @Deprecated
-    public void lostlife(EntityPad pad){
+    public void lostlife(){
         if (lives > 0) {
             lives -= 1;
         }else

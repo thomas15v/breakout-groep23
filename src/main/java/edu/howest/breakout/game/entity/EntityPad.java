@@ -72,7 +72,7 @@ public class EntityPad extends EntityBlock {
             ball.setX(getX() + getWidth()/2 - ball.getWidth()/2);
             switch (wall) {
                 case top:
-                    ball.setY(getY() + 10 + getHeight());
+                    ball.setY(getY() + 10 +getHeight());
                     break;
                 case bottom:
                     ball.setY(getY() - getHeight() - 10);
