@@ -41,6 +41,11 @@ public abstract class Game extends Observable implements Runnable {
         this.scoreManager = new ScoreManager();
     }
 
+    @Override
+    public synchronized void setChanged() {
+        super.setChanged();
+    }
+
     public Game(Level level, Difficulty difficulty){
         this(Arrays.asList(level), difficulty);
     }
@@ -142,6 +147,8 @@ public abstract class Game extends Observable implements Runnable {
     }
 
     public void setPaused(boolean paused) {
+        setChanged();
+        notifyObservers();
         this.paused = paused;
     }
 

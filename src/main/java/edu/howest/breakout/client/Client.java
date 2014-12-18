@@ -31,18 +31,23 @@ public class Client extends JFrame implements Observer {
     private CardLayout cardLayout;
     private JPanel RootPannel;
     private GameFrame gameFrame;
+    private PauseMenu pauseMenu;
+    private boolean isPaused;
 
     public Client(){
         this.database = new Database("root", "", "jdbc:mysql://localhost:3306/breakout");
         RootPannel = new JPanel();
+        pauseMenu = new PauseMenu();
         setContentPane(RootPannel);
         this.difficulty = new Difficulty();
         setVisible(true);
         cardLayout = new CardLayout();
         RootPannel.setLayout(cardLayout);
         this.highScorePanel = new HighScorePanel(database);
+        RootPannel.add(pauseMenu, "pausemenu");
         RootPannel.add(MainMenuPannel, "Main");
         RootPannel.add(highScorePanel, "HighScores");
+        show(MainMenuPannel);
         setMinimumSize(new Dimension(1000, 700));
         //setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
@@ -110,6 +115,21 @@ public class Client extends JFrame implements Observer {
             }
         });
 
+        pauseMenu.getBackToMenuButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameFrame.getGame().setGameState(GameState.EndGame);
+                remove(gameFrame);
+                show(MainMenuPannel);
+            }
+        });
+        pauseMenu.getContinueButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameFrame.getGame().setPaused(!gameFrame.getGame().isPaused());
+            }
+        });
+
         pack();
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
@@ -159,23 +179,33 @@ public class Client extends JFrame implements Observer {
     }
 
     public void update(Observable o, Object arg) {
+        Game game = (Game) o;
         if (arg != null)
         {
             if (arg.equals(GameState.Errored))
                 close(true);
             else if (arg.equals(GameState.EndGame)) {
-                Game game = (Game) o;
                 if (game instanceof MultiPlayerGame)
                     database.storeMultiplayerGame(game.getScoreManager());
                 else
                     for (Player player : game.getScoreManager().getPlayers())
                         database.addPlayer(player);
-                show(MainMenuPannel);
+                pauseMenu.setTitle(gameFrame.getGameGrid().getTitle());
+                show(pauseMenu);
                 remove(gameFrame);
                 o.deleteObserver(this);
-                repaint();
             }
         }
+
+        if (game.isPaused()) {
+            show(pauseMenu);
+            isPaused = true;
+        }else if (isPaused) {
+            System.out.print("Show again");
+            show(gameFrame);
+            isPaused = false;
+        }
+        repaint();
     }
 
     private void show(JPanel panel){

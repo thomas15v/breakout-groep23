@@ -39,4 +39,8 @@ public class GameFrame extends JPanel{
     private void createUIComponents() {
         gameGrid = new GameGrid();
     }
+
+    public GameGrid getGameGrid() {
+        return gameGrid;
+    }
 }

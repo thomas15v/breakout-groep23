@@ -34,7 +34,7 @@ public class LocalGame extends Game {
         addPads(players);
     }
 
-    @Deprecated
+    @Override
     public void addPads(List<Player> players){
         EntityPad entityPad = new EntityPad(Wall.bottom, Color.RED, 150, 15 , this, players.get(0), false);
         getInputManager().addController(new PadController(entityPad, this));
