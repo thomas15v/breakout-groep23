@@ -21,7 +21,6 @@ public class InputManager implements KeyEventDispatcher {
     }
 
     public void keyTyped(KeyEvent e) {
-        System.out.println("ya");
         for (Controller controller : controllerList)
             controller.keyTyped(e);
     }

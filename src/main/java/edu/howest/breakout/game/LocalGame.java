@@ -24,11 +24,8 @@ public class LocalGame extends Game {
     public LocalGame(InputManager inputManager, Level level, Difficulty difficulty) {
         super(level, difficulty);
         this.inputManager = inputManager;
-        this.entityPad = new EntityPad(Wall.bottom, Color.RED, 150, 15, (int) getDimension().getHeight());
-        EntityBall ball = new EntityBall(entityPad);
-        add(ball);
+        this.entityPad = new EntityPad(Wall.bottom, Color.RED, 150, 15, this);
         this.inputManager.addController(new PadController(entityPad, this));
-        entityPad.setBall(ball);
         add(entityPad);
         entityPad.setSpeed(15);
     }

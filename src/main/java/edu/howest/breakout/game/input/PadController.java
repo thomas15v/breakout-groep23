@@ -22,7 +22,6 @@ public class PadController implements Controller {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("their is input");
         if (e.getKeyCode() == KeyEvent.VK_LEFT)
             controller.setMovement(Direction.left);
         if (e.getKeyCode() == KeyEvent.VK_RIGHT)

@@ -13,7 +13,7 @@ public class EntityBall extends Entity {
     private boolean lostBall = false;
     private EnumSet<Wall> walls;
     private int bereik = 90;
-    EntityPad owner;
+    private EntityPad owner;
 
     public EntityBall(int x, int y){
         this(x, y, EnumSet.of(Wall.bottom));
@@ -33,8 +33,13 @@ public class EntityBall extends Entity {
         setAngle(/*new Random().nextInt()*/ 160);
     }
 
+    public EntityBall(EntityPad owner, EnumSet<Wall> walls){
+        this(owner);
+        this.walls = walls;
+    }
+
     public EntityBall(EntityPad owner){
-        this(-80,-80 , owner.getWall());
+        this((int) owner.getX(), (int) owner.getY() + 10, owner.getWall());
         this.owner = owner;
         setSpeed(0);
     }
@@ -57,7 +62,7 @@ public class EntityBall extends Entity {
         if (getX()>game.getDimension().width-getWidth()){setX(game.getDimension().width - getWidth());}
 
         if (lostBall) {
-            game.lostlife(owner);
+            owner.newBall();
             setDestroyed(true);
         }
         for (Entity e : game.getEntities()) {
@@ -88,10 +93,10 @@ public class EntityBall extends Entity {
                 {
                     hadbounce = false;
                 }
-                if (hadbounce)
+                if (hadbounce) {
                     ((EntityBlock) e).DoAction(game, this);
-
-
+                    System.out.print("hey?");
+                }
             }
         }
     }

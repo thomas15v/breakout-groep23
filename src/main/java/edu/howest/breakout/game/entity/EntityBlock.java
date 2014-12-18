@@ -26,7 +26,7 @@ public class EntityBlock extends Entity {
 
         game.addScore(calculateScore(game));
         if (powerUp.isWorth())
-            game.add(new EntityPowerup((int) getX(), (int)getY(), powerUp));
+            game.add(new EntityPowerup((int) getX() + getWidth() / 2, (int)getY() + getHeight() / 2, powerUp));
     }
 
     public int calculateScore(Game game){

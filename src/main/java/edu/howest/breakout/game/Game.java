@@ -76,11 +76,9 @@ public abstract class Game extends Observable implements Runnable {
         return logger;
     }
 
+    @Deprecated
     public void lostlife(EntityPad pad){
         if (lives > 0) {
-            EntityBall ball = new EntityBall(pad);
-            pad.setBall(ball);
-            add(ball);
             lives -= 1;
         }else
             setGameState(GameState.EndLost);

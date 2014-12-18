@@ -17,6 +17,7 @@ public class EntityPowerup extends Entity {
         setSpeed(4);
         setAngle(0);
         this.powerUp = powerUp;
+        setColor(powerUp.getColor());
     }
 
     @Override

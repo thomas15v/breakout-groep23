@@ -32,9 +32,11 @@ public class GameGrid extends JPanel implements Runnable {
 
     private void registerRenders(){
         RenderBlock renderBlock = new RenderBlock();
-        registerRender(EntityBall.class, new RenderBall());
+        RenderBall renderBall = new RenderBall();
+        registerRender(EntityBall.class, renderBall);
         registerRender(EntityBlock.class, renderBlock );
         registerRender(EntityPad.class, renderBlock );
+        registerRender(EntityPowerup.class, renderBall );
     }
 
     public void registerRender(Class entity, Render render){

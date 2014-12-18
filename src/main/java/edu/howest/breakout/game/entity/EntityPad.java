@@ -6,29 +6,33 @@ import edu.howest.breakout.game.info.Wall;
 import edu.howest.breakout.game.powerup.PowerUpManager;
 
 import java.awt.*;
+import java.util.EnumSet;
 
 import static edu.howest.breakout.game.info.Wall.*;
 
 public class EntityPad extends EntityBlock {
 
     private Wall wall;
+    private EnumSet<Wall> ballWalls;
     private Direction MovementDirection;
     private EntityBall ball;
     private boolean hasBall;
     private PowerUpManager powerUpManager;
+    private Game game;
 
-    public EntityPad(Wall wall, Color color, int width, int height, int gamehight) {
+    public EntityPad(Wall wall, Color color, int width, int height, Game game) {
         super(0, 0, width, height, color);
+        this.game = game;
         this.powerUpManager = new PowerUpManager();
         int x = 0;
         int y = 0;
-        this.hasBall = false;
         this.wall = wall;
+        this.ballWalls = EnumSet.of(wall);
         this.MovementDirection = Direction.none;
         switch (wall){
             case bottom:
                 x = 50;
-                y = gamehight - height - 10;
+                y = (int) game.getDimension().getHeight() - height - 10;
                 break;
             case top:
                 x = 50;
@@ -37,6 +41,12 @@ public class EntityPad extends EntityBlock {
         }
         setX(x);
         setY(y);
+        newBall();
+    }
+
+    public EntityPad(Wall wall, Color color, int width, int height, Game game, EnumSet<Wall> walls){
+        this(wall, color, width, height, game);
+        this.ballWalls = walls;
 
     }
 
@@ -83,9 +93,10 @@ public class EntityPad extends EntityBlock {
         return wall;
     }
 
-    public void setBall(EntityBall ball) {
+    public void newBall() {
         hasBall = true;
-        this.ball = ball;
+        ball = new EntityBall(this, ballWalls);
+        game.add(ball);
     }
 
     public PowerUpManager getPowerUpManager() {

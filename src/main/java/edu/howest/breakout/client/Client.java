@@ -1,7 +1,6 @@
-package edu.howest.breakout.client.menu;
+package edu.howest.breakout.client;
 
 
-import edu.howest.breakout.client.GameFrame;
 import edu.howest.breakout.game.Database;
 import edu.howest.breakout.game.difficulty.Difficulty;
 import edu.howest.breakout.game.info.GameState;
@@ -15,7 +14,7 @@ import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 
-public class MainMenuPannel extends JFrame implements Observer {
+public class Client extends JFrame implements Observer {
     private JButton exitButton;
     private JButton highScoresButton;
     private JButton multiPlayerButton;
@@ -26,7 +25,7 @@ public class MainMenuPannel extends JFrame implements Observer {
     Database database;
 
 
-    public MainMenuPannel(){
+    public Client(){
         this.database = new Database("root", "", "jdbc:mysql://localhost:3306/breakout");
 
         this.difficulty = new Difficulty();
@@ -96,13 +95,13 @@ public class MainMenuPannel extends JFrame implements Observer {
     }
 
     public static void main(String[] args){
-        MainMenuPannel frame = new MainMenuPannel();
+        Client frame = new Client();
     }
 
 
     public void startSinglePlayer(){
         try {
-            final GameFrame gameFrame = new GameFrame(database.getLevel(1), difficulty);
+            final GameFrame gameFrame = new GameFrame(database.getLevel(2), difficulty);
             addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
