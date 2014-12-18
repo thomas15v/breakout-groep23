@@ -43,6 +43,8 @@ public class EntityPad extends EntityBlock {
         }
         setX(x);
         setY(y);
+        if (!ballLess)
+            newBall();
     }
 
     public EntityPad(Wall wall, Color color, int width, int height, Game game, EnumSet<Wall> BallWalls){
