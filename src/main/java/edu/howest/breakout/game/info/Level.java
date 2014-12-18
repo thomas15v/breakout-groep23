@@ -54,6 +54,6 @@ public class Level {
 
     @Override
     public String toString() {
-        return getName() + " " + getId();
+        return getName();
     }
 }
