@@ -1,4 +1,5 @@
 -- V1_init.sql
+
 create table `blocksoorten` (
   `Id` int not null AUTO_INCREMENT unique,
   `Kleur` char(6) not null unique,

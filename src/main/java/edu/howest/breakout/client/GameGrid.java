@@ -18,8 +18,6 @@ public class GameGrid extends JPanel implements Runnable {
     private TickCalculator tickCalculator;
     private String title;
 
-
-
     public GameGrid(){
         registerRenders();
         setVisible(true);
@@ -56,13 +54,7 @@ public class GameGrid extends JPanel implements Runnable {
             Entity entity = it.next();
             renders.get(entity.getClass()).render(graphics2D, entity);
         }
-        renderTitle(graphics2D, title);
         //paintDebug(graphics2D);
-    }
-
-    private void renderTitle(Graphics2D graphics2D, String title) {
-        if (title != null)
-            graphics2D.drawString(title, getWidth()/2, getHeight()/2);
     }
 
     private void paintDebug(Graphics2D g){
